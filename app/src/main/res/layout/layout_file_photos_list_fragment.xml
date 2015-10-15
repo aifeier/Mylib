@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <GridView
+        android:id="@+id/fragment_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:numColumns="3"
+        android:verticalSpacing="5dp"
+        android:horizontalSpacing="5dp"
+        android:scrollbars="none">
+    </GridView>
+
+</LinearLayout>

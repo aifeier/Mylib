@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Cwf.iml" filepath="$PROJECT_DIR$/Cwf.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cwflibrary/cwflibrary.iml" filepath="$PROJECT_DIR$/cwflibrary/cwflibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/okhttplibrary/okhttplibrary.iml" filepath="$PROJECT_DIR$/okhttplibrary/okhttplibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photolibrary/photolibrary.iml" filepath="$PROJECT_DIR$/photolibrary/photolibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qrcodelibrary/qrcodelibrary.iml" filepath="$PROJECT_DIR$/qrcodelibrary/qrcodelibrary.iml" />
+    </modules>
+  </component>
+</project>

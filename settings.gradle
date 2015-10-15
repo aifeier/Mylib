@@ -1,0 +1,2 @@
+include ':app', ':qrcodelibrary', ':cwflibrary', ':okhttplibrary', ':photolibrary'
+//,'ZXing_Android'
