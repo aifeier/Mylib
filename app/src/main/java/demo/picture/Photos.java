@@ -23,6 +23,8 @@ import java.io.FileNotFoundException;
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
 import lib.utils.DirectoryUtil;
+
+import com.cwf.app.cwflibrary.utils.GlideUtils;
 import com.cwf.app.cwflibrary.utils.TimeUtils;
 import com.cwf.app.photolibrary.utils.photoviewlibs.PhotoView;
 
@@ -38,8 +40,10 @@ public class Photos extends BaseActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_text_img);
         PhotoView img = (PhotoView) findViewById(R.id.img);
+        GlideUtils.init(this);
+        GlideUtils.getNetworkImage("http://img4.imgtn.bdimg.com/it/u=1621924933,968611299&fm=21&gp=0.jpg", (ImageView) img);
         //goole推荐的图片加载
-        Glide.with(this).load(R.drawable.gg).into(img);//本地
+/*        Glide.with(this).load(R.drawable.gg).into(img);//本地
         Glide.with(this)
                 .load("http://pic14.nipic.com/20110522/7411759_164157418126_2.jpg")//可用输文件地址，网址，本地等
                 .error(R.drawable.image_bg)//错误图片
@@ -47,7 +51,7 @@ public class Photos extends BaseActivity implements View.OnClickListener{
                 .diskCacheStrategy(DiskCacheStrategy.ALL)//让Glide既缓存全尺寸又缓存其他尺寸
                 .override(200, 100)//mage Resizing
                 .centerCrop()//Center Cropping
-                .into((ImageView)img);//网络
+                .into((ImageView) img);*/
         mImg  = (ImageView) findViewById(R.id.img);
         mImg.setOnClickListener(this);
     }
