@@ -50,9 +50,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         // 给ViewHolder设置元素
         Actor p = actors.get(i);
         viewHolder.mTextView.setText(p.name);
-        GlideUtils.getResourcesImage(mContext,p.getImageResourceId(mContext), viewHolder.mImageView );
+        GlideUtils.getNetworkImage(mContext, "http://b.hiphotos.baidu.com/image/pic/item/29381f30e924b899d84ce5396c061d950a7bf6bb.jpg", viewHolder.mImageView );
 //        viewHolder.mImageView.setImageDrawable(DrawableContainer.createFromPath(mContext.getResources().getString(p.getImageResourceId(mContext))));
-        viewHolder.mImageView.setImageResource(p.getImageResourceId(mContext));
+//        viewHolder.mImageView.setImageResource(p.getImageResourceId(mContext));
     }
 
     @Override

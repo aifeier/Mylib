@@ -40,7 +40,7 @@ public class Photos extends BaseActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_text_img);
         PhotoView img = (PhotoView) findViewById(R.id.img);
-        GlideUtils.init(this);
+        GlideUtils.setmContext(this);
         GlideUtils.getNetworkImage("http://img4.imgtn.bdimg.com/it/u=1621924933,968611299&fm=21&gp=0.jpg", (ImageView) img);
         //goole推荐的图片加载
 /*        Glide.with(this).load(R.drawable.gg).into(img);//本地

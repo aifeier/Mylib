@@ -49,6 +49,7 @@ public class ViewHolder {
 	}
 
 	public ViewHolder(Context context, int position, ViewGroup parent, int itemLayoutId) {
+		GlideUtils.setmContext(context);
 		mContext = context;
 		mPosition = position;
 		mViews = new SparseArray<View>();
@@ -140,16 +141,19 @@ public class ViewHolder {
 	}
 
 	public ViewHolder setImageViewByGlide(int viewId, String sourcePath){
+//		GlideUtils.setImageView(sourcePath, (ImageView) findViewById(viewId));
 		GlideUtils.getNetworkImage(mContext, sourcePath, (ImageView) findViewById(viewId));
 		return this;
 	}
 
 	public ViewHolder setImageViewByGlide(int viewId, Bitmap bitmap){
-		GlideUtils.getDrawableImage(mContext, new BitmapDrawable(bitmap), (ImageView) findViewById(viewId));
+//		GlideUtils.setImageView(new BitmapDrawable(mContext.getResources(), bitmap), (ImageView) findViewById(viewId));
+		GlideUtils.getDrawableImage(mContext, new BitmapDrawable(mContext.getResources(), bitmap), (ImageView) findViewById(viewId));
 		return this;
 	}
 
 	public ViewHolder setImageViewByGlide(int viewId, int sourcePath){
+//		GlideUtils.setImageView(sourcePath, (ImageView) findViewById(viewId));
 		GlideUtils.getResourcesImage(mContext, sourcePath, (ImageView) findViewById(viewId));
 		return this;
 	}
