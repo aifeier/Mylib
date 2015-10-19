@@ -241,6 +241,7 @@ public class ViewHolder {
 		ImageView imageView = (ImageView) findViewById(viewId);
 		imageView.setImageBitmap(bitmap);
 		imageView.setTag(tag);
+
 		return this;
 	}
 
