@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.util.Log;
 import android.util.SparseArray;
@@ -15,7 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.cwf.app.cwf.R;
+import com.cwf.app.cwflibrary.utils.GlideUtils;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -33,6 +37,8 @@ import demo.picture.SelfActivity;
 import demo.picture.toolbox.entiy.BitmapCache;
 
 public class ViewHolder {
+
+	private Context mContext;
 	private SparseArray<View> mViews;//存储item中的子view
 	private View mConvertView; //item的view
 	public int mPosition;//当前item的位置
@@ -43,6 +49,7 @@ public class ViewHolder {
 	}
 
 	public ViewHolder(Context context, int position, ViewGroup parent, int itemLayoutId) {
+		mContext = context;
 		mPosition = position;
 		mViews = new SparseArray<View>();
 		mConvertView = LayoutInflater.from(context).inflate(itemLayoutId, parent, false);
@@ -130,6 +137,21 @@ public class ViewHolder {
 	 */
 	public ViewHolder setImageBitmapToImageView(int viewId, Bitmap bitmap) {
 		return setImageBitmapToImageViewAndSetTag(viewId, bitmap, mPosition + "");
+	}
+
+	public ViewHolder setImageViewByGlide(int viewId, String sourcePath){
+		GlideUtils.getNetworkImage(mContext, sourcePath, (ImageView) findViewById(viewId));
+		return this;
+	}
+
+	public ViewHolder setImageViewByGlide(int viewId, Bitmap bitmap){
+		GlideUtils.getDrawableImage(mContext, new BitmapDrawable(bitmap), (ImageView) findViewById(viewId));
+		return this;
+	}
+
+	public ViewHolder setImageViewByGlide(int viewId, int sourcePath){
+		GlideUtils.getResourcesImage(mContext, sourcePath, (ImageView) findViewById(viewId));
+		return this;
 	}
 
 	/**
@@ -241,7 +263,6 @@ public class ViewHolder {
 		ImageView imageView = (ImageView) findViewById(viewId);
 		imageView.setImageBitmap(bitmap);
 		imageView.setTag(tag);
-
 		return this;
 	}
 

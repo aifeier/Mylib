@@ -199,7 +199,8 @@ public class SelfActivity extends BaseActivity{
 
             @Override
             public void buildAddView(ViewHolder holder) {
-                holder.setImageBitmapToImageView(R.id.item_grid_image, bitmap);
+                holder.setImageViewByGlide(R.id.item_grid_image,R.drawable.icon_addpic_unfocused );
+//                holder.setImageBitmapToImageView(R.id.item_grid_image, bitmap);
             }
 
 

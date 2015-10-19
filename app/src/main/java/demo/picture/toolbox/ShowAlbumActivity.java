@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
+import com.cwf.app.cwflibrary.utils.GlideUtils;
 
 import java.util.List;
 
@@ -71,7 +72,9 @@ public class ShowAlbumActivity extends Activity implements View.OnClickListener{
         GridAdapter<ImageItem> adapter = new GridAdapter<ImageItem>(ShowAlbumActivity.this, R.layout.item_file_photos_list2,mData.getImageList()) {
             @Override
             public void buildView(ViewHolder holder, ImageItem data) {
-                holder.setImageBitmapToImageView(R.id.item_grid_image, data.getImagePath(), callback);
+                holder.setImageViewByGlide(R.id.item_grid_image,data.getImagePath() );
+//                GlideUtils.getNetworkImage(ShowAlbumActivity.this, data.getImagePath(), (ImageView) holder.findViewById(R.id.item_grid_image));
+//                holder.setImageBitmapToImageView(R.id.item_grid_image, data.getImagePath(), callback);
                 ImageView select = (ImageView) holder.findViewById(R.id.imv_select);
 
                 for(ImageItem i: BitmapTemp.tempSelectBitmap){

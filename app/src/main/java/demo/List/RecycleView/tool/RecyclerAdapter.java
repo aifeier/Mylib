@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
+import com.cwf.app.cwflibrary.utils.GlideUtils;
 
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         // 给ViewHolder设置元素
         Actor p = actors.get(i);
         viewHolder.mTextView.setText(p.name);
+        GlideUtils.getResourcesImage(mContext,p.getImageResourceId(mContext), viewHolder.mImageView );
 //        viewHolder.mImageView.setImageDrawable(DrawableContainer.createFromPath(mContext.getResources().getString(p.getImageResourceId(mContext))));
         viewHolder.mImageView.setImageResource(p.getImageResourceId(mContext));
     }
