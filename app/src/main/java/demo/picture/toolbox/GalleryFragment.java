@@ -81,7 +81,7 @@ public class GalleryFragment extends Fragment{
 
             }
         });
-        mViewPager.setOffscreenPageLimit(1);
+//        mViewPager.setOffscreenPageLimit(1);
         mViewPager.setAdapter(adapter);
         mViewPager.setPageMargin(20);
         mViewPager.setCurrentItem(position);

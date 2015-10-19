@@ -60,7 +60,7 @@ public class ShowPhotosFragment extends android.app.Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if(callBack1!=null){
-//                callBack1.gotoGalleryView(position);
+                callBack1.gotoGalleryView(position);
             }
         }
     };

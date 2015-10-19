@@ -8,9 +8,13 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Gallery;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.cwf.app.cwf.R;
+import com.cwf.app.cwflibrary.utils.GlideUtils;
 import com.cwf.app.photolibrary.utils.photoviewlibs.PhotoView;
 
 import java.util.ArrayList;
@@ -39,24 +43,27 @@ public class GalleryActivity extends BaseActivity{
     private PhotoView img;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_photos_view);
         if(listViews==null)
             listViews = new ArrayList<View>();
-
+        GlideUtils.setmContext(this);
         for(ImageItem item : BitmapTemp.tempSelectBitmap){
             img = new PhotoView(this);
             img.setId(Integer.parseInt(item.getImageId()));
-            img.setImageBitmap(item.getBitmap());
+//            img.setImageBitmap(item.getBitmap());
             img.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT));
+            GlideUtils.setImageView(item.getImagePath(), img);
             listViews.add(img);
             img.destroyDrawingCache();
         }
 
         mViewPager = (ViewPager) findViewById(R.id.photo_viewpager);
+        mViewPager.setOffscreenPageLimit(1);
         mViewPager.addOnPageChangeListener(pageChangeListener);
         adapter = new my(listViews);
         mViewPager.setAdapter(adapter);
