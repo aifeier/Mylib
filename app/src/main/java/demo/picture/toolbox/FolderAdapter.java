@@ -41,9 +41,6 @@ public class FolderAdapter extends BaseAdapter {
         AlbumHelper helper = AlbumHelper.getHelper();
         helper.init(c.getApplicationContext());
         albumList = helper.getImagesBucketList(false);
-//        for(ImageBucket item: albumList){
-//            dataList.addAll(item.imageList);
-//        }
         init(c);
     }
 
@@ -74,23 +71,6 @@ public class FolderAdapter extends BaseAdapter {
         return position;
     }
 
-    BitmapCache.ImageCallback callback = new BitmapCache.ImageCallback() {
-        @Override
-        public void imageLoad(ImageView imageView, Bitmap bitmap,
-                              Object... params) {
-            if (imageView != null && bitmap != null) {
-                String url = (String) params[0];
-                if (url != null && url.equals((String) imageView.getTag())) {
-                    ((ImageView) imageView).setImageBitmap(bitmap);
-                } else {
-                    Log.e(TAG, "callback, bmp not match");
-                }
-            } else {
-                Log.e(TAG, "callback, bmp null");
-            }
-        }
-    };
-
     private class ViewHolder {
         // 封面
         public ImageView imageView;
@@ -113,11 +93,10 @@ public class FolderAdapter extends BaseAdapter {
         } else
             holder = (ViewHolder) convertView.getTag();
         String path;
-        if (AlbumHelper.getHelper().getImagesBucketList(false) != null) {
+        if (albumList != null) {
 
-            //path = photoAbsolutePathList.get(position);
             //封面图片路径
-            path = albumList.get(position).getImageList().get(0).imagePath;
+            path = albumList.get(position).getImageList().get(0).getThumbnailPath();
             // 给folderName设置值为文件夹名称
             holder.folderName.setText(albumList.get(position).getBucketName() +
                     "(" + albumList.get(position).getCount()+")");
@@ -135,44 +114,17 @@ public class FolderAdapter extends BaseAdapter {
         else {
             final ImageItem item = albumList.get(position).getImageList().get(0);
             Glide.with(mContext)
-                    .load(item.getThumbnailPath())
-                    .error(R.drawable.error)
+                    .load(path)
+                    .error(R.drawable.plugin_camera_no_pictures)
                     .placeholder(R.drawable.loading4)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .centerCrop()
                     .into(holder.imageView);
-//            holder.imageView.setTag(item.imagePath);
-//            cache.displayBmp(holder.imageView, item.thumbnailPath, item.imagePath,
-//                    callback);
         }
-//        // 为封面添加监听
-//        holder.imageView.setOnClickListener(new ImageViewClickListener(
-//                position, mIntent,holder.choose_back));
 
         return convertView;
     }
 
-    // 为每一个文件夹构建的监听器
-    private class ImageViewClickListener implements OnClickListener {
-        private int position;
-        private Intent intent;
-        private ImageView choose_back;
-        public ImageViewClickListener(int position, Intent intent,ImageView choose_back) {
-            this.position = position;
-            this.intent = intent;
-            this.choose_back = choose_back;
-        }
-
-        public void onClick(View v) {
-//            ShowAllPhoto.dataList = (ArrayList<ImageItem>) AlbumActivity.contentList.get(position).imageList;
-//            Intent intent = new Intent();
-//            String folderName = AlbumActivity.contentList.get(position).bucketName;
-//            intent.putExtra("folderName", folderName);
-//            intent.setClass(mContext, ShowAllPhoto.class);
-//            mContext.startActivity(intent);
-//            choose_back.setVisibility(v.VISIBLE);
-        }
-    }
 
     public int dipToPx(int dip) {
         return (int) (dip * dm.density + 0.5f);
