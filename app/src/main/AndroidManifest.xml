@@ -155,6 +155,20 @@
         <activity android:name="demo.qrcode.QRCodeMain"
             android:screenOrientation="portrait"></activity>
 
+        <!--CustomLayoutList-->
+        <activity android:name="demo.custom.CustomLayoutList"
+            android:screenOrientation="portrait"></activity>
+
+        <!--gestureLock-->
+        <activity android:name="demo.custom.GestureLockActivity"
+            android:screenOrientation="portrait"
+            android:label="手势密码">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="demo.custom.CustomLayoutList"></category>
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

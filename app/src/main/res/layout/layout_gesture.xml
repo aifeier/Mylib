@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gesture="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <com.cwf.app.cwflibrary.widget.gesture.GestureLockViewGroup
+        android:id="@+id/id_gestureLockViewGroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFFFF"
+        android:gravity="center_vertical"
+        gesture:count="4"
+        gesture:tryTimes="5"
+        gesture:color_no_finger_inner_circle="#FFFF0000"
+        gesture:color_no_finger_outer_circle="#FFFFFF00"
+        gesture:color_finger_on="#FF00FF00"
+        gesture:color_finger_up="#FF0000FF"
+        />
+
+
+</RelativeLayout>

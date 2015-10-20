@@ -10,6 +10,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import demo.List.DemoListActivity;
 import demo.baidumap.BaseMapActivity;
+import demo.custom.CustomLayoutList;
 import demo.intent.VolleyDemoList;
 import demo.picture.PictureDemoList;
 import demo.qrcode.QRCodeMain;
@@ -20,7 +21,7 @@ import lib.MainApplication;
 public class MainActivity extends BaseActivity implements OnItemClickListener{
 
     private ListView mList;
-    private final String[] demo = {"百度地图" , "网络请求使用" , "状态栏变色", "本地图片", "ListDemo" , "QRCode" ,  "动画"};
+    private final String[] demo = {"百度地图" , "网络请求使用" , "状态栏变色", "本地图片", "ListDemo" , "QRCode" ,  "动画", "自定义控件"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,11 @@ public class MainActivity extends BaseActivity implements OnItemClickListener{
                 break;
             case 5:
                 i = new Intent(MainActivity.this, QRCodeMain.class);
+            case 6:
+                break;
+            case 7:
+                i = new Intent(MainActivity.this, CustomLayoutList.class);
+                break;
             default:
                 break;
         }

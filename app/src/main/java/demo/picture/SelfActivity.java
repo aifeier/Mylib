@@ -165,6 +165,7 @@ public class SelfActivity extends BaseActivity{
 
                     ImageItem takePhoto = new ImageItem();
                     takePhoto.setImageId(BitmapTemp.tempSelectBitmap.size() + "");
+                    takePhoto.setImagePath(FileUtils.SDPATH + fileName+".jpg");
                     BitmapTemp.tempSelectBitmap.add(takePhoto);
                     mAdapter.notifyDataSetChanged();
                 }
@@ -262,7 +263,6 @@ public class SelfActivity extends BaseActivity{
     @Override
     protected void onResume() {
         mAdapter.notifyDataSetChanged();
-//        BitmapTemp.tempSelectBitmap.clear();
         super.onResume();
     }
 }
