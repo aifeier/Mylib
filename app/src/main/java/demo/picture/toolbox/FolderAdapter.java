@@ -14,6 +14,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cwf.app.cwf.R;
 
 import java.util.List;
@@ -124,12 +126,24 @@ public class FolderAdapter extends BaseAdapter {
         } else
             path = "android_hybrid_camera_default";
         if (path.contains("android_hybrid_camera_default"))
-            holder.imageView.setImageResource(R.drawable.plugin_camera_no_pictures);
+            Glide.with(mContext)
+                    .load(R.drawable.plugin_camera_no_pictures)
+                    .error(R.drawable.error)
+                    .placeholder(R.drawable.loading4)
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .into(holder.imageView);
         else {
             final ImageItem item = albumList.get(position).getImageList().get(0);
-            holder.imageView.setTag(item.imagePath);
-            cache.displayBmp(holder.imageView, item.thumbnailPath, item.imagePath,
-                    callback);
+            Glide.with(mContext)
+                    .load(item.getThumbnailPath())
+                    .error(R.drawable.error)
+                    .placeholder(R.drawable.loading4)
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .centerCrop()
+                    .into(holder.imageView);
+//            holder.imageView.setTag(item.imagePath);
+//            cache.displayBmp(holder.imageView, item.thumbnailPath, item.imagePath,
+//                    callback);
         }
 //        // 为封面添加监听
 //        holder.imageView.setOnClickListener(new ImageViewClickListener(

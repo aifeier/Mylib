@@ -1,5 +1,7 @@
 package demo.picture.toolbox;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -10,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Gallery;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cwf.app.cwf.R;
 import com.cwf.app.cwflibrary.utils.GlideUtils;
 import com.cwf.app.photolibrary.utils.photoviewlibs.PhotoView;
@@ -28,6 +32,8 @@ import lib.utils.ActivityUtils;
 /**
  * Created by n-240 on 2015/9/28.
  */
+
+/*查看大图*/
 public class GalleryActivity extends BaseActivity{
 
     public static final String KEY_ID = "location_id";
@@ -35,41 +41,68 @@ public class GalleryActivity extends BaseActivity{
     public static final String KEY_CAN_DELETE = "can_del";
 
     private ViewPager mViewPager;
-    private my adapter;
+    private mPagerAdapter adapter;
 
-    private int location;
+    private static ArrayList<ImageItem> mList = new ArrayList<ImageItem>();
+    private static int location = -1;
 
-    private ArrayList<View> listViews = null;
-    private PhotoView img;
 
+    /*初始化参数*/
+    public static void startThisActivity(Activity activity, ArrayList<ImageItem> data, int position){
+        mList = data;
+        if(position>=0)
+            location = position;
+        activity.startActivity(new Intent(activity, GalleryActivity.class));
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_photos_view);
-        if(listViews==null)
-            listViews = new ArrayList<View>();
-        GlideUtils.setmContext(this);
-        for(ImageItem item : BitmapTemp.tempSelectBitmap){
-            img = new PhotoView(this);
-            img.setId(Integer.parseInt(item.getImageId()));
-//            img.setImageBitmap(item.getBitmap());
-            img.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT));
-            GlideUtils.setImageView(item.getImagePath(), img);
-            listViews.add(img);
-            img.destroyDrawingCache();
-        }
 
         mViewPager = (ViewPager) findViewById(R.id.photo_viewpager);
         mViewPager.setOffscreenPageLimit(1);
-        mViewPager.addOnPageChangeListener(pageChangeListener);
-        adapter = new my(listViews);
+//        mViewPager.addOnPageChangeListener(pageChangeListener);
+        adapter = new mPagerAdapter();
         mViewPager.setAdapter(adapter);
         mViewPager.setPageMargin(20);
-        int id = getIntent().getIntExtra(KEY_ID, 0);
-        mViewPager.setCurrentItem(id);
+        mViewPager.setCurrentItem(location);
+    }
+
+    private class mPagerAdapter extends PagerAdapter{
+
+
+
+        @Override
+        public int getCount() {
+            return mList.size();
+        }
+
+        @Override
+        public View instantiateItem(ViewGroup container, int position) {
+            PhotoView mView = new PhotoView(container.getContext());
+            mView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT));
+            Glide.with(container.getContext())
+                    .load(mList.get(position).getImagePath())
+                    .error(R.drawable.error)
+                    .placeholder(R.drawable.loading4)
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .into(mView);
+            container.addView(mView);
+            return mView;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
     }
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -86,95 +119,5 @@ public class GalleryActivity extends BaseActivity{
 
         }
     };
-
-    private class my extends PagerAdapter{
-        private ArrayList<View> listViews;
-        private int size;
-        public my(ArrayList<View> listViews) {
-            this.listViews = listViews;
-            size = listViews == null ? 0 : listViews.size();
-        }
-
-        @Override
-        public int getCount() {
-            return size;
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            return POSITION_NONE;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            ((ViewPager) container).addView(listViews.get(position % size), 0);
-            return listViews.get(position % size);
-        }
-
-        @Override
-        public void setPrimaryItem(ViewGroup container, int position, Object object) {
-            super.setPrimaryItem(container, position, object);
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public void destroyItem(View container, int position, Object object) {
-            ((ViewPager) container).removeView(listViews.get(position % size));
-        }
-    }
-
-
-    class MyPageAdapter extends PagerAdapter {
-
-        private ArrayList<View> listViews;
-
-        private int size;
-        public MyPageAdapter(ArrayList<View> listViews) {
-            this.listViews = listViews;
-            size = listViews == null ? 0 : listViews.size();
-        }
-
-        @Override
-        public int getCount() {
-            return size;
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            return POSITION_NONE;
-        }
-
-        @Override
-        public void destroyItem(View arg0, int arg1, Object arg2) {
-            ((ViewPager) arg0).removeView(listViews.get(arg1 % size));
-        }
-
-
-        @Override
-        public Object instantiateItem(View arg0, int arg1) {
-            try {
-                ((ViewPager) arg0).addView(listViews.get(arg1 % size), 0);
-
-            } catch (Exception e) {
-            }
-            return listViews.get(arg1 % size);
-        }
-
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return arg0 == arg1;
-        }
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        listViews.clear();
-        listViews.clone();
-        super.onDestroy();
-    }
 
 }

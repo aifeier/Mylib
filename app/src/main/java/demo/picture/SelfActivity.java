@@ -16,21 +16,22 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cwf.app.cwf.R;
 import com.cwf.app.cwflibrary.utils.FileUtils;
+import com.cwf.app.cwflibrary.utils.GlideUtils;
 
 import java.util.ArrayList;
 
 import demo.picture.toolbox.BitmapTemp;
 import demo.picture.toolbox.GalleryActivity;
 import demo.picture.toolbox.ImageFileActivity;
-import demo.picture.toolbox.ShowFilePhoto;
-import demo.picture.toolbox.entiy.ImageCollection;
 import lib.utils.ActivityUtils;
 import demo.picture.toolbox.entiy.ImageItem;
 import lib.BaseActivity;
@@ -48,7 +49,7 @@ public class SelfActivity extends BaseActivity{
 
     private GridView noScrollGridView;
     private GridAdapter<ImageItem> mAdapter;
-    public static int Max = 5;
+    public static int Max = 20;
     public static Bitmap bitmap;
     private LinearLayout ll_popup;
 
@@ -133,13 +134,7 @@ public class SelfActivity extends BaseActivity{
                             R.anim.abc_fade_in));
                     popupWindow.showAtLocation(parentView, Gravity.BOTTOM, 0, 0);
                 } else {
-//                    ImageCollection IC = new ImageCollection();
-//                    IC.setImageList(BitmapTemp.tempSelectBitmap);
-//                    Intent i = ShowFilePhoto.startThisActivity(SelfActivity.this, 0, IC, position);
-//                    startActivity(i);
-                    Intent i = new Intent(SelfActivity.this, GalleryActivity.class);
-                    startActivityForResult(i, 1);
-
+                    GalleryActivity.startThisActivity(SelfActivity.this, BitmapTemp.tempSelectBitmap, position);
                 }
             }
         });
@@ -169,7 +164,6 @@ public class SelfActivity extends BaseActivity{
                     FileUtils.saveBitmap(bm, fileName);
 
                     ImageItem takePhoto = new ImageItem();
-                    takePhoto.setBitmap(bm);
                     takePhoto.setImageId(BitmapTemp.tempSelectBitmap.size() + "");
                     BitmapTemp.tempSelectBitmap.add(takePhoto);
                     mAdapter.notifyDataSetChanged();
@@ -194,13 +188,22 @@ public class SelfActivity extends BaseActivity{
 
             @Override
             public void buildView(ViewHolder holder, ImageItem data) {
-                holder.setImageBitmapToImageView(R.id.item_grid_image, data.getBitmap());
+                Glide.with(SelfActivity.this)
+                        .load(data.getThumbnailPath())
+                        .error(R.drawable.error)
+                        .placeholder(R.drawable.loading4)
+                        .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                        .into((ImageView) holder.findViewById(R.id.item_grid_image));
             }
 
             @Override
             public void buildAddView(ViewHolder holder) {
-                holder.setImageViewByGlide(R.id.item_grid_image,R.drawable.icon_addpic_unfocused );
-//                holder.setImageBitmapToImageView(R.id.item_grid_image, bitmap);
+                Glide.with(SelfActivity.this)
+                        .load(R.drawable.icon_addpic_unfocused)
+                        .error(R.drawable.error)
+                        .placeholder(R.drawable.loading4)
+                        .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                        .into((ImageView) holder.findViewById(R.id.item_grid_image));
             }
 
 
@@ -211,7 +214,7 @@ public class SelfActivity extends BaseActivity{
 
             @Override
             public int getMaxSize() {
-                return 5;
+                return Max;
             }
 
         };

@@ -14,10 +14,13 @@ public class ImageItem implements Serializable {
 	 * 文件夹的照片列表
 	 */
 	private static final long serialVersionUID = 1L;
+	/*图片Id*/
 	public String imageId;
+	/*缩略图路径*/
 	public String thumbnailPath;
+	/*图片完整路径*/
 	public String imagePath;
-	private Bitmap bitmap;
+	/*是否被选中*/
 	public boolean isSelected = false;
 
 	public String getImageId() {
@@ -28,8 +31,12 @@ public class ImageItem implements Serializable {
 		this.imageId = imageId;
 	}
 
+	/*如果有缩略图则返回缩略图路径，否则返回完整路径*/
 	public String getThumbnailPath() {
-		return thumbnailPath;
+		if(thumbnailPath != null )
+			return thumbnailPath;
+		else
+			return imagePath;
 	}
 
 	public void setThumbnailPath(String thumbnailPath) {
@@ -50,22 +57,6 @@ public class ImageItem implements Serializable {
 
 	public void setSelected(boolean isSelected) {
 		this.isSelected = isSelected;
-	}
-
-	public Bitmap getBitmap() {
-		if (bitmap == null) {
-			try {
-				bitmap = BitmapTemp.revitionImageSize(imagePath);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return bitmap;
-	}
-
-	public void setBitmap(Bitmap bitmap) {
-		this.bitmap = bitmap;
 	}
 
 }

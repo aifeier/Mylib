@@ -1,6 +1,7 @@
 package demo.picture.toolbox.entiy;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 public class ImageCollection implements Serializable{
 
@@ -11,7 +12,7 @@ public class ImageCollection implements Serializable{
 
 	public int count = 0;//数量
 	public String bucketName;
-	public List<ImageItem> imageList;
+	public ArrayList<ImageItem> imageList;
 
 	public int getCount() {
 		return count;
@@ -29,11 +30,11 @@ public class ImageCollection implements Serializable{
 		this.bucketName = bucketName;
 	}
 
-	public List<ImageItem> getImageList() {
+	public ArrayList<ImageItem> getImageList() {
 		return imageList;
 	}
 
-	public void setImageList(List<ImageItem> imageList) {
+	public void setImageList(ArrayList<ImageItem> imageList) {
 		this.imageList = imageList;
 	}
 }

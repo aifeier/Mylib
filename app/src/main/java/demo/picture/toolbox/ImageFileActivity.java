@@ -16,6 +16,8 @@ import lib.utils.ActivityUtils;
 /**
  * Created by n-240 on 2015/9/28.
  */
+
+/*文件夹列表*/
 public class ImageFileActivity extends BaseActivity{
 
     private ListView mList;
@@ -33,9 +35,6 @@ public class ImageFileActivity extends BaseActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ImageCollection item = (ImageCollection) mList.getAdapter().getItem(position);
-//                ActivityUtils.showTip(item.getImageList().size() + item.getBucketName() + item.getImageList().get(0).getImagePath(), false);
-//                Intent i = ShowFilePhoto.startThisActivity(ImageFileActivity.this, 1, item, -1);
-//                startActivityForResult(i, 0);
                 Intent i = ShowAlbumActivity.startThisActivity(ImageFileActivity.this, item);
                 startActivityForResult(i, 0);
             }

@@ -24,6 +24,7 @@ import lib.widget.ViewHolder;
 /**
  * Created by n-240 on 2015/9/30.
  */
+/*查看文件夹里图片列表*/
 public class ShowAlbumActivity extends Activity implements View.OnClickListener{
     private TextView file_select_num;//确定按钮，显示数量
     private TextView preview;//预览
@@ -65,6 +66,7 @@ public class ShowAlbumActivity extends Activity implements View.OnClickListener{
     private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            GalleryActivity.startThisActivity(ShowAlbumActivity.this, mData.getImageList(), position);
         }
     };
 
@@ -73,8 +75,6 @@ public class ShowAlbumActivity extends Activity implements View.OnClickListener{
             @Override
             public void buildView(ViewHolder holder, ImageItem data) {
                 holder.setImageViewByGlide(R.id.item_grid_image,data.getImagePath() );
-//                GlideUtils.getNetworkImage(ShowAlbumActivity.this, data.getImagePath(), (ImageView) holder.findViewById(R.id.item_grid_image));
-//                holder.setImageBitmapToImageView(R.id.item_grid_image, data.getImagePath(), callback);
                 ImageView select = (ImageView) holder.findViewById(R.id.imv_select);
 
                 for(ImageItem i: BitmapTemp.tempSelectBitmap){
