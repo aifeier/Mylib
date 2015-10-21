@@ -32,7 +32,8 @@ public abstract class BaseActivity extends Activity {
 
 
 //        themePreferences = new ThemePreferences(this);
-        getActionBar().setDisplayShowHomeEnabled(false);
+        if(getActionBar()!=null)
+            getActionBar().setDisplayShowHomeEnabled(false);
 
         /***请求等待*/
         progressDialog = new ProgressDialog(this);
