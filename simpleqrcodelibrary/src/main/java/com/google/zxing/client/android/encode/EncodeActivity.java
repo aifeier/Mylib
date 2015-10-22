@@ -26,6 +26,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
@@ -76,10 +77,14 @@ public final class EncodeActivity extends Activity {
   protected void onResume() {
     super.onResume();
     // This assumes the view is full screen, which is a good assumption
-    WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
+   /* WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
     Display display = manager.getDefaultDisplay();
     int width = display.getWidth();
-    int height = display.getHeight();
+    int height = display.getHeight();*/
+    DisplayMetrics dm = new DisplayMetrics();
+    getWindowManager().getDefaultDisplay().getMetrics(dm);
+    int width = dm.widthPixels;
+    int height = dm.heightPixels;
     int smallerDimension = width < height ? width : height;
     smallerDimension = smallerDimension * 7 / 8;
 

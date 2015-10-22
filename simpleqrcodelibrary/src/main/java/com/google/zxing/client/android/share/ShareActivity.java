@@ -16,11 +16,13 @@
 
 package com.google.zxing.client.android.share;
 
+import android.content.ClipData;
 import android.provider.ContactsContract;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.client.android.R;
+import com.google.zxing.client.android.encode.EncodeActivity;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -92,6 +94,7 @@ public final class ShareActivity extends Activity {
     intent.putExtra(Intents.Encode.TYPE, Contents.Type.TEXT);
     intent.putExtra(Intents.Encode.DATA, text);
     intent.putExtra(Intents.Encode.FORMAT, BarcodeFormat.QR_CODE.toString());
+    intent.putExtra("USE_VCARD", true);
     startActivity(intent);
   }
 
@@ -126,7 +129,7 @@ public final class ShareActivity extends Activity {
   protected void onResume() {
     super.onResume();
     ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-    clipboardButton.setEnabled(clipboard.hasText());
+    clipboardButton.setEnabled(clipboard.hasPrimaryClip());
   }
 
   @Override
