@@ -30,7 +30,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.provider.Browser;
-import android.text.ClipboardManager;
+import android.content.ClipboardManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -64,8 +64,8 @@ public final class ShareActivity extends Activity {
     public void onClick(View v) {
       ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
       // Should always be true, because we grey out the clipboard button in onResume() if it's empty
-      if (clipboard.hasText()) {
-        launchSearch(clipboard.getText().toString());
+      if (clipboard.hasPrimaryClip()) {
+        launchSearch(clipboard.getPrimaryClip().getItemAt(0).toString());
       }
     }
   };
@@ -98,7 +98,7 @@ public final class ShareActivity extends Activity {
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
-   LinearLayout.LayoutParams lp =  new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT);
+   LinearLayout.LayoutParams lp =  new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT);
     lp.gravity = Gravity.CENTER;
     
     LinearLayout ll = new LinearLayout(this);
@@ -112,6 +112,7 @@ public final class ShareActivity extends Activity {
     ll.addView(clipboardButton);
     
     EditText share_text_view = new EditText(this);
+    share_text_view.setHeight(200);
     share_text_view.setHint("输入一些文本按回车");
     share_text_view.setOnKeyListener(textListener);
     ll.addView(share_text_view);
