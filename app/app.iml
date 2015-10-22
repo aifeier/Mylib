@@ -107,8 +107,8 @@
     <orderEntry type="library" exported="" name="glide-3.6.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.1.0" level="project" />
     <orderEntry type="module" module-name="okhttplibrary" exported="" />
+    <orderEntry type="module" module-name="simpleqrcodelibrary" exported="" />
     <orderEntry type="module" module-name="cwflibrary" exported="" />
     <orderEntry type="module" module-name="photolibrary" exported="" />
-    <orderEntry type="module" module-name="qrcodelibrary" exported="" />
   </component>
 </module>

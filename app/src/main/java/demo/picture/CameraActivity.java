@@ -24,7 +24,7 @@ import lib.utils.DirectoryUtil;
 /**
  * Created by n-240 on 2015/9/25.
  */
-public class Camera extends BaseActivity implements View.OnClickListener{
+public class CameraActivity extends BaseActivity implements View.OnClickListener{
     ImageView mImg ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

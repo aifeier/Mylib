@@ -42,8 +42,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.0.0'
     compile 'com.android.support:cardview-v7:23.0.0'
     compile 'de.greenrobot:eventbus:3.0.0-beta1'
-    compile project(':qrcodelibrary')
     compile project(':okhttplibrary')
     compile project(':cwflibrary')
     compile project(':photolibrary')
+    compile project(':simpleqrcodelibrary')
 }
