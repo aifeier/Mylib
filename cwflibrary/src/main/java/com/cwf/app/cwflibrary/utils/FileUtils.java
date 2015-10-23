@@ -31,6 +31,28 @@ public class FileUtils {
 			e.printStackTrace();
 		}
 	}
+	/*
+	* path is end with '/'
+	* fileFullName end with .mp4 or .txt ...
+	* */
+
+	public static String createPath(String path, String fileFullName){
+		try {
+			if (!isFileExist(path)) {
+				File tempf = createSDDir(path);
+			}
+			File f = new File(SDPATH+path, fileFullName);
+			if (f.exists()) {
+				f.delete();
+			}
+			return f.getAbsolutePath();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public static File createSDDir(String dirName) throws IOException {
 		File dir = new File(SDPATH + dirName);

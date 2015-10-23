@@ -29,6 +29,7 @@ import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
@@ -53,6 +54,8 @@ final class CameraConfigurationManager {
   private Point screenResolution;
   private Point cameraResolution;
 
+  private boolean isMinCameraSize = false;
+
   CameraConfigurationManager(Context context) {
     this.context = context;
   }
@@ -63,10 +66,11 @@ final class CameraConfigurationManager {
   void initFromCameraParameters(Camera camera) {
     Camera.Parameters parameters = camera.getParameters();
     WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-    Display display = manager.getDefaultDisplay();
-    int width = display.getWidth();
-    int height = display.getHeight();
-    // We're landscape-only, and have apparently seen issues with display thinking it's portrait 
+    DisplayMetrics dm = new DisplayMetrics();
+    manager.getDefaultDisplay().getMetrics(dm);
+    int width = dm.widthPixels;
+    int height = dm.heightPixels;
+    // We're landscape-only, and have apparently seen issues with display thinking it's portrait
     // when waking from sleep. If it's not landscape, assume it's mistaken and reverse them:
     if (width < height) {
       Log.i(TAG, "Display reports portrait orientation; assuming this is incorrect");
@@ -77,7 +81,15 @@ final class CameraConfigurationManager {
     screenResolution = new Point(width, height);
     Log.i(TAG, "Screen resolution: " + screenResolution);
     cameraResolution = findBestPreviewSizeValue(parameters, screenResolution);
+    if(isMinCameraSize)
+      /*是视频横向显示并且不拉升变形*/
+      cameraResolution = new Point(cameraResolution.y*cameraResolution.y/cameraResolution.x,cameraResolution.y);
     Log.i(TAG, "Camera resolution: " + cameraResolution);
+  }
+
+  /*设置为小窗口模式*/
+  void setMinCameraSize(boolean isMin){
+    isMinCameraSize = isMin;
   }
 
 @TargetApi(8)

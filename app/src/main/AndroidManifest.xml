@@ -147,6 +147,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name="demo.picture.VideoRecordActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:label="视频录制">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

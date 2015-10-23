@@ -1,2 +1,2 @@
-include ':app', ':qrcodelibrary', ':cwflibrary', ':okhttplibrary', ':photolibrary'
+include ':app', ':qrcodelibrary', ':cwflibrary', ':okhttplibrary', ':photolibrary', ':simpleqrcodelibrary'
 //,'ZXing_Android'

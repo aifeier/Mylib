@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/okhttplibrary/okhttplibrary.iml" filepath="$PROJECT_DIR$/okhttplibrary/okhttplibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/photolibrary/photolibrary.iml" filepath="$PROJECT_DIR$/photolibrary/photolibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/qrcodelibrary/qrcodelibrary.iml" filepath="$PROJECT_DIR$/qrcodelibrary/qrcodelibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/simpleqrcodelibrary/simpleqrcodelibrary.iml" filepath="$PROJECT_DIR$/simpleqrcodelibrary/simpleqrcodelibrary.iml" />
     </modules>
   </component>
 </project>

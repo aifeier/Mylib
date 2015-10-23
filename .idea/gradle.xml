@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/okhttplibrary" />
             <option value="$PROJECT_DIR$/photolibrary" />
             <option value="$PROJECT_DIR$/qrcodelibrary" />
+            <option value="$PROJECT_DIR$/simpleqrcodelibrary" />
           </set>
         </option>
       </GradleProjectSettings>

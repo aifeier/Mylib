@@ -180,7 +180,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     } else {
       // Install the callback and wait for surfaceCreated() to init the camera.
       surfaceHolder.addCallback(this);
-      surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+//      surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
 
     beepManager.updatePrefs();
@@ -684,24 +684,24 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
    * it to a value stored as a preference.
    */
   private boolean showHelpOnFirstLaunch() {
-    try {
-      PackageInfo info = getPackageManager().getPackageInfo(PACKAGE_NAME, 0);
-      int currentVersion = info.versionCode;
-      SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-      int lastVersion = prefs.getInt(PreferencesActivity.KEY_HELP_VERSION_SHOWN, 0);
-      if (currentVersion > lastVersion) {
-        prefs.edit().putInt(PreferencesActivity.KEY_HELP_VERSION_SHOWN, currentVersion).commit();
-        Intent intent = new Intent(this, HelpActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        // Show the default page on a clean install, and the what's new page on an upgrade.
-        String page = lastVersion == 0 ? HelpActivity.DEFAULT_PAGE : HelpActivity.WHATS_NEW_PAGE;
-        intent.putExtra(HelpActivity.REQUESTED_PAGE_KEY, page);
-        startActivity(intent);
-        return true;
-      }
-    } catch (PackageManager.NameNotFoundException e) {
-      Log.w(TAG, e);
-    }
+//    try {
+//      PackageInfo info = getPackageManager().getPackageInfo(PACKAGE_NAME, 0);
+//      int currentVersion = info.versionCode;
+//      SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//      int lastVersion = prefs.getInt(PreferencesActivity.KEY_HELP_VERSION_SHOWN, 0);
+//      if (currentVersion > lastVersion) {
+//        prefs.edit().putInt(PreferencesActivity.KEY_HELP_VERSION_SHOWN, currentVersion).commit();
+//        Intent intent = new Intent(this, HelpActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+//        // Show the default page on a clean install, and the what's new page on an upgrade.
+//        String page = lastVersion == 0 ? HelpActivity.DEFAULT_PAGE : HelpActivity.WHATS_NEW_PAGE;
+//        intent.putExtra(HelpActivity.REQUESTED_PAGE_KEY, page);
+//        startActivity(intent);
+//        return true;
+//      }
+//    } catch (PackageManager.NameNotFoundException e) {
+//      Log.w(TAG, e);
+//    }
     return false;
   }
 
