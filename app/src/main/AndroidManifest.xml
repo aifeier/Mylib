@@ -154,6 +154,15 @@
                 <category android:name="com.cwf.app.cwf.demo.picture"/>
             </intent-filter>
         </activity>
+        <activity android:name="demo.picture.AudioRecordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:label="音频录制">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.cwf.app.cwf.demo.picture"/>
+            </intent-filter>
+        </activity>
 
         <!--List-->
         <activity android:name="demo.List.RecycleView.RecyclerViewActivity"
