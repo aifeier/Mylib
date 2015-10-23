@@ -2,6 +2,7 @@ package demo.picture;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.hardware.Camera;
@@ -130,7 +131,7 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
                 // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
                 mediarecorder.setVideoSize(height, width);
                 // 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
-                mediarecorder.setVideoFrameRate(24);
+                mediarecorder.setVideoFrameRate(30);
                 mediarecorder.setPreviewDisplay(surfaceHolder.getSurface());
                 // 设置视频文件输出的路径
                 mediarecorder.setOutputFile(FileUtils.createPath("video/",
