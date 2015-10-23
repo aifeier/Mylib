@@ -109,7 +109,6 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
                 // 设置录制视频源为Camera(相机)
                 mediarecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
                 mediarecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-//                mediarecorder.setInputSurface(surfaceHolder.getSurface());
                 mediarecorder.setOrientationHint(90);
 
                 // 设置录制完成后视频的封装格式THREE_GPP为3gp.MPEG_4为mp4
@@ -126,7 +125,7 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
 //                mediarecorder.setVideoEncodingBitRate(5 * 480 * 320);
                 // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
 //                mediarecorder.setVideoSize(480, 320);
-                mediarecorder.setVideoSize(width, height);
+                mediarecorder.setVideoSize(height, width);
                 // 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
                 mediarecorder.setVideoFrameRate(24);
 //                mediarecorder.setPreviewDisplay(surfaceHolder.getSurface());
