@@ -9,6 +9,7 @@ import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -44,11 +45,10 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
         // 选择支持半透明模式,在有surfaceview的activity中使用。
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         setContentView(R.layout.layout_videorecord);
-        cameraManager = new CameraManager(getApplication());
-        initView();
     }
 
     private void initView(){
+        cameraManager = new CameraManager(getApplication());
         start = (Button) this.findViewById(R.id.start);
         stop = (Button) this.findViewById(R.id.stop);
         start.setOnClickListener(this);
@@ -58,8 +58,13 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
         SurfaceHolder holder = surfaceview.getHolder();// 取得holder
         holder.addCallback(this); // holder加入回调接口
         holder.setKeepScreenOn(true);
-        // setType必须设置，要不出错.
-//        holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        stop.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -122,13 +127,11 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
                 int height = 320;
 //                mediarecorder.setVideoEncodingBitRate(5 * 1920 * 1080);
                 mediarecorder.setVideoEncodingBitRate(5 * width * height);
-//                mediarecorder.setVideoEncodingBitRate(5 * 480 * 320);
                 // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
-//                mediarecorder.setVideoSize(480, 320);
                 mediarecorder.setVideoSize(height, width);
                 // 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
                 mediarecorder.setVideoFrameRate(24);
-//                mediarecorder.setPreviewDisplay(surfaceHolder.getSurface());
+                mediarecorder.setPreviewDisplay(surfaceHolder.getSurface());
                 // 设置视频文件输出的路径
                 mediarecorder.setOutputFile(FileUtils.createPath("video/",
                         TimeUtils.getSimpleDate().replace(" ","-").replace(":","-")+".mp4"));
@@ -163,6 +166,23 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     protected void onPause() {
+        if (mediarecorder != null) {
+            // 停止录制
+            mediarecorder.stop();
+            // 释放资源
+            mediarecorder.release();
+            mediarecorder = null;
+            start.setEnabled(true);
+            stop.setEnabled(false);
+        }
+        cameraManager.closeDriver();
+        surfaceHolder.removeCallback(this);
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        initView();
+        super.onResume();
     }
 }
