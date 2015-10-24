@@ -14,6 +14,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -43,6 +45,8 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         // 设置横屏显示
 //        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         // 选择支持半透明模式,在有surfaceview的activity中使用。
@@ -138,6 +142,8 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
                 // 设置视频文件输出的路径
                 mediarecorder.setOutputFile(FileUtils.createPath("video/",
                         TimeUtils.getSimpleDate().replace(" ","-").replace(":","-")+".mp4"));
+                /*/storage/emulated/0/cwf/video/2015-10-24-23-47-21.mp4*/
+                /*/storage/sdcard0/cwf/video/2015-10-25-00-02-50.mp4*/
                 try {
                     // 准备录制
                     mediarecorder.prepare();
