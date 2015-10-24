@@ -16,6 +16,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import com.betterman.util.PreferenceConfig;
 import com.cwf.app.cwf.R;
 import com.cwf.app.cwflibrary.utils.FileUtils;
 import com.cwf.app.cwflibrary.utils.TimeUtils;
@@ -74,7 +76,7 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
 
         surfaceHolder = holder;
         try {
-            cameraManager.setMinCameraSize(true);
+            cameraManager.setVerticalCameraSize(true);
             cameraManager.openDriver(holder);
             cameraManager.startPreview();
         } catch (IOException e) {
@@ -124,8 +126,8 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
                 mediarecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
                 /*设置比特率*/
                 mediarecorder.setAudioEncodingBitRate(44100);
-                int width = 480;
-                int height = 320;
+                int width = PreferenceConfig.PreviewCameraWidth;
+                int height = PreferenceConfig.PreviewCameraHeight;
 //                mediarecorder.setVideoEncodingBitRate(5 * 1920 * 1080);
                 mediarecorder.setVideoEncodingBitRate(5 * width * height);
                 // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.cwf.app.cwf.R;
+import com.cwf.app.cwflibrary.utils.FileUtils;
 import com.cwf.app.cwflibrary.utils.TimeUtils;
 
 import java.io.File;
@@ -31,6 +32,7 @@ public class Crop extends BaseActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_text_img);
         mImg  = (ImageView) findViewById(R.id.img);
+        mImg.setClickable(true);
         mImg.setOnClickListener(this);
 
     }
@@ -39,12 +41,22 @@ public class Crop extends BaseActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.img:
+                video();
 //                openPhotos();
-                mFile = new File(DirectoryUtil.getImageCacheDir(), TimeUtils.getSimpleDate()+".jpg");
-                doCrop(Uri.fromFile(mFile));
+//                mFile = new File(DirectoryUtil.getImageCacheDir(), TimeUtils.getSimpleDate()+".jpg");
+//                doCrop(Uri.fromFile(mFile));
                 break;
         }
     }
+
+    private void video(){
+        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        Uri uri = Uri.fromFile(new File(FileUtils.createPath("", "a.mp4")));
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+        startActivity(intent);
+    }
+
 
     private void doCrop(Uri uri){
 
