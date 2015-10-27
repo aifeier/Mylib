@@ -51,6 +51,11 @@ private String[] pics = { "icon_addpic_focused", "penguins", "icon_addpic_focuse
 //                    getResources().getColor( R.color.red,null));
             swipeRefreshLayout.setOnRefreshListener(this);
 
+            //设置背景
+            swipeRefreshLayout.setProgressBackgroundColorSchemeColor(0xFF000066);
+            //设置箭头颜色
+            swipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_light, R.color.holo_red_light,R.color.purple);
+
             // 这句话是为了，第一次进入页面的时候显示加载进度条
             swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
                     .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
