@@ -14,10 +14,12 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.betterman.util.PreferenceConfig;
 import com.cwf.app.cwf.R;
 import com.cwf.app.cwflibrary.utils.FileUtils;
 import com.cwf.app.cwflibrary.utils.TimeUtils;
@@ -40,11 +42,11 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
 
     private CameraManager cameraManager;
 
-    private String path = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         // 设置横屏显示
 //        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         // 选择支持半透明模式,在有surfaceview的activity中使用。
@@ -56,26 +58,16 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
         cameraManager = new CameraManager(getApplication());
         start = (Button) this.findViewById(R.id.start);
         stop = (Button) this.findViewById(R.id.stop);
-//        start.setOnClickListener(this);
+        start.setOnClickListener(this);
         stop.setOnClickListener(this);
         stop.setEnabled(false);
         surfaceview = (SurfaceView) this.findViewById(R.id.surfaceview);
         SurfaceHolder holder = surfaceview.getHolder();// 取得holder
         holder.addCallback(this); // holder加入回调接口
         holder.setKeepScreenOn(true);
-        start.setOnTouchListener(new View.OnTouchListener() {
+        stop.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        startRecord();
-                        start.setText("松开停止录制");
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        stopRecord();
-                        start.setText("开始录制");
-                        break;
-                }
                 return false;
             }
         });
@@ -88,7 +80,7 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
 
         surfaceHolder = holder;
         try {
-            cameraManager.setMinCameraSize(true);
+            cameraManager.setVerticalCameraSize(true);
             cameraManager.openDriver(holder);
             cameraManager.startPreview();
         } catch (IOException e) {
@@ -115,75 +107,68 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
         cameraManager.closeDriver();
     }
 
-    private void startRecord(){
-        mediarecorder = new MediaRecorder();// 创建mediarecorder对象
-        Camera camera = cameraManager.getCamera();
-        if (camera != null) {
-            camera.unlock();
-            mediarecorder.setCamera(camera);
-        }
-        // 设置录制视频源为Camera(相机)
-        mediarecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
-        mediarecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-        mediarecorder.setOrientationHint(90);
-
-        // 设置录制完成后视频的封装格式THREE_GPP为3gp.MPEG_4为mp4
-        mediarecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
-        // 设置录制的视频编码,音频编码
-        mediarecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-        mediarecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                /*设置比特率*/
-        mediarecorder.setAudioEncodingBitRate(44100);
-        int width = 480;
-        int height = 320;
-//                mediarecorder.setVideoEncodingBitRate(5 * 1920 * 1080);
-        mediarecorder.setVideoEncodingBitRate(5 * width * height);
-        // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
-        mediarecorder.setVideoSize(height, width);
-        // 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
-        mediarecorder.setVideoFrameRate(30);
-        mediarecorder.setPreviewDisplay(surfaceHolder.getSurface());
-        // 设置视频文件输出的路径
-        path = FileUtils.createPath("video/",
-                TimeUtils.getSimpleDate().replace(" ","-").replace(":","-")+".mp4");
-        mediarecorder.setOutputFile(path);
-        try {
-            // 准备录制
-            mediarecorder.prepare();
-            // 开始录制
-            mediarecorder.start();
-//            start.setEnabled(false);
-//            stop.setEnabled(true);
-        } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    private void stopRecord(){
-        if (mediarecorder != null) {
-            // 停止录制
-            mediarecorder.stop();
-            // 释放资源
-            mediarecorder.release();
-            mediarecorder = null;
-//            start.setEnabled(true);
-//            stop.setEnabled(false);
-            Toast.makeText(VideoRecordActivity.this,"视频保存成功!(" + path+")", Toast.LENGTH_LONG).show();
-        }
-    }
-
+//    @TargetApi(Build.VERSION_CODES.M)
     @Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.start:
-                startRecord();
+                mediarecorder = new MediaRecorder();// 创建mediarecorder对象
+                Camera camera = cameraManager.getCamera();
+                if (camera != null) {
+                    camera.unlock();
+                    mediarecorder.setCamera(camera);
+                }
+                // 设置录制视频源为Camera(相机)
+                mediarecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
+                mediarecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+                mediarecorder.setOrientationHint(90);
+
+                // 设置录制完成后视频的封装格式THREE_GPP为3gp.MPEG_4为mp4
+                mediarecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+                // 设置录制的视频编码,音频编码
+                mediarecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+                mediarecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+                /*设置比特率*/
+                mediarecorder.setAudioEncodingBitRate(44100);
+                int width = PreferenceConfig.PreviewCameraWidth;
+                int height = PreferenceConfig.PreviewCameraHeight;
+//                mediarecorder.setVideoEncodingBitRate(5 * 1920 * 1080);
+                mediarecorder.setVideoEncodingBitRate(5 * width * height);
+                // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
+                mediarecorder.setVideoSize(height, width);
+                // 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
+                mediarecorder.setVideoFrameRate(30);
+                mediarecorder.setPreviewDisplay(surfaceHolder.getSurface());
+                // 设置视频文件输出的路径
+                mediarecorder.setOutputFile(FileUtils.createPath("video/",
+                        TimeUtils.getSimpleDate().replace(" ","-").replace(":","-")+".mp4"));
+                /*/storage/emulated/0/cwf/video/2015-10-24-23-47-21.mp4*/
+                /*/storage/sdcard0/cwf/video/2015-10-25-00-02-50.mp4*/
+                try {
+                    // 准备录制
+                    mediarecorder.prepare();
+                    // 开始录制
+                    mediarecorder.start();
+                    start.setEnabled(false);
+                    stop.setEnabled(true);
+                } catch (IllegalStateException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 break;
             case R.id.stop:
-                stopRecord();
+                if (mediarecorder != null) {
+                    // 停止录制
+                    mediarecorder.stop();
+                    // 释放资源
+                    mediarecorder.release();
+                    mediarecorder = null;
+                    start.setEnabled(true);
+                    stop.setEnabled(false);
+                }
                 break;
         }
     }

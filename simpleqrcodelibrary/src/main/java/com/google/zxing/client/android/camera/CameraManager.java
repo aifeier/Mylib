@@ -57,7 +57,7 @@ public final class CameraManager {
   private boolean reverseImage;
   private int requestedFramingRectWidth;
   private int requestedFramingRectHeight;
-  private boolean isMinCameraSize;
+  private boolean isVerticalCameraSize;
   /**
    * Preview frames are delivered here, which we pass on to the registered handler. Make sure to
    * clear the handler so it will only receive one message.
@@ -71,7 +71,7 @@ public final class CameraManager {
     this.configManager = new CameraConfigurationManager(context);
     previewCallback = new PreviewCallback(configManager);
     autoFocusCallback = new AutoFocusCallback();
-    isMinCameraSize = false;
+    isVerticalCameraSize = false;
   }
 
   /**
@@ -93,7 +93,7 @@ public final class CameraManager {
 
     if (!initialized) {
       initialized = true;
-      configManager.setMinCameraSize(isMinCameraSize);
+      configManager.setVerticalCameraSize(isVerticalCameraSize);
       configManager.initFromCameraParameters(theCamera);
       if (requestedFramingRectWidth > 0 && requestedFramingRectHeight > 0) {
         setManualFramingRect(requestedFramingRectWidth, requestedFramingRectHeight);
@@ -107,8 +107,8 @@ public final class CameraManager {
   }
 
   /*do it before openDriver if you want use min cmaera size*/
-  public void setMinCameraSize(boolean isMin){
-    isMinCameraSize = isMin;
+  public void setVerticalCameraSize(boolean isMin){
+    isVerticalCameraSize = isMin;
   }
 
   private CameraConfigurationManager getConfigManager(){

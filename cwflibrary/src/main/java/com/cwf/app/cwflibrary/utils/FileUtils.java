@@ -38,6 +38,9 @@ public class FileUtils {
 
 	public static String createPath(String path, String fileFullName){
 		try {
+			if (!isFileExist("")) {
+				File tempf = createSDDir("");
+			}
 			if (!isFileExist(path)) {
 				File tempf = createSDDir(path);
 			}
