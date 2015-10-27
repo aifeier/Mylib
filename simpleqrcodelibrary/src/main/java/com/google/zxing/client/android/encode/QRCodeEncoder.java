@@ -22,6 +22,8 @@ import java.util.Map;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -31,6 +33,7 @@ import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.client.android.R;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 /**
  * This class does the work of decoding the user's request and extracting all the data
@@ -129,6 +132,19 @@ final class QRCodeEncoder {
 
 
   Bitmap encodeAsBitmap() throws WriterException {
+
+    int IMAGE_HALFWIDTH = 40;//中间logo的长宽
+    Bitmap mBitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.logo);
+    Matrix m = new Matrix();
+    float sx = (float) 2 * IMAGE_HALFWIDTH / mBitmap.getWidth();
+    float sy = (float) 2 * IMAGE_HALFWIDTH
+    / mBitmap.getHeight();
+    m.setScale(sx, sy);//设置缩放信息
+    //将logo图片按martix设置的信息缩放
+    mBitmap = Bitmap.createBitmap(mBitmap, 0, 0,
+            mBitmap.getWidth(), mBitmap.getHeight(), m, false);
+
+
     String contentsToEncode = contents;
     if (contentsToEncode == null) {
       return null;
@@ -137,7 +153,8 @@ final class QRCodeEncoder {
     String encoding = guessAppropriateEncoding(contentsToEncode);
     if (encoding != null) {
       hints = new EnumMap<EncodeHintType,Object>(EncodeHintType.class);
-      hints.put(EncodeHintType.CHARACTER_SET, encoding);
+      hints.put(EncodeHintType.CHARACTER_SET, encoding);//设置字符类型
+      hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H); // 矫错级别
     }
     MultiFormatWriter writer = new MultiFormatWriter();
     BitMatrix result;
@@ -149,11 +166,21 @@ final class QRCodeEncoder {
     }
     int width = result.getWidth();
     int height = result.getHeight();
+    int halfW = width / 2;
+    int halfH = height / 2;
     int[] pixels = new int[width * height];
     for (int y = 0; y < height; y++) {
       int offset = y * width;
       for (int x = 0; x < width; x++) {
-        pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+        if (x > halfW - IMAGE_HALFWIDTH && x < halfW + IMAGE_HALFWIDTH
+                && y > halfH - IMAGE_HALFWIDTH && y < halfH + IMAGE_HALFWIDTH) {
+                //该位置用于存放图片信息
+               //记录图片每个像素信息
+          pixels[offset + x] = mBitmap.getPixel(x - halfW
+                  + IMAGE_HALFWIDTH, y - halfH + IMAGE_HALFWIDTH);
+        }else
+          pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+
       }
     }
 
