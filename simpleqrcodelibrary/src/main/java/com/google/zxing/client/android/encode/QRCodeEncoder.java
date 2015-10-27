@@ -47,6 +47,11 @@ final class QRCodeEncoder {
 
   private static final int WHITE = 0xFFFFFFFF;
   private static final int BLACK = 0xFF000000;
+  private static final int BLUE1 = 0xFF0000FF;
+  private static final int BLUE2 = 0xFF0000DD;
+  private static final int BLUE3 = 0xFF0000AA;
+  private static final int BLUE4 = 0xFF000088;
+  private static final int BLUE5 = 0xFF000077;
 
   private final Activity activity;
   private String contents;
@@ -168,17 +173,30 @@ final class QRCodeEncoder {
     int height = result.getHeight();
     int halfW = width / 2;
     int halfH = height / 2;
+    int add = width > height? height/13 : width/13;
     int[] pixels = new int[width * height];
     for (int y = 0; y < height; y++) {
       int offset = y * width;
       for (int x = 0; x < width; x++) {
+        int radiusW = Math.abs(halfW - x);
+        int radiusH = Math.abs(halfH - y);
         if (x > halfW - IMAGE_HALFWIDTH && x < halfW + IMAGE_HALFWIDTH
                 && y > halfH - IMAGE_HALFWIDTH && y < halfH + IMAGE_HALFWIDTH) {
                 //该位置用于存放图片信息
                //记录图片每个像素信息
           pixels[offset + x] = mBitmap.getPixel(x - halfW
                   + IMAGE_HALFWIDTH, y - halfH + IMAGE_HALFWIDTH);
-        }else
+        }else if(radiusW < add && radiusH < add)
+          pixels[offset + x] = result.get(x, y) ? BLUE1 : WHITE;
+        else if(radiusW < add*2 && radiusH < add*2)
+          pixels[offset + x] = result.get(x, y) ? BLUE2 : WHITE;
+        else if(radiusW < add*3 && radiusH < add*3)
+          pixels[offset + x] = result.get(x, y) ? BLUE3 : WHITE;
+        else if(radiusW < add*4 && radiusH < add*4)
+          pixels[offset + x] = result.get(x, y) ? BLUE4 : WHITE;
+        else if(radiusW < add*5 && radiusH < add*5)
+          pixels[offset + x] = result.get(x, y) ? BLUE5 : WHITE;
+        else
           pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
 
       }
