@@ -197,6 +197,14 @@
                 <category android:name="com.cwf.demo_list"/>
             </intent-filter>
         </activity>
+        <activity android:name="demo.List.PullToRefresh.PullToRefreshListActivity"
+            android:screenOrientation="portrait"
+            android:label="PullToRefreshList">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.cwf.demo_list"/>
+            </intent-filter>
+        </activity>
         <activity android:name="demo.List.DemoListActivity"
             android:screenOrientation="portrait"
             />
