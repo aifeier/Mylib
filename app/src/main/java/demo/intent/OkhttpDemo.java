@@ -2,21 +2,21 @@ package demo.intent;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
-import com.cwf.app.okhttplibrary.OkHttpUtil;
+import com.cwf.app.okhttplibrary.OkHttpClientManager;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Response;
 
-import org.apache.http.message.BasicNameValuePair;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
+import demo.intent.entity.News;
+import demo.intent.entity.WeaherData;
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
 
@@ -25,21 +25,36 @@ import lib.utils.ActivityUtils;
  */
 public class OkhttpDemo extends BaseActivity implements Callback{
 
+    private TextView textview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_text_img);
+        textview = (TextView) findViewById(R.id.textview);
         setTheme(R.style.FullBleedTheme);
-        List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-        params.add(new BasicNameValuePair("tel", "15867117181"));
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("tel", "15867117181");
         FormEncodingBuilder form = new FormEncodingBuilder();
         form.add("", "");
         RequestBody b = form.build();
-        String u = OkHttpUtil.attachHttpGetParams(
-                "http://apis.baidu.com/apistore/mobilephoneservice/mobilephone", params);
-        OkHttpUtil.enqueue(
-                new Request.Builder().url(u).post(b)
-                        .addHeader("apikey", " ed238d5e9c0f41c0155b8c2aead25e73").build(), 1, this);
+
+        OkHttpClientManager.getAsyn("http://api.huceo.com/meinv/other/?key=e7b0c852050f609d927bc20fe11fde9c&num=10&page=1",
+                new OkHttpClientManager.ResultCallback<News>()
+                {
+                    @Override
+                    public void onError(Request request, Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(News news)
+                    {
+                        textview.setText(news.getNewslist().get(0).getTitle());//UI线程
+                    }
+                });
+
     }
 
     @Override
@@ -49,11 +64,16 @@ public class OkhttpDemo extends BaseActivity implements Callback{
 
     @Override
     public void onResponse(Response response) throws IOException {
-        switch (Integer.getInteger(response.request().tag().toString(), 0)) {
-            case 0:
-                Log.e("", response.body().string());
-                break;
-        }
-        ActivityUtils.showTip(response.body().string(), true);
+        Log.e("ABC", response.body().string() + response.message() + response.request().body().toString());
+//        ActivityUtils.showTip(response.body().string(), true);
+        final String str  = response.body().string();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textview.setText(str);
+            }
+
+        });
     }
+
 }
