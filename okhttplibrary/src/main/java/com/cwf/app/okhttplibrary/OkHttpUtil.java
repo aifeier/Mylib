@@ -9,10 +9,11 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
+//import org.apache.http.client.utils.URLEncodedUtils;
+//import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -40,16 +41,16 @@ public class OkHttpUtil {
 	 * @param responseCallback
 	 * @param params
 	 */
-	public static void enqueue(String murl, int tag, Callback responseCallback,
-			List<BasicNameValuePair> params) {
-		FormEncodingBuilder form = new FormEncodingBuilder();
-		for (BasicNameValuePair p : params)
-			form.add(p.getName(), p.getValue());
-		RequestBody mBody = form.build();
-
-		Request request = new Request.Builder().url(murl).post(mBody).tag(tag).build();
-		mOkHttpClient.newCall(request).enqueue(responseCallback);
-	}
+//	public static void enqueue(String murl, int tag, Callback responseCallback,
+//			List<BasicNameValuePair> params) {
+//		FormEncodingBuilder form = new FormEncodingBuilder();
+//		for (BasicNameValuePair p : params)
+//			form.add(p.getName(), p.getValue());
+//		RequestBody mBody = form.build();
+//
+//		Request request = new Request.Builder().url(murl).post(mBody).tag(tag).build();
+//		mOkHttpClient.newCall(request).enqueue(responseCallback);
+//	}
 
 	/***
 	 * post submit
@@ -115,9 +116,9 @@ public class OkHttpUtil {
 	 * @param params
 	 * @return
 	 */
-	public static String formatParams(List<BasicNameValuePair> params) {
-		return URLEncodedUtils.format(params, CHARSET_NAME);
-	}
+//	public static String formatParams(List<BasicNameValuePair> params) {
+//		return URLEncodedUtils.format(params, CHARSET_NAME);
+//	}
 
 	/**
 	 * 为HttpGet 的 url 方便的添加多个name value 参数。
@@ -125,8 +126,9 @@ public class OkHttpUtil {
 	 * @param params
 	 * @return
 	 */
-	public static String attachHttpGetParams(String url, List<BasicNameValuePair> params) {
-		return url + "?" + formatParams(params);
+	public static String attachHttpGetParams(String url, HashMap<String, String> params) {
+		return url;
+//		+ "?" + formatParams(params);
 	}
 
 	/**

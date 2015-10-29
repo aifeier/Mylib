@@ -12,9 +12,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/cwflibrary" />
-            <option value="$PROJECT_DIR$/okhttplibrary" />
             <option value="$PROJECT_DIR$/photolibrary" />
-            <option value="$PROJECT_DIR$/qrcodelibrary" />
+            <option value="$PROJECT_DIR$/pulltorefreshlibrary" />
             <option value="$PROJECT_DIR$/simpleqrcodelibrary" />
           </set>
         </option>

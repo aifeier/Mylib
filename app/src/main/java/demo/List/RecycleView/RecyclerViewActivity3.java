@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.cwf.app.cwf.R;
-import com.cwf.app.okhttplibrary.OkHttpClientManager;
+import com.cwf.app.cwflibrary.utils.OkHttpClientManager;
 import com.squareup.okhttp.Request;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class RecyclerViewActivity3 extends Activity implements RecyclerViewUtils
                         RVU.setRefreshState(false);
                         infos.clear();
                         infos.addAll(news.getNewslist());
-                        if(myAdapter == null){
+                        if (myAdapter == null) {
                             myAdapter = new AutoAdapter2<NewsInfo>(RecyclerViewActivity3.this, R.layout.card_view2, infos) {
                                 @Override
                                 public void buildView2(ViewHolder2 holder, NewsInfo data) {
@@ -77,8 +77,7 @@ public class RecyclerViewActivity3 extends Activity implements RecyclerViewUtils
                             };
 //                            // 为mRecyclerView设置适配器
                             RVU.setAdapter(myAdapter);
-                        }
-                        else
+                        } else
                             myAdapter.notifyDataSetChanged();
                     }
                 });

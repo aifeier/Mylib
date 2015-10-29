@@ -3,7 +3,6 @@ package demo.intent.mode.eventbus;
 import android.os.Message;
 import android.util.Log;
 
-import com.cwf.app.okhttplibrary.OkHttpUtil;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;

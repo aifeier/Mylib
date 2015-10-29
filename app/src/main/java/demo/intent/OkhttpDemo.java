@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
-import com.cwf.app.okhttplibrary.OkHttpClientManager;
+import com.cwf.app.cwflibrary.utils.OkHttpClientManager;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -40,17 +40,14 @@ public class OkhttpDemo extends BaseActivity implements Callback{
         RequestBody b = form.build();
 
         OkHttpClientManager.getAsyn("http://api.huceo.com/meinv/other/?key=e7b0c852050f609d927bc20fe11fde9c&num=10&page=1",
-                new OkHttpClientManager.ResultCallback<News>()
-                {
+                new OkHttpClientManager.ResultCallback<News>() {
                     @Override
-                    public void onError(Request request, Exception e)
-                    {
+                    public void onError(Request request, Exception e) {
                         e.printStackTrace();
                     }
 
                     @Override
-                    public void onResponse(News news)
-                    {
+                    public void onResponse(News news) {
                         textview.setText(news.getNewslist().get(0).getTitle());//UI线程
                     }
                 });

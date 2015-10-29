@@ -1,6 +1,6 @@
 package demo.List.RecycleView.tool;
 
-import com.cwf.app.okhttplibrary.OkHttpClientManager;
+import com.cwf.app.cwflibrary.utils.OkHttpClientManager;
 import com.squareup.okhttp.Request;
 
 import java.util.ArrayList;
@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import de.greenrobot.event.EventBus;
 import demo.intent.entity.News;
 import demo.intent.entity.NewsInfo;
-import lib.utils.ActivityUtils;
 
 /**
  * Created by n-240 on 2015/10/29.

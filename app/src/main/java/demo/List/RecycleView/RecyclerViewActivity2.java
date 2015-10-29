@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 
 import com.cwf.app.cwf.R;
-import com.cwf.app.okhttplibrary.OkHttpClientManager;
+import com.cwf.app.cwflibrary.utils.OkHttpClientManager;
 import com.squareup.okhttp.Request;
 
 import demo.List.RecycleView.tool.RecyclerAdapter;
@@ -92,9 +92,9 @@ public class RecyclerViewActivity2 extends Activity implements SwipeRefreshLayou
                     public void onResponse(News news) {
                         swipeRefreshLayout.setRefreshing(false);
                         mData = news;
-                            myAdapter = new RecyclerAdapter2(RecyclerViewActivity2.this, mData.getNewslist());
+                        myAdapter = new RecyclerAdapter2(RecyclerViewActivity2.this, mData.getNewslist());
 //                            // 为mRecyclerView设置适配器
-                            mRecyclerView.setAdapter(myAdapter);
+                        mRecyclerView.setAdapter(myAdapter);
                     }
                 });
     }
