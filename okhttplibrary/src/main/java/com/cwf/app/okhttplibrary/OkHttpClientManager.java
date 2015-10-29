@@ -2,6 +2,7 @@ package com.cwf.app.okhttplibrary;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.ImageView;
 
 
@@ -106,8 +107,10 @@ public class OkHttpClientManager
      */
     private void _getAsyn(String url, final ResultCallback callback)
     {
+        Log.e(TAG, url);
         final Request request = new Request.Builder()
                 .url(url)
+//                .addHeader("apikey", "ed238d5e9c0f41c0155b8c2aead25e73")
                 .build();
         deliveryResult(callback, request);
     }
@@ -165,6 +168,7 @@ public class OkHttpClientManager
     {
         Param[] paramsArr = map2Params(params);
         Request request = buildPostRequest(url, paramsArr);
+        Log.e(TAG, request.urlString());
         deliveryResult(callback, request);
     }
 
@@ -573,6 +577,7 @@ public class OkHttpClientManager
                 try
                 {
                     final String string = response.body().string();
+                    Log.e(TAG, string);
                     if (callback.mType == String.class)
                     {
                         sendSuccessResultCallback(string, callback);
