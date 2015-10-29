@@ -3,31 +3,21 @@ package demo.List.RecycleView;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.util.TypedValue;
 
 import com.cwf.app.cwf.R;
-import com.cwf.app.okhttplibrary.OkHttpClientManager;
-import com.squareup.okhttp.Request;
 
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import demo.List.RecycleView.tool.NetWorkRequest;
-import demo.List.RecycleView.tool.RecyclerAdapter;
-import demo.List.RecycleView.tool.RecyclerAdapter2;
-import demo.List.RecycleView.tool.RecyclerViewUtils;
-import demo.intent.entity.News;
+import lib.widget.AutoRecyclerAdapter.RecyclerViewUtils;
 import demo.intent.entity.NewsInfo;
-import demo.intent.mode.eventbus.TestEvent;
 import lib.utils.ActivityUtils;
-import lib.widget.AutoAdapter;
-import lib.widget.AutoAdapter2;
-import lib.widget.ViewHolder2;
+import lib.widget.AutoRecyclerAdapter.AutoAdapter2;
+import lib.widget.AutoRecyclerAdapter.ViewHolder2;
 
 /**
  * Created by n-240 on 2015/10/29.

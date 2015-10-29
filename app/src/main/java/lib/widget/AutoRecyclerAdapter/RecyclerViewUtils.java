@@ -1,4 +1,4 @@
-package demo.List.RecycleView.tool;
+package lib.widget.AutoRecyclerAdapter;
 
 import android.app.Activity;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,7 +9,7 @@ import android.util.TypedValue;
 
 import com.cwf.app.cwf.R;
 
-import lib.widget.AutoAdapter2;
+import lib.widget.AutoRecyclerAdapter.AutoAdapter2;
 
 /**
  * Created by n-240 on 2015/10/29.
