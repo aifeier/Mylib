@@ -26,7 +26,7 @@ public class TestEvent {
 
 
     public TestEvent(String message){
-        List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+      /*  List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
         params.add(new BasicNameValuePair("tel", "15867117181"));
         FormEncodingBuilder form = new FormEncodingBuilder();
         form.add("", "");
@@ -36,7 +36,7 @@ public class TestEvent {
         OkHttpUtil.enqueue(
                 new Request.Builder().url(u).post(b)
                         .addHeader("apikey", " ed238d5e9c0f41c0155b8c2aead25e73").build());
-        mMsg = message;
+        mMsg = message;*/
     }
 
     public String getMsg(){
