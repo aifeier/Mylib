@@ -12,8 +12,11 @@ import com.cwf.app.cwf.R;
 import com.cwf.app.okhttplibrary.OkHttpClientManager;
 import com.squareup.okhttp.Request;
 
+import java.util.ArrayList;
+
 import demo.List.RecycleView.tool.RecyclerAdapter;
 import demo.List.RecycleView.tool.RecyclerAdapter2;
+import demo.List.RecycleView.tool.RecyclerViewUtils;
 import demo.intent.entity.News;
 import demo.intent.entity.NewsInfo;
 import lib.utils.ActivityUtils;
@@ -24,7 +27,7 @@ import lib.widget.ViewHolder2;
 /**
  * Created by n-240 on 2015/10/29.
  */
-public class RecyclerViewActivity3 extends Activity implements SwipeRefreshLayout.OnRefreshListener{
+public class RecyclerViewActivity3 extends Activity implements RecyclerViewUtils.RecyclerViewRefreshListener{
 
     private RecyclerView mRecyclerView;
 
@@ -35,119 +38,84 @@ public class RecyclerViewActivity3 extends Activity implements SwipeRefreshLayou
 
     private AutoAdapter2<NewsInfo> myAdapter;
 
-    private News mData;
+    private ArrayList<NewsInfo> infos;
 
     private int page = 1;
+    private RecyclerViewUtils RVU;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_view);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(this);
-/*        //设置背景
-        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(0xFF000066);
-        //设置箭头颜色
-        swipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_light, R.color.holo_red_light, R.color.purple);
-        // 这句话是为了，第一次进入页面的时候显示加载进度条
-        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
-                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
-                        .getDisplayMetrics()));*/
-        mRecyclerView=(RecyclerView) findViewById(R.id.recycler_view);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE
-                        && lastVisibleItem + 1 == myAdapter.getItemCount()) {
-                    swipeRefreshLayout.setRefreshing(true);
-                    loadMore();
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
-                swipeRefreshLayout.setEnabled(mLayoutManager
-                        .findFirstCompletelyVisibleItemPosition() == 0);
-            }
-        });
-
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-/*        // 设置ItemAnimator
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        // 设置固定大小
-        mRecyclerView.setHasFixedSize(true);*/
-
-        swipeRefreshLayout.setRefreshing(true);
-        OkHttpClientManager.getAsyn("http://api.huceo.com/meinv/other/?key=e7b0c852050f609d927bc20fe11fde9c&num=10&page=1",
-                new OkHttpClientManager.ResultCallback<News>() {
-                    @Override
-                    public void onError(Request request, Exception e) {
-                        e.printStackTrace();
-                        swipeRefreshLayout.setRefreshing(false);
-                        ActivityUtils.showTip("刷新失败！请重试！", false);
-                    }
-
-                    @Override
-                    public void onResponse(News news) {
-                        swipeRefreshLayout.setRefreshing(false);
-                        mData = news;
-//                        myAdapter = new RecyclerAdapter2(RecyclerViewActivity3.this, mData.getNewslist());
-                        myAdapter = new AutoAdapter2<NewsInfo>(RecyclerViewActivity3.this, R.layout.card_view2, mData.getNewslist()) {
-                            @Override
-                            public void buildView2(ViewHolder2 holder, NewsInfo data) {
-                                holder.setValueToTextView(R.id.description, data.getDescription());
-                                holder.setUrltoImageView(R.id.pic, data.getPicUrl());
-
-                            }
-                        };
-//                            // 为mRecyclerView设置适配器
-                        mRecyclerView.setAdapter(myAdapter);
-                    }
-                });
+        infos = new ArrayList<NewsInfo>();
+        RVU = new RecyclerViewUtils(RecyclerViewActivity3.this,R.id.recycler_view, R.id.swipe_refresh_layout);
+        RVU.setRefreshListener(this);
+        RVU.setRefreshState(true);
+        fristrefresh();
     }
 
-    @Override
-    public void onRefresh() {
+    private void fristrefresh(){
         page = 1;
-        OkHttpClientManager.getAsyn("http://api.huceo.com/meinv/other/?key=e7b0c852050f609d927bc20fe11fde9c&num=10&page=1",
+        OkHttpClientManager.getAsyn("http://api.huceo.com/meinv/other/?key=e7b0c852050f609d927bc20fe11fde9c&num=20&page=1",
                 new OkHttpClientManager.ResultCallback<News>() {
                     @Override
                     public void onError(Request request, Exception e) {
+                        RVU.setRefreshState(false);
                         e.printStackTrace();
-                        swipeRefreshLayout.setRefreshing(false);
                         ActivityUtils.showTip("刷新失败！请重试！", false);
                     }
 
                     @Override
                     public void onResponse(News news) {
-                        swipeRefreshLayout.setRefreshing(false);
-                        mData = null;
-                        mData = news;
-                        myAdapter.notifyDataSetChanged();
+                        RVU.setRefreshState(false);
+                        infos.clear();
+                        infos.addAll(news.getNewslist());
+                        if(myAdapter == null){
+                            myAdapter = new AutoAdapter2<NewsInfo>(RecyclerViewActivity3.this, R.layout.card_view2, infos) {
+                                @Override
+                                public void buildView2(ViewHolder2 holder, NewsInfo data) {
+                                    holder.setValueToTextView(R.id.description, data.getDescription());
+                                    holder.setUrltoImageView(R.id.pic, data.getPicUrl());
+
+                                }
+                            };
+//                            // 为mRecyclerView设置适配器
+                            RVU.setAdapter(myAdapter);
+                        }
+                        else
+                            myAdapter.notifyDataSetChanged();
                     }
                 });
     }
 
     private void loadMore(){
         page++;
-        OkHttpClientManager.getAsyn("http://api.huceo.com/meinv/other/?key=e7b0c852050f609d927bc20fe11fde9c&num=10&page="+page,
+        OkHttpClientManager.getAsyn("http://api.huceo.com/meinv/other/?key=e7b0c852050f609d927bc20fe11fde9c&num=20&page="+page,
                 new OkHttpClientManager.ResultCallback<News>() {
                     @Override
                     public void onError(Request request, Exception e) {
-                        swipeRefreshLayout.setRefreshing(false);
+                        page--;
+                        RVU.setRefreshState(false);
                         ActivityUtils.showTip("加载失败！请重试！", false);
                     }
 
                     @Override
                     public void onResponse(News news) {
-                        swipeRefreshLayout.setRefreshing(false);
-                        mData.getNewslist().addAll(news.getNewslist());
+                        RVU.setRefreshState(false);
+                        infos.addAll(news.getNewslist());
                         myAdapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+    @Override
+    public void loadingMore() {
+        loadMore();
+    }
+
+    @Override
+    public void refresh() {
+        fristrefresh();
     }
 }
