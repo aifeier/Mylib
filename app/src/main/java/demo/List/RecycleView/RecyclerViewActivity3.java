@@ -15,13 +15,16 @@ import com.squareup.okhttp.Request;
 import demo.List.RecycleView.tool.RecyclerAdapter;
 import demo.List.RecycleView.tool.RecyclerAdapter2;
 import demo.intent.entity.News;
+import demo.intent.entity.NewsInfo;
 import lib.utils.ActivityUtils;
 import lib.widget.AutoAdapter;
+import lib.widget.AutoAdapter2;
+import lib.widget.ViewHolder2;
 
 /**
  * Created by n-240 on 2015/10/29.
  */
-public class RecyclerViewActivity2 extends Activity implements SwipeRefreshLayout.OnRefreshListener{
+public class RecyclerViewActivity3 extends Activity implements SwipeRefreshLayout.OnRefreshListener{
 
     private RecyclerView mRecyclerView;
 
@@ -30,7 +33,7 @@ public class RecyclerViewActivity2 extends Activity implements SwipeRefreshLayou
 
     private  int lastVisibleItem;
 
-    private RecyclerAdapter2 myAdapter;
+    private AutoAdapter2<NewsInfo> myAdapter;
 
     private News mData;
 
@@ -92,9 +95,17 @@ public class RecyclerViewActivity2 extends Activity implements SwipeRefreshLayou
                     public void onResponse(News news) {
                         swipeRefreshLayout.setRefreshing(false);
                         mData = news;
-                            myAdapter = new RecyclerAdapter2(RecyclerViewActivity2.this, mData.getNewslist());
+//                        myAdapter = new RecyclerAdapter2(RecyclerViewActivity3.this, mData.getNewslist());
+                        myAdapter = new AutoAdapter2<NewsInfo>(RecyclerViewActivity3.this, R.layout.card_view2, mData.getNewslist()) {
+                            @Override
+                            public void buildView2(ViewHolder2 holder, NewsInfo data) {
+                                holder.setValueToTextView(R.id.description, data.getDescription());
+                                holder.setUrltoImageView(R.id.pic, data.getPicUrl());
+
+                            }
+                        };
 //                            // 为mRecyclerView设置适配器
-                            mRecyclerView.setAdapter(myAdapter);
+                        mRecyclerView.setAdapter(myAdapter);
                     }
                 });
     }
