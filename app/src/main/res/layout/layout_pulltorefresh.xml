@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
     <!--     The PullToRefreshListView replaces a standard ListView widget. -->
 
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+    <com.handmark.pulltorefresh.library.autoloadlist.AutoRefreshListView
         android:id="@+id/pull_refresh_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

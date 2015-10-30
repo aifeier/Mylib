@@ -11,6 +11,7 @@ import com.cwf.app.cwf.R;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.autoloadlist.AutoLoadAdapter;
+import com.handmark.pulltorefresh.library.autoloadlist.AutoRefreshListView;
 import com.handmark.pulltorefresh.library.autoloadlist.ViewHolder;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import lib.utils.ActivityUtils;
 
 public class PullToRefreshListActivity extends Activity{
 
-    private PullToRefreshListView pullToRefreshListView;
+    private AutoRefreshListView autoRefreshListView;
     private LinkedList<String> mListItems;
 
     private ArrayList<NewsInfo> mData;
@@ -40,23 +41,9 @@ public class PullToRefreshListActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_pulltorefresh);
         EventBus.getDefault().register(this);
-//        page = 1;
-        pullToRefreshListView = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
-//        pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-//            @Override
-//            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-//                mAdapter.resetAdapterAndRefresh();
-//            }
-//        });
-//        pullToRefreshListView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
-//            @Override
-//            public void onLastItemVisible() {
-//                page++;
-//                mAdapter.loadNextPage();
-//            }
-//        });
+        autoRefreshListView = (AutoRefreshListView) findViewById(R.id.pull_refresh_list);
         mData = new ArrayList<NewsInfo>();
-        mAdapter = new AutoLoadAdapter<NewsInfo>(getApplicationContext(), R.layout.card_view2, mData) {
+        mAdapter = new AutoLoadAdapter<NewsInfo>(getApplicationContext(), R.layout.card_view2) {
             @Override
             public void buildView(ViewHolder holder, NewsInfo data) {
                 holder.setValueToTextView(R.id.description, data.getDescription());
@@ -68,23 +55,14 @@ public class PullToRefreshListActivity extends Activity{
                 NetWorkRequest.getPage(page);
             }
         };
-        pullToRefreshListView.setListAdapter(mAdapter);
+        autoRefreshListView.setListAdapter(mAdapter);
 
     }
 
 
     @Subscribe
     public void onEventBackground(ArrayList<NewsInfo> list) {
-        pullToRefreshListView.onRefreshComplete();
-        if(list.size()>0) {
-            if(page == 1){
-                mData.clear();
-            }
-            mData.addAll(list);
-            mAdapter.notifyDataSetChanged();
-        }else
-            ActivityUtils.showTip("加载失败！请重试！", false);
-
+        mAdapter.setmData(list, autoRefreshListView);
     }
 
     @Override

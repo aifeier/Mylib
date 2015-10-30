@@ -4,6 +4,9 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Toast;
+
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
 
@@ -21,12 +24,11 @@ public abstract class AutoLoadAdapter<T> extends BaseAdapter {
 
     private int mTotalRecords = 10000;
 
-    public AutoLoadAdapter(Context mContext, int mItemLayoutId, ArrayList<T> mData) {
+    public AutoLoadAdapter(Context mContext, int mItemLayoutId) {
         super();
         this.mItemLayoutId = mItemLayoutId;
         this.mContext = mContext;
-        if (mData != null)
-            this.mData = mData;
+        mData = new ArrayList<T>();
         mCurrentPage =  1;
     }
 
@@ -58,10 +60,6 @@ public abstract class AutoLoadAdapter<T> extends BaseAdapter {
         mCurrentPage = 0;
         mFirstRun = true;
         clearDataCache();
-        if (executing) {
-//            mAutoLoadListView.removeFooterView(mFootView);
-//            cancelTask();
-        }
         loadNextPage();
 
     }
@@ -71,8 +69,22 @@ public abstract class AutoLoadAdapter<T> extends BaseAdapter {
             if (mFirstRun || getCount() < mTotalRecords) {
                 mCurrentPage++;
                 getPage(mCurrentPage);
+                mFirstRun = false;
             }
         }
+    }
+
+    public void setmData(ArrayList<T> datalist, AutoRefreshListView autoRefreshListView){
+        if(autoRefreshListView !=null)
+            autoRefreshListView.onRefreshComplete();
+        if(datalist.size()>0) {
+            if(mCurrentPage == 1){
+                mData.clear();
+            }
+            mData.addAll(datalist);
+            notifyDataSetChanged();
+        }else
+            Toast.makeText(mContext , "加载失败！请重试！", Toast.LENGTH_SHORT).show();
     }
 
     public void clearDataCache() {
@@ -84,4 +96,6 @@ public abstract class AutoLoadAdapter<T> extends BaseAdapter {
     public abstract void buildView(ViewHolder holder, T data);
 
     public abstract void getPage(int page);
+
+
 }
