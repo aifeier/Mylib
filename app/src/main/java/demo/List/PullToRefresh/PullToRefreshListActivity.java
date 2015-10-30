@@ -1,12 +1,10 @@
 package demo.List.PullToRefresh;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.cwf.app.cwf.R;
@@ -14,7 +12,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 import de.greenrobot.event.EventBus;
@@ -22,10 +19,7 @@ import de.greenrobot.event.Subscribe;
 import demo.List.RecycleView.tool.NetWorkRequest;
 import demo.intent.entity.NewsInfo;
 import lib.utils.ActivityUtils;
-import lib.widget.AutoAdapter;
-import lib.widget.AutoLoadAdapter;
-import lib.widget.AutoRecyclerAdapter.AutoAdapter2;
-import lib.widget.AutoRecyclerAdapter.ViewHolder2;
+import lib.widget.autoload.AutoLoadAdapter;
 import lib.widget.ViewHolder;
 
 /**
