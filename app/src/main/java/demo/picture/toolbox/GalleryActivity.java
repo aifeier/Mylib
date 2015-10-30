@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cwf.app.cwf.R;
-import com.cwf.app.cwflibrary.utils.GlideUtils;
 import com.cwf.app.photolibrary.utils.photoviewlibs.PhotoView;
 
 import java.util.ArrayList;

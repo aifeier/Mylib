@@ -6,12 +6,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.cwf.app.cwf.R;
-import com.cwf.app.cwflibrary.utils.FileUtils;
-import com.cwf.app.cwflibrary.utils.TimeUtils;
 
 import java.io.IOException;
 
 import lib.BaseActivity;
+import lib.utils.FileUtils;
+import lib.utils.TimeUtils;
 
 /**
  * Created by n-240 on 2015/10/23.
@@ -56,7 +56,7 @@ public class AudioRecordActivity extends BaseActivity{
         mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
         mediaRecorder.setAudioEncodingBitRate(44100);
         mediaRecorder.setOutputFile(FileUtils.createPath("audio/",
-                TimeUtils.getSimpleDate().replace(" ", "-").replace(":", "-")+".aac"));
+                TimeUtils.getSimpleDate().replace(" ", "-").replace(":", "-") + ".aac"));
         try {
             mediaRecorder.prepare();
         } catch (IOException e) {

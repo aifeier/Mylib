@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.cwf.app.cwf.R;
-import com.cwf.app.cwflibrary.utils.TimeUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,6 +19,7 @@ import demo.intent.entity.Base;
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
 import lib.utils.DirectoryUtil;
+import lib.utils.TimeUtils;
 
 /**
  * Created by n-240 on 2015/9/25.

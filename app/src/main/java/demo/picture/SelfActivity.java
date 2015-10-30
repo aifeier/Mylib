@@ -24,8 +24,6 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cwf.app.cwf.R;
-import com.cwf.app.cwflibrary.utils.FileUtils;
-import com.cwf.app.cwflibrary.utils.GlideUtils;
 
 import java.util.ArrayList;
 
@@ -35,6 +33,7 @@ import demo.picture.toolbox.ImageFileActivity;
 import lib.utils.ActivityUtils;
 import demo.picture.toolbox.entiy.ImageItem;
 import lib.BaseActivity;
+import lib.utils.FileUtils;
 import lib.widget.GridAdapter;
 import lib.widget.ViewHolder;
 

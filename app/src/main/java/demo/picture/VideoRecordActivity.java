@@ -21,11 +21,12 @@ import android.widget.LinearLayout;
 
 import com.betterman.util.PreferenceConfig;
 import com.cwf.app.cwf.R;
-import com.cwf.app.cwflibrary.utils.FileUtils;
-import com.cwf.app.cwflibrary.utils.TimeUtils;
 import com.google.zxing.client.android.camera.CameraManager;
 
 import java.io.IOException;
+
+import lib.utils.FileUtils;
+import lib.utils.TimeUtils;
 
 /**
  * Created by n-240 on 2015/10/22.
@@ -141,7 +142,7 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
                 mediarecorder.setPreviewDisplay(surfaceHolder.getSurface());
                 // 设置视频文件输出的路径
                 mediarecorder.setOutputFile(FileUtils.createPath("video/",
-                        TimeUtils.getSimpleDate().replace(" ","-").replace(":","-")+".mp4"));
+                        TimeUtils.getSimpleDate().replace(" ", "-").replace(":", "-") + ".mp4"));
                 /*/storage/emulated/0/cwf/video/2015-10-24-23-47-21.mp4*/
                 /*/storage/sdcard0/cwf/video/2015-10-25-00-02-50.mp4*/
                 try {

@@ -12,7 +12,6 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cwf.app.cwf.R;
@@ -23,9 +22,8 @@ import java.io.FileNotFoundException;
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
 import lib.utils.DirectoryUtil;
+import lib.utils.GlideUtils;
 
-import com.cwf.app.cwflibrary.utils.GlideUtils;
-import com.cwf.app.cwflibrary.utils.TimeUtils;
 import com.cwf.app.photolibrary.utils.photoviewlibs.PhotoView;
 
 /**

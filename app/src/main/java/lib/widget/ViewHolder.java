@@ -15,11 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.cwf.app.cwf.R;
-import com.cwf.app.cwflibrary.utils.GlideUtils;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -35,6 +33,7 @@ import java.util.HashMap;
 import demo.intent.mode.toolbox.RequestManager;
 import demo.picture.SelfActivity;
 import demo.picture.toolbox.entiy.BitmapCache;
+import lib.utils.GlideUtils;
 
 public class ViewHolder {
 

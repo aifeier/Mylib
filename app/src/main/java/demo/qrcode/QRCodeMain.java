@@ -17,7 +17,6 @@ import android.widget.ImageView;
 
 import com.betterman.login.LoginActivity;
 import com.bumptech.glide.Glide;
-import com.cwf.app.cwflibrary.utils.NetUtils;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.google.zxing.client.android.CaptureActivity;
@@ -27,6 +26,8 @@ import com.google.zxing.client.android.Intents;
 
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
+import lib.utils.NetUtils;
+
 import com.cwf.app.cwf.R;
 import com.google.zxing.client.android.camera.CameraManager;
 

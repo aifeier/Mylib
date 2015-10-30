@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
-import com.cwf.app.cwflibrary.utils.GlideUtils;
 
 import java.util.List;
 

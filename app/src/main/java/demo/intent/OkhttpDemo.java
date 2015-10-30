@@ -5,7 +5,6 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
-import com.cwf.app.cwflibrary.utils.OkHttpClientManager;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -19,6 +18,7 @@ import demo.intent.entity.News;
 import demo.intent.entity.WeaherData;
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
+import lib.utils.OkHttpClientManager;
 
 /**
  * Created by n-240 on 2015/9/24.

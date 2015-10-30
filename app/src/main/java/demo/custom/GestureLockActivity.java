@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.cwf.app.cwf.R;
-import com.cwf.app.cwflibrary.utils.MD5Util;
-import com.cwf.app.cwflibrary.widget.gesture.GestureLockViewGroup;
+
 
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
+import lib.utils.MD5Util;
+import lib.widget.gesture.GestureLockViewGroup;
 
 /**
  * Created by n-240 on 2015/10/20.
