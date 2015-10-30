@@ -1,4 +1,4 @@
-package lib.widget;
+package lib.widget.autoload;
 
 import java.util.List;
 
@@ -6,6 +6,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import lib.widget.ViewHolder;
 
 public abstract class AutoLoadAdapter<T> extends BaseAdapter {
     private Context mContext;

@@ -1,11 +1,10 @@
-package lib.widget.autoloadlist;
+package lib.widget.autoload;
 
 /**
  * Created by n-240 on 2015/10/30.
  */
 
 import android.content.Context;
-import android.os.Debug;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +26,7 @@ import com.cwf.app.cwf.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import lib.widget.AutoLoadAdapter;
+import lib.widget.autoloadlist.OnRefreshListener;
 
 public  class AutoLoadListView<T> extends ListView implements AbsListView.OnScrollListener {
 
@@ -146,7 +145,7 @@ public  class AutoLoadListView<T> extends ListView implements AbsListView.OnScro
         }
         child.measure(childWidthSpec, childHeightSpec);
     }
-    private AutoLoadAdapter<T> myAdapter;
+
     @Override
     public void setAdapter(ListAdapter adapter) {
         super.setAdapter(adapter);
