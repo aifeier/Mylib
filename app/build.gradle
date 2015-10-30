@@ -47,5 +47,4 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.squareup.okio:okio:1.6.0'
     compile files('libs/Volley.jar')
-    compile files('libs/ListViewAnim.jar')
 }
