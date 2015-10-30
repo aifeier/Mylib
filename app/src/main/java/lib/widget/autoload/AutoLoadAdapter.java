@@ -1,6 +1,6 @@
 package lib.widget.autoload;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.view.View;
@@ -12,7 +12,7 @@ import lib.widget.ViewHolder;
 public abstract class AutoLoadAdapter<T> extends BaseAdapter {
     private Context mContext;
     private int mItemLayoutId;
-    protected List<T> mData;
+    protected ArrayList<T> mData;
 
     private int mCurrentPage;
 
@@ -22,7 +22,7 @@ public abstract class AutoLoadAdapter<T> extends BaseAdapter {
 
     private int mTotalRecords = 10000;
 
-    public AutoLoadAdapter(Context mContext, int mItemLayoutId, List<T> mData) {
+    public AutoLoadAdapter(Context mContext, int mItemLayoutId, ArrayList<T> mData) {
         super();
         this.mItemLayoutId = mItemLayoutId;
         this.mContext = mContext;

@@ -213,6 +213,14 @@
                 <category android:name="com.cwf.demo_list"/>
             </intent-filter>
         </activity>
+        <activity android:name="demo.List.AutoLoadListActivity"
+            android:screenOrientation="portrait"
+            android:label="AutoLoadListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.cwf.demo_list"/>
+            </intent-filter>
+        </activity>
         <activity android:name="demo.List.DemoListActivity"
             android:screenOrientation="portrait"
             />
