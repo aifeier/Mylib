@@ -23,6 +23,7 @@ import demo.List.RecycleView.tool.NetWorkRequest;
 import demo.intent.entity.NewsInfo;
 import lib.utils.ActivityUtils;
 import lib.widget.AutoAdapter;
+import lib.widget.AutoLoadAdapter;
 import lib.widget.AutoRecyclerAdapter.AutoAdapter2;
 import lib.widget.AutoRecyclerAdapter.ViewHolder2;
 import lib.widget.ViewHolder;
@@ -37,7 +38,7 @@ public class PullToRefreshListActivity extends Activity{
     private LinkedList<String> mListItems;
 
     private ArrayList<NewsInfo> mData;
-    private AutoAdapter<NewsInfo> mAdapter;
+    private AutoLoadAdapter<NewsInfo> mAdapter;
     private int page;
 
     @Override
@@ -50,23 +51,27 @@ public class PullToRefreshListActivity extends Activity{
         pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                page = 1;
-                NetWorkRequest.getPage(page);
+                mAdapter.resetAdapterAndRefresh();
             }
         });
         pullToRefreshListView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
             @Override
             public void onLastItemVisible() {
                 page++;
-                NetWorkRequest.getPage(page);
+                mAdapter.loadNextPage();
             }
         });
         mData = new ArrayList<NewsInfo>();
-        mAdapter = new AutoAdapter<NewsInfo>(getApplicationContext(), R.layout.card_view2, mData) {
+        mAdapter = new AutoLoadAdapter<NewsInfo>(getApplicationContext(), R.layout.card_view2, mData) {
             @Override
             public void buildView(ViewHolder holder, NewsInfo data) {
                 holder.setValueToTextView(R.id.description, data.getDescription());
                 holder.setImageViewByGlide(R.id.pic, data.getPicUrl());
+            }
+
+            @Override
+            public void getPage(int page) {
+                NetWorkRequest.getPage(page);
             }
         };
 
