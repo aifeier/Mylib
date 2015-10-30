@@ -9,8 +9,14 @@ import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -32,6 +38,7 @@ import com.cwf.app.photolibrary.utils.photoviewlibs.PhotoView;
 public class Photos extends BaseActivity implements View.OnClickListener{
     ImageView mImg ;
     private File mFile;
+    private TextView textview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,10 @@ public class Photos extends BaseActivity implements View.OnClickListener{
                 .into((ImageView) img);*/
         mImg  = (ImageView) findViewById(R.id.img);
         mImg.setOnClickListener(this);
+        textview = (TextView)findViewById(R.id.textview);
+        textview.setClickable(true);
+        textview.setOnClickListener(this);
+
     }
 
     @Override
@@ -60,7 +71,57 @@ public class Photos extends BaseActivity implements View.OnClickListener{
             case R.id.img:
                 openPhotos();
                 break;
+            case R.id.textview:
+                showPopupWindow(v);
+                break;
         }
+    }
+
+    private void showPopupWindow(View view) {
+
+        // 一个自定义的布局，作为显示的内容
+        View contentView = LayoutInflater.from(this).inflate(
+                R.layout.layout_text_img, null);
+        TextView textView = new TextView(this);
+        textView.setText("你是色盲啊！                ");
+        // 设置按钮的点击事件
+//        Button button = (Button) contentView.findViewById(R.id.button1);
+//        button.setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(mContext, "button is pressed",
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        final PopupWindow popupWindow = new PopupWindow(textView,
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+
+        popupWindow.setTouchable(true);
+
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+//                Log.i("mengdd", "onTouch : ");
+
+                return false;
+                // 这里如果返回true的话，touch事件将被拦截
+                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
+            }
+        });
+
+        // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
+        // 我觉得这里是API的一个bug
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(
+                R.drawable.penguins));
+
+        // 设置好参数之后再show
+//        popupWindow.showAsDropDown(view);
+        popupWindow.showAtLocation(view, Gravity.CENTER, view.getLayoutParams().width, view.getLayoutParams().height);
+
     }
 
     private void openPhotos(){
