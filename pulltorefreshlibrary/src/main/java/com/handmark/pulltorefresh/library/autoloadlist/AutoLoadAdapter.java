@@ -20,8 +20,6 @@ public abstract class AutoLoadAdapter<T> extends BaseAdapter {
 
     private boolean mFirstRun = true;
 
-    private boolean executing = false;
-
     private int mTotalRecords = 10000;
 
     public AutoLoadAdapter(Context mContext, int mItemLayoutId) {
@@ -59,18 +57,16 @@ public abstract class AutoLoadAdapter<T> extends BaseAdapter {
     public void resetAdapterAndRefresh() {
         mCurrentPage = 0;
         mFirstRun = true;
-        clearDataCache();
+        mData.clear();
         loadNextPage();
 
     }
 
     public void loadNextPage(){
-        if (!executing) {
-            if (mFirstRun || getCount() < mTotalRecords) {
-                mCurrentPage++;
-                getPage(mCurrentPage);
-                mFirstRun = false;
-            }
+        if (mFirstRun || getCount() < mTotalRecords) {
+            mCurrentPage++;
+            getPage(mCurrentPage);
+            mFirstRun = false;
         }
     }
 
@@ -85,11 +81,6 @@ public abstract class AutoLoadAdapter<T> extends BaseAdapter {
             notifyDataSetChanged();
         }else
             Toast.makeText(mContext , "加载失败！请重试！", Toast.LENGTH_SHORT).show();
-    }
-
-    public void clearDataCache() {
-        mData.clear();
-        notifyDataSetChanged();
     }
 
 
