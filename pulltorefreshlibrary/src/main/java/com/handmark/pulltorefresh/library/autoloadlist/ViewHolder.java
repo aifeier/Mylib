@@ -3,7 +3,6 @@ package com.handmark.pulltorefresh.library.autoloadlist;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -14,15 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.ref.SoftReference;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 
 
@@ -119,6 +116,24 @@ public class ViewHolder {
 		return this;
 	}
 
+	public ViewHolder setUrlToImageView(int viewId, String url, int errImg, int loadingImg){
+		Glide.with(mContext)
+				.load(url)
+				.error(errImg)
+				.placeholder(loadingImg)
+				.into((ImageView) findViewById(viewId));
+		return this;
+	}
+
+	public ViewHolder setUrlToImageView(int viewId, int img, int errImg, int loadingImg){
+		Glide.with(mContext)
+				.load(img)
+				.error(errImg)
+				.placeholder(loadingImg)
+				.into((ImageView) findViewById(viewId));
+		return this;
+	}
+
 	/**
 	 * 给ImageView设置bitmap
 	 * @param viewId ImageView的id
@@ -127,55 +142,6 @@ public class ViewHolder {
 	 */
 	public ViewHolder setImageBitmapToImageView(int viewId, Bitmap bitmap) {
 		return setImageBitmapToImageViewAndSetTag(viewId, bitmap, mPosition + "");
-	}
-
-//	public ViewHolder setImageViewByGlide(int viewId, String sourcePath){
-////		GlideUtils.setImageView(sourcePath, (ImageView) findViewById(viewId));
-//		GlideUtils.getNetworkImage(mContext, sourcePath, (ImageView) findViewById(viewId));
-//		return this;
-//	}
-//
-//	public ViewHolder setImageViewByGlide(int viewId, Bitmap bitmap){
-////		GlideUtils.setImageView(new BitmapDrawable(mContext.getResources(), bitmap), (ImageView) findViewById(viewId));
-//		GlideUtils.getDrawableImage(mContext, new BitmapDrawable(mContext.getResources(), bitmap), (ImageView) findViewById(viewId));
-//		return this;
-//	}
-//
-//	public ViewHolder setImageViewByGlide(int viewId, int sourcePath){
-////		GlideUtils.setImageView(sourcePath, (ImageView) findViewById(viewId));
-//		GlideUtils.getResourcesImage(mContext, sourcePath, (ImageView) findViewById(viewId));
-//		return this;
-//	}
-
-
-
-
-	//把一个url的网络图片变成一个本地的BitMap
-	    private Bitmap returnBitMap(String url) {
-				URL myFileUrl = null;
-		         Bitmap bitmap = null;
-		         try {
-			             myFileUrl = new URL(url);
-			         } catch (MalformedURLException e) {
-			            e.printStackTrace();
-				 }
-		         try {
-	 		             HttpURLConnection conn = (HttpURLConnection) myFileUrl
-			                     .openConnection();
-			            conn.setDoInput(true);
-			            conn.connect();
-			            InputStream is = conn.getInputStream();
-					 bitmap = BitmapFactory.decodeStream(is);
-			           is.close();
-			        } catch (IOException e) {
-			            e.printStackTrace();
-			        }
-		        return bitmap;
-		    }
-
-	public interface ImageCallback {
-		public void imageLoad(ImageView imageView, Bitmap bitmap,
-							  Object... params);
 	}
 
 

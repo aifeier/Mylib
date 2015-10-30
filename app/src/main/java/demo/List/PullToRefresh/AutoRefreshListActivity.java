@@ -27,7 +27,7 @@ import lib.utils.ActivityUtils;
  * Created by n-240 on 2015/10/29.
  */
 
-public class PullToRefreshListActivity extends Activity{
+public class AutoRefreshListActivity extends Activity{
 
     private AutoRefreshListView autoRefreshListView;
     private LinkedList<String> mListItems;
@@ -47,7 +47,7 @@ public class PullToRefreshListActivity extends Activity{
             @Override
             public void buildView(ViewHolder holder, NewsInfo data) {
                 holder.setValueToTextView(R.id.description, data.getDescription());
-//                holder.setImageViewByGlide(R.id.pic, data.getPicUrl());
+                holder.setUrlToImageView(R.id.pic, data.getPicUrl(), R.drawable.error, R.drawable.loading2);
             }
 
             @Override

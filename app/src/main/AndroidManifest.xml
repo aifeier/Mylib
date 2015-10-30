@@ -165,30 +165,6 @@
         </activity>
 
         <!--List-->
-        <activity android:name="demo.List.RecycleView.RecyclerViewActivity"
-            android:screenOrientation="portrait"
-            android:label="RecycleView">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.demo_list"/>
-            </intent-filter>
-        </activity>
-        <activity android:name="demo.List.RecycleView.RecyclerViewActivity2"
-            android:screenOrientation="portrait"
-            android:label="RecycleView2">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.demo_list"/>
-            </intent-filter>
-        </activity>
-        <activity android:name="demo.List.RecycleView.RecyclerViewActivity3"
-            android:screenOrientation="portrait"
-            android:label="RecycleView3">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.demo_list"/>
-            </intent-filter>
-        </activity>
         <activity android:name="demo.List.RecycleView.RecyclerViewActivity4"
             android:screenOrientation="portrait"
             android:label="RecycleView4">
@@ -197,7 +173,7 @@
                 <category android:name="com.cwf.demo_list"/>
             </intent-filter>
         </activity>
-        <activity android:name="demo.List.PullToRefresh.PullToRefreshListActivity"
+        <activity android:name="demo.List.PullToRefresh.AutoRefreshListActivity"
             android:screenOrientation="portrait"
             android:label="PullToRefreshList">
             <intent-filter>
