@@ -21,7 +21,11 @@
         android:numColumns="3"
         android:verticalSpacing="5dp"
         android:horizontalSpacing="5dp"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:drawSelectorOnTop="false"
+        android:fadingEdgeLength="0.0dp"
+        android:layoutAnimation="@anim/navagation_gridview_anim"
+        android:cacheColorHint="@color/white">
     </GridView>
 
     <FrameLayout
