@@ -28,12 +28,11 @@ public abstract class AutoLoadRecyclerAdapter<T> extends RecyclerView.Adapter<Vi
     private boolean isFrist = true;
     private int allPage = 10000;
 
-    public AutoLoadRecyclerAdapter(Context mContext, int mItemLayoutId, ArrayList<T> mData){
+    public AutoLoadRecyclerAdapter(Context mContext, int mItemLayoutId){
         super();
         this.mItemLayoutId = mItemLayoutId;
         this.mContext = mContext;
-        if (mData != null)
-            this.mData = mData;
+        mData = new ArrayList<T>();
     }
 
     @Override
@@ -59,7 +58,7 @@ public abstract class AutoLoadRecyclerAdapter<T> extends RecyclerView.Adapter<Vi
     }
 
     public void loadNextPage(){
-        if(isFrist||mCurrentPage < allPage) {
+        if(isFrist || mCurrentPage < allPage) {
             mCurrentPage++;
             isFrist = false;
             getPage(mCurrentPage);

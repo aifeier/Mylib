@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 
 import com.cwf.app.cwf.R;
 
@@ -47,6 +48,11 @@ public class AutoLoadRecyclerView<T> extends RecyclerView{
         if(swipeRefreshLayout==null)
             return ;
         this.swipeRefreshLayout = swipeRefreshLayout;
+        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, context.getResources()
+                        .getDisplayMetrics()));
+        if(getAdapter() == null)
+            return ;
         final AutoLoadRecyclerAdapter<T> mAdapter =(AutoLoadRecyclerAdapter<T>) getAdapter();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -65,7 +71,7 @@ public class AutoLoadRecyclerView<T> extends RecyclerView{
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
-                        && lastVisibleItem + 1 == recyclerView.getAdapter().getItemCount()&&!swipeRefreshLayout.isRefreshing()) {
+                        && lastVisibleItem + 1 == recyclerView.getAdapter().getItemCount() && !swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(true);
                     mAdapter.loadNextPage();
                 }
@@ -74,11 +80,13 @@ public class AutoLoadRecyclerView<T> extends RecyclerView{
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                lastVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
                 swipeRefreshLayout.setEnabled(linearLayoutManager
                         .findFirstCompletelyVisibleItemPosition() == 0);
             }
         });
+        //第一次加载
+        mAdapter.refreshAndClearData();
     }
 
     public void setRefreshFinish(){
