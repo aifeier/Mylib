@@ -43,11 +43,13 @@ public class AutoRefreshListActivity extends Activity{
         EventBus.getDefault().register(this);
         autoRefreshListView = (AutoRefreshListView) findViewById(R.id.pull_refresh_list);
         mData = new ArrayList<NewsInfo>();
-        mAdapter = new AutoLoadAdapter<NewsInfo>(getApplicationContext(), R.layout.card_view2) {
+        mAdapter = new AutoLoadAdapter<NewsInfo>(getApplicationContext(), R.layout.listitem) {
             @Override
             public void buildView(ViewHolder holder, NewsInfo data) {
-                holder.setValueToTextView(R.id.description, data.getDescription());
-                holder.setUrlToImageView(R.id.pic, data.getPicUrl(), R.drawable.error, R.drawable.loading2);
+                holder.setValueToButton(R.id.item_button, data.getTitle());
+                holder.setValueToTextView(R.id.item_text, data.getDescription());
+                holder.setUrlToImageView(R.id.item_img, data.getPicUrl(), R.drawable.error, R.drawable.loading2);
+                holder.setUrlToImageView(R.id.item_header_img, data.getPicUrl(), R.drawable.error, R.drawable.loading2);
             }
 
             @Override
