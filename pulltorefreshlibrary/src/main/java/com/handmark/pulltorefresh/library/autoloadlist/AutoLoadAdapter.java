@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public abstract class AutoLoadAdapter<T> extends BaseAdapter {
         }
     }
 
-    public void setmData(ArrayList<T> datalist, AutoRefreshListView autoRefreshListView){
+    public void setmData(ArrayList<T> datalist, PullToRefreshBase autoRefreshListView){
         if(autoRefreshListView !=null)
             autoRefreshListView.onRefreshComplete();
         if(datalist.size()>0) {

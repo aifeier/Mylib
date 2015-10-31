@@ -1,8 +1,13 @@
 package demo.List.PullToRefresh;
 
 import android.app.Activity;
+import android.app.FragmentContainer;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -23,6 +28,7 @@ import demo.intent.entity.NewsInfo;
 public class AutoRefreshGirdViewActivity extends Activity{
     PullToRefreshGridView pullToRefreshGridView ;
     AutoLoadAdapter<NewsInfo> autoLoadAdapter;
+    private FrameLayout frameLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +63,15 @@ public class AutoRefreshGirdViewActivity extends Activity{
         });
         pullToRefreshGridView.getRefreshableView().setAdapter(autoLoadAdapter);
         autoLoadAdapter.resetAdapterAndRefresh();
+        setDefaultFragment();
+    }
+    private void setDefaultFragment(){
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        TextFragment TF = new TextFragment();
 
+        transaction.replace(R.id.auto_gridview_framelayout, TF);
+        transaction.commit();
     }
 
     @Subscribe
