@@ -18,6 +18,7 @@ import demo.intent.entity.News;
 import demo.intent.entity.WeaherData;
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
+import lib.utils.FileUtils;
 import lib.utils.OkHttpClientManager;
 
 /**
@@ -33,7 +34,7 @@ public class OkhttpDemo extends BaseActivity implements Callback{
         setContentView(R.layout.layout_text_img);
         textview = (TextView) findViewById(R.id.textview);
         setTheme(R.style.FullBleedTheme);
-        HashMap<String, String> params = new HashMap<String, String>();
+ /*       HashMap<String, String> params = new HashMap<String, String>();
         params.put("tel", "15867117181");
         FormEncodingBuilder form = new FormEncodingBuilder();
         form.add("", "");
@@ -50,7 +51,20 @@ public class OkhttpDemo extends BaseActivity implements Callback{
                     public void onResponse(News news) {
                         textview.setText(news.getNewslist().get(0).getTitle());//UI线程
                     }
-                });
+                });*/
+
+        OkHttpClientManager.downloadAsyn("http://zx.kaitao.cn/UserFiles/Image/beijingtupian6.jpg",
+                FileUtils.createPath("files"), new OkHttpClientManager.ResultCallback<String>() {
+            @Override
+            public void onError(Request request, Exception e) {
+                ActivityUtils.showTip("下载失败", false);
+            }
+
+            @Override
+            public void onResponse(String response) {
+                ActivityUtils.showTip("下载成功", false);
+            }
+        });
 
     }
 

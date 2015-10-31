@@ -141,8 +141,8 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
                 mediarecorder.setVideoFrameRate(30);
                 mediarecorder.setPreviewDisplay(surfaceHolder.getSurface());
                 // 设置视频文件输出的路径
-                mediarecorder.setOutputFile(FileUtils.createPath("video/",
-                        TimeUtils.getSimpleDate().replace(" ", "-").replace(":", "-") + ".mp4"));
+                mediarecorder.setOutputFile(FileUtils.createPath("video/")
+                        +"/"+TimeUtils.getSimpleDate().replace(" ", "-").replace(":", "-") + ".mp4");
                 /*/storage/emulated/0/cwf/video/2015-10-24-23-47-21.mp4*/
                 /*/storage/sdcard0/cwf/video/2015-10-25-00-02-50.mp4*/
                 try {

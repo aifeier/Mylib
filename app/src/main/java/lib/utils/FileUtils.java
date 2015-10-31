@@ -37,19 +37,16 @@ public class FileUtils {
 	* fileFullName end with .mp4 or .txt ...
 	* */
 
-	public static String createPath(String path, String fileFullName){
+	public static String createPath(String path){
 		try {
 			if (!isFileExist("")) {
 				File tempf = createSDDir("");
 			}
 			if (!isFileExist(path)) {
 				File tempf = createSDDir(path);
-			}
-			File f = new File(SDPATH+path, fileFullName);
-			if (f.exists()) {
-				f.delete();
-			}
-			return f.getAbsolutePath();
+				return tempf.getParent();
+			}else
+				return SDPATH + path;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
