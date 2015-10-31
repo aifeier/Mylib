@@ -346,7 +346,7 @@ public class AutoRefreshListView<T> extends PullToRefreshAdapterViewBase<ListVie
 					height, Gravity.CENTER_HORIZONTAL);
 			FrameLayout frame = new FrameLayout(getContext());
 			frame.addView(v, lp);
-			mRefreshableView.addHeaderView(frame, null, false);
+			mRefreshableView.addHeaderView(frame, null, true);
 		}
 
 	}

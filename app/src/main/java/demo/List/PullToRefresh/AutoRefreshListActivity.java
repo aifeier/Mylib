@@ -1,6 +1,7 @@
 package demo.List.PullToRefresh;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -24,6 +25,7 @@ import java.util.LinkedList;
 
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
+import demo.List.RecycleView.RecyclerViewActivity4;
 import demo.List.RecycleView.tool.NetWorkRequest;
 import demo.intent.entity.NewsInfo;
 import lib.utils.ActivityUtils;
@@ -65,6 +67,13 @@ public class AutoRefreshListActivity extends Activity{
         autoRefreshListView.setListAdapter(mAdapter);
         ImageView imageView = new ImageView(this);
         imageView.setImageResource(R.drawable.penguins);
+        imageView.setClickable(true);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AutoRefreshListActivity.this, RecyclerViewActivity4.class));
+            }
+        });
         autoRefreshListView.setVisiableHeader(imageView, 300);
 
     }
