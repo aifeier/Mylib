@@ -39,11 +39,6 @@ import com.handmark.pulltorefresh.library.internal.LoadingLayout;
 
 public class AutoRefreshListView<T> extends PullToRefreshAdapterViewBase<ListView> {
 
-	public LoadingLayout getmHeaderLoadingView() {
-		return mHeaderLoadingView;
-	}
-
-
 	private LoadingLayout mHeaderLoadingView;
 	private LoadingLayout mFooterLoadingView;
 
