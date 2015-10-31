@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white_e">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="2dp"
+        android:padding="4dp"
         android:orientation="vertical"
         >
         <ImageView
@@ -27,7 +27,7 @@
             android:id="@+id/item_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/white_e"
             android:typeface="sans"
             android:textColor="@color/blue"
             />
@@ -42,7 +42,19 @@
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:paddingTop="5dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            />
+        <lib.widget.NoScrollGridView
+            android:id="@+id/item_gridview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numColumns="auto_fit"
+            android:verticalSpacing="1dp"
+            android:horizontalSpacing="1dp"
+            android:gravity="fill"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            ></lib.widget.NoScrollGridView>
     </LinearLayout>
 
 </LinearLayout>

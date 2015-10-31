@@ -57,6 +57,13 @@ public class AutoRefreshListActivity extends Activity{
                 holder.setValueToTextView(R.id.item_text, data.getDescription());
                 holder.setUrlToImageView(R.id.item_img, data.getPicUrl(), R.drawable.error, R.drawable.loading2);
                 holder.setUrlToImageView(R.id.item_header_img, data.getPicUrl(), R.drawable.error, R.drawable.loading2);
+                ArrayList<String> lists = new ArrayList<String>();
+                lists.add(data.getPicUrl());
+                lists.add(data.getPicUrl());
+                lists.add(data.getPicUrl());
+                lists.add(data.getPicUrl());
+                lists.add(data.getPicUrl());
+                holder.setPicturesToGridView(R.id.item_gridview, lists, R.drawable.error, R.drawable.loading4);
             }
 
             @Override

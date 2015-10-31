@@ -9,17 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.handmark.pulltorefresh.library.R;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.ref.SoftReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -122,6 +125,29 @@ public class ViewHolder {
 				.error(errImg)
 				.placeholder(loadingImg)
 				.into((ImageView) findViewById(viewId));
+		return this;
+	}
+
+	public ViewHolder setPicturesToGridView(int viewId,final ArrayList<String> strUrl, final int errImg, final int loadingImg){
+		GridView gridView = (GridView) findViewById(viewId);
+		AutoLoadAdapter<String> autoLoadAdapter = new AutoLoadAdapter<String>(mContext, R.layout.item_photo) {
+			@Override
+			public void buildView(ViewHolder holder, String data) {
+				holder.setUrlToImageView(R.id.item_imageview, data, errImg, loadingImg);
+			}
+
+			@Override
+			public void getPage(int page) {
+
+			}
+		};
+		autoLoadAdapter.setmData(strUrl, null);
+		if(strUrl.size()==1){
+			gridView.setNumColumns(1);
+		}else{
+			gridView.setNumColumns(3);
+		}
+		gridView.setAdapter(autoLoadAdapter);
 		return this;
 	}
 

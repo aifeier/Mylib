@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
     <!--     The PullToRefreshListView replaces a standard ListView widget. -->
 
     <com.handmark.pulltorefresh.library.autoloadlist.AutoRefreshListView
@@ -9,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:cacheColorHint="#00000000"
-        android:divider="@color/snow"
+        android:divider="@color/divide_line"
         android:dividerHeight="1dp"
         android:fadingEdge="none"
         android:fastScrollEnabled="false"
