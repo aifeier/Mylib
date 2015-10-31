@@ -345,17 +345,17 @@ public class AutoRefreshListView<T> extends PullToRefreshAdapterViewBase<ListVie
 	}
 
 	public void setListAdapter(ListAdapter adapter) {
+		setMode(Mode.BOTH);
 		getRefreshableView().setAdapter(adapter);
 		final AutoLoadAdapter<T> mAdapter = (AutoLoadAdapter<T>) adapter;
-		setOnRefreshListener(new OnRefreshListener<ListView>() {
+		setOnRefreshListener(new OnRefreshListener2<ListView>() {
 			@Override
-			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 				mAdapter.resetAdapterAndRefresh();
 			}
-		});
-		setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
+
 			@Override
-			public void onLastItemVisible() {
+			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 				mAdapter.loadNextPage();
 			}
 		});
