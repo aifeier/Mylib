@@ -339,6 +339,19 @@ public class AutoRefreshListView<T> extends PullToRefreshAdapterViewBase<ListVie
 
 	}
 
+	/*设置显示的头部*/
+	public void setVisiableHeader(View v, int height){
+		if(v !=null) {
+			final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+					height, Gravity.CENTER_HORIZONTAL);
+			FrameLayout frame = new FrameLayout(getContext());
+			frame.addView(v, lp);
+			mRefreshableView.addHeaderView(frame, null, false);
+		}
+
+	}
+
+
 	public void setListAdapter(ListAdapter adapter) {
 		setMode(Mode.BOTH);
 		getRefreshableView().setAdapter(adapter);

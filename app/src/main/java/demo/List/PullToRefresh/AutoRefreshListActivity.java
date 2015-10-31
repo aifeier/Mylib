@@ -3,8 +3,13 @@ package demo.List.PullToRefresh;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.cwf.app.cwf.R;
@@ -58,6 +63,9 @@ public class AutoRefreshListActivity extends Activity{
             }
         };
         autoRefreshListView.setListAdapter(mAdapter);
+        ImageView imageView = new ImageView(this);
+        imageView.setImageResource(R.drawable.penguins);
+        autoRefreshListView.setVisiableHeader(imageView, 300);
 
     }
 
