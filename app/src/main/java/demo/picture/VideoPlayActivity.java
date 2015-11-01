@@ -51,9 +51,12 @@ public class VideoPlayActivity extends Activity{
         Uri uri = Uri.parse(
                 "http://hc.yinyuetai.com/uploads/videos/common/BC3C013F426AC39ECC7DE6E43ECDAD43.flv?sc=4a1a2e90ba57c4c4&br=776&vid=687613&aid=1406&area=KR&vst=4\n");
 //        uri = Uri.parse(FileUtils.SDPATH+"video/2015-10-25-00-36-01.mp4");
+        uri = Uri.parse("http://he.yinyuetai.com/uploads/videos/common/BF6E0144973D496A0DEE6F4D99529FE8.flv?sc=fdf0d21351abf9a2&br=3131&vid=2005287&aid=1559&area=KR&vst=4");
+        uri = Uri.parse("http://he.yinyuetai.com/uploads/videos/common/ED7E0150647552A1F94E35CDA9803703.flv?sc=125ee2c11e8cb7c0&br=3087&vid=2390250&aid=25339&area=KR&vst=0");
         videoView.setVideoURI(uri);
         videoView.requestFocus();
         videoView.start();
 
     }
+
 }

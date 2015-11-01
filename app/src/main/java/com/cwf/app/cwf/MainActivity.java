@@ -21,7 +21,7 @@ import lib.MainApplication;
 public class MainActivity extends BaseActivity implements OnItemClickListener{
 
     private ListView mList;
-    private final String[] demo = {"百度地图" , "网络请求使用" , "状态栏变色", "本地图片", "ListDemo" , "QRCode" ,  "动画", "自定义控件"};
+    private final String[] demo = {"百度地图" , "网络请求使用" , "状态栏变色", "多媒体", "ListDemo" , "QRCode" ,  "动画", "自定义控件"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

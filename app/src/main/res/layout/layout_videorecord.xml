@@ -3,7 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/relativelayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         >
@@ -12,8 +13,20 @@
             android:id="@+id/surfaceview"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            />
-    </LinearLayout>
+            >
+        </SurfaceView>
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_alignParentBottom="true"
+            android:max="100"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+             />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"

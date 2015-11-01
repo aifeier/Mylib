@@ -24,6 +24,8 @@
 
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!--改变屏幕方向-->
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -168,6 +170,16 @@
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:label="VideoPlayActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.cwf.app.cwf.demo.picture"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="demo.picture.VideoPlayActivity2"
+            android:screenOrientation="unspecified"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="VideoPlayActivity2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.cwf.app.cwf.demo.picture"/>
