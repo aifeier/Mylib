@@ -166,7 +166,7 @@
         </activity>
         <activity android:name="demo.picture.VideoPlayActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/FullBleedTheme"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:label="VideoPlayActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

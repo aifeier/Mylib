@@ -1,5 +1,6 @@
 package demo.picture;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.MediaController;
@@ -38,7 +39,7 @@ import lib.utils.FileUtils;
  *本例中使用VideoView来播放网络上的视频
   */
 
-public class VideoPlayActivity extends BaseActivity{
+public class VideoPlayActivity extends Activity{
 
     VideoView videoView;
     @Override
