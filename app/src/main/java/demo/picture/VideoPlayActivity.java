@@ -49,9 +49,10 @@ public class VideoPlayActivity extends BaseActivity{
         videoView.setMediaController(new MediaController(this));
         Uri uri = Uri.parse(
                 "http://hc.yinyuetai.com/uploads/videos/common/BC3C013F426AC39ECC7DE6E43ECDAD43.flv?sc=4a1a2e90ba57c4c4&br=776&vid=687613&aid=1406&area=KR&vst=4\n");
-        uri = Uri.parse(FileUtils.SDPATH+"video/2015-10-25-00-36-01.mp4");
+//        uri = Uri.parse(FileUtils.SDPATH+"video/2015-10-25-00-36-01.mp4");
         videoView.setVideoURI(uri);
         videoView.requestFocus();
+        videoView.start();
 
     }
 }

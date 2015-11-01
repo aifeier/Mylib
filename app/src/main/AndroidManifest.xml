@@ -165,8 +165,8 @@
             </intent-filter>
         </activity>
         <activity android:name="demo.picture.VideoPlayActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:screenOrientation="landscape"
+            android:theme="@style/FullBleedTheme"
             android:label="VideoPlayActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
