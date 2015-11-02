@@ -113,7 +113,6 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(playVideoID != position - 1){
-                    isFrist = true;
                     playVideoID = position;
                     initPlay((String)parent.getAdapter().getItem(position));
                 }
