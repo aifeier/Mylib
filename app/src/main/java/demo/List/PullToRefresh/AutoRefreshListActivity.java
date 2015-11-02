@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -28,6 +29,8 @@ import de.greenrobot.event.Subscribe;
 import demo.List.RecycleView.RecyclerViewActivity4;
 import demo.List.RecycleView.tool.NetWorkRequest;
 import demo.intent.entity.NewsInfo;
+import demo.picture.toolbox.GalleryActivity;
+import demo.picture.toolbox.entiy.ImageItem;
 import lib.utils.ActivityUtils;
 
 /**
@@ -57,13 +60,28 @@ public class AutoRefreshListActivity extends Activity{
                 holder.setValueToTextView(R.id.item_text, data.getDescription());
                 holder.setUrlToImageView(R.id.item_img, data.getPicUrl(), R.drawable.error, R.drawable.loading2);
                 holder.setUrlToImageView(R.id.item_header_img, data.getPicUrl(), R.drawable.error, R.drawable.loading2);
-                ArrayList<String> lists = new ArrayList<String>();
+                final ArrayList<String> lists = new ArrayList<String>();
                 lists.add(data.getPicUrl());
                 lists.add(data.getPicUrl());
                 lists.add(data.getPicUrl());
                 lists.add(data.getPicUrl());
                 lists.add(data.getPicUrl());
                 holder.setPicturesToGridView(R.id.item_gridview, lists, R.drawable.error, R.drawable.loading4);
+                GridView gridView = (GridView) holder.findViewById(R.id.item_gridview);
+                final ArrayList<ImageItem> imageItems = new ArrayList<ImageItem>();
+                ImageItem imageItem = new ImageItem();
+                imageItem.setImagePath(data.getPicUrl());
+                imageItems.add(imageItem);
+                imageItems.add(imageItem);
+                imageItems.add(imageItem);
+                imageItems.add(imageItem);
+                imageItems.add(imageItem);
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        GalleryActivity.startThisActivity(AutoRefreshListActivity.this, imageItems , position);
+                    }
+                });
                 if (page ==1) {
                     holder.setVideoToView(R.id.item_textureview, "http://115.231.144." +
                             "58/6/j/t/s/d/jtsdhetjxhxpaawfotxqrzuknrohqk/hc.yin" +

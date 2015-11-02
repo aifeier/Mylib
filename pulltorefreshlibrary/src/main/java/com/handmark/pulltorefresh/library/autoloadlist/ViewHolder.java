@@ -149,7 +149,8 @@ public class ViewHolder {
 	private void initTextureView(int viewId,  final String video_uri){
 		final MediaPlayer mediaPlayer = new MediaPlayer();
 		TextureView textureView = (TextureView) findViewById(viewId);
-		textureView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 320));
+		textureView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+				, 320));
 		textureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
 			@Override
 			public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
