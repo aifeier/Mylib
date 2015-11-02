@@ -199,8 +199,9 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                 @Override
                 public void onBufferingUpdate(MediaPlayer mp, int percent) {
                     playseek = mp.getCurrentPosition();
+                    seekBar.setSecondaryProgress(percent);
                     seekBar.setProgress(mp.getCurrentPosition() * 100 / mp.getDuration());
-                    start.setText("全屏");
+                    start.setText("全屏" + percent);
                     time_now.setText(TimeUtils.intToString(mp.getCurrentPosition() / 1000));
                 }
             });
@@ -215,8 +216,16 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                 public void onPrepared(MediaPlayer mp) {
                     isPrepared = true;
                     seekBar.setClickable(true);
-                    if(!isManualPause)
+                    if (playseek != -1) {
+                        mediaPlayer.seekTo(playseek);
+                    }
+                    if (!isManualPause) {
                         mediaPlayer.start();
+                    }
+                    isFrist = false;
+                    stop.setText(mediaPlayer.getVideoHeight() + "*" + mediaPlayer.getVideoWidth());
+                    time_all.setText(TimeUtils.intToString(mediaPlayer.getDuration() / 1000));
+                    time_now.setText("00:00");
                 }
             });
             mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -256,15 +265,13 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                     initPlay(null);
                 }
             });
-
-            mediaPlayer.prepare();
+            /*同步*/
+//            mediaPlayer.prepare();
+            /*异步*/
+            mediaPlayer.prepareAsync();
             if(playseek !=-1){
                 mediaPlayer.seekTo(playseek);
             }
-            isFrist = false;
-            stop.setText(mediaPlayer.getVideoHeight() + "*" + mediaPlayer.getVideoWidth());
-            time_all.setText(TimeUtils.intToString(mediaPlayer.getDuration() / 1000));
-            time_now.setText("00:00");
         }catch (IllegalArgumentException e){
             e.printStackTrace();
         } catch (IllegalStateException e){

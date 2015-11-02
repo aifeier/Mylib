@@ -60,7 +60,7 @@ public class VideoPlayInTextureView extends Activity implements TextureView.Surf
         try {
             mediaPlayer.setDataSource(this, uri);
             mediaPlayer.setSurface(new Surface(surfaceTexture));
-            mediaPlayer.prepare();
+            mediaPlayer.prepareAsync();
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
