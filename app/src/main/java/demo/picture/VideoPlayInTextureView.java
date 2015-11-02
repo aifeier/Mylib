@@ -39,6 +39,10 @@ public class VideoPlayInTextureView extends Activity implements TextureView.Surf
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_videorecord);
         ((SurfaceView) findViewById(R.id.surfaceview)).setVisibility(View.GONE);
+        initView();
+    }
+
+    private void initView(){
         time_now = (TextView) findViewById(R.id.time_now);
         textureView = (TextureView)findViewById(R.id.textureview);
         textureView.setSurfaceTextureListener(this);
@@ -104,6 +108,19 @@ public class VideoPlayInTextureView extends Activity implements TextureView.Surf
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initView();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.release();
+        surfaceTexture.release();
     }
 
     @Override
