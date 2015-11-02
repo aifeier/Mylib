@@ -38,7 +38,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:textColor="@color/black"
-            android:background="#22FFFFFF"/>
+            android:background="#22FFFFFF"
+            android:padding="4dp"/>
         <SeekBar
             android:id="@+id/seekbar"
             android:layout_width="match_parent"
@@ -59,7 +60,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:textColor="@color/black"
-            android:background="#22FFFFFF"/>
+            android:background="#22FFFFFF"
+            android:padding="4dp"/>
     </RelativeLayout>
 
     <com.handmark.pulltorefresh.library.autoloadlist.AutoRefreshListView
