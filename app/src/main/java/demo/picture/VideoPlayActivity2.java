@@ -12,15 +12,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -67,6 +64,8 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_videorecord);
         videos = new ArrayList<String>();
+        videos.add("http://hc.yinyuetai.com/uploads/videos/common/55880150C39863B173E1CE9422A1602" +
+                "0.flv?sc=306c63174fc2acec&br=782&vid=2408863&aid=13412&area=KR&vst=0");
         videos.add("http://he.yinyuetai.com/uploads/videos/common/A60C014EBF4DA368A591526EA8712E8" +
                 "C.flv?sc=04b740fe57884841&br=3132&vid=721484&aid=25339&area=KR&vst=0");
         videos.add("http://he.yinyuetai.com/uploads/videos/common/DC08014E16B2FB6" +
@@ -78,7 +77,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                 "D3.flv?sc=eca62b3086bf94ca&br=3130&vid=782827&aid=25339&area=KR&vst=0");
         videos.add("http://he.yinyuetai.com/uploads/videos/common/0DA4015080D10E8F5D592F80220E92" +
                 "E5.flv?sc=14520cce7b04809b&br=3091&vid=2398409&aid=37822&area=KR&vst=0");
-        playVideoID = 0;
+        playVideoID = -1;
     }
 
     private void initView(){
