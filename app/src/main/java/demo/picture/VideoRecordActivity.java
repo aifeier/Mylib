@@ -2,12 +2,9 @@ package demo.picture;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
-import android.graphics.Rect;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -17,7 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.betterman.util.PreferenceConfig;
 import com.cwf.app.cwf.R;
@@ -26,6 +23,7 @@ import com.google.zxing.client.android.camera.CameraManager;
 import java.io.IOException;
 
 import lib.utils.FileUtils;
+import lib.utils.ScreenUtils;
 import lib.utils.TimeUtils;
 
 /**
@@ -87,8 +85,10 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
         } catch (IOException e) {
             e.printStackTrace();
         }
-        LinearLayout.LayoutParams cameraFL = new LinearLayout.LayoutParams(cameraManager.getCameraResolution().y,
-                cameraManager.getCameraResolution().x, Gravity.CENTER);
+
+        RelativeLayout.LayoutParams cameraFL = new RelativeLayout.LayoutParams(
+                cameraManager.getCameraResolution().y,
+                cameraManager.getCameraResolution().x);
         surfaceview.setLayoutParams(cameraFL);
     }
 

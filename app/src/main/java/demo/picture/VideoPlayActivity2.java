@@ -2,6 +2,7 @@ package demo.picture;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
@@ -10,15 +11,12 @@ import android.media.TimedText;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
-import android.os.SystemClock;
-import android.view.Gravity;
+import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,7 +26,6 @@ import com.cwf.app.cwf.R;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import lib.utils.ActivityUtils;
 import lib.utils.ScreenUtils;
 import lib.utils.TimeUtils;
 
@@ -54,6 +51,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     private ArrayList<String> videos;
     private int playVideoID;
     private RelativeLayout.LayoutParams lp ;
+    private  RelativeLayout relativelayout;
 
 
     @Override
@@ -76,8 +74,14 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     }
 
     private void initView(){
+        /*设置窗口大小*/
         lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 ScreenUtils.getScreenWidth(this) / 16 * 9);
+        relativelayout = (RelativeLayout) findViewById(R.id.relativelayout);
+        relativelayout.setLayoutParams(lp);
+        surface.setLayoutParams(lp);
+
+        /*初始化surfaceview等*/
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         surface = (SurfaceView) findViewById(R.id.surfaceview);
         surfaceHolder = surface.getHolder();
@@ -90,6 +94,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
             public void onClick(View view) {
                 if (!mediaPlayer.isPlaying() && isPrepared)
                     mediaPlayer.start();
+                ConfigurationChangeed();
             }
         });
         stop = (Button) findViewById(R.id.stop);
@@ -121,7 +126,13 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        initPlay(null);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initPlay(null);
+            }
+        }, 1000);
     }
 
     @Override
@@ -137,7 +148,6 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void initPlay(String url){
         /*设置窗口大小*/
-        RelativeLayout relativelayout = (RelativeLayout) findViewById(R.id.relativelayout);
         relativelayout.setLayoutParams(lp);
         surface.setLayoutParams(lp);
         if(surfaceHolder == null)
@@ -147,9 +157,9 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
             playVideoID = (playVideoID + 1) % videos.size();
             url = videos.get(playVideoID);
         }
-        Uri uri = Uri.parse(url);
+        final Uri uri = Uri.parse(url);
         try {
-            mediaPlayer.setDataSource(this, uri);
+            mediaPlayer.setDataSource(VideoPlayActivity2.this, uri);
             mediaPlayer.setScreenOnWhilePlaying(true);
             mediaPlayer.setDisplay(surfaceHolder);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -214,7 +224,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
             });
 
             mediaPlayer.prepare();
-            if(!isManualPause)
+            if(!isManualPause && isPrepared)
                 mediaPlayer.start();
             if(playseek !=-1){
                 mediaPlayer.seekTo(playseek);
@@ -244,25 +254,32 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         }
     }
 
+    private void ConfigurationChangeed(){
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }else{
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+        /*为了使方向感应有效，屏幕方向又设置为不确定*/
+        /*setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);*/
+    }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         switch (newConfig.orientation){
             case Configuration.ORIENTATION_PORTRAIT:
-                lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                        ScreenUtils.getScreenWidth(this) / 16 * 9);
                 start.setVisibility(View.VISIBLE);
                 stop.setVisibility(View.VISIBLE);
                 break;
             case Configuration.ORIENTATION_LANDSCAPE:
-                lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                        ScreenUtils.getScreenWidth(this) / 16 * 9);
                 start.setVisibility(View.GONE);
                 stop.setVisibility(View.GONE);
                 break;
         }
         /*设置窗口大小*/
-        RelativeLayout relativelayout = (RelativeLayout) findViewById(R.id.relativelayout);
+        lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                ScreenUtils.getScreenWidth(this) / 16 * 9);
         relativelayout.setLayoutParams(lp);
         surface.setLayoutParams(lp);
     }
@@ -285,5 +302,16 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         surfaceHolder.removeCallback(this);
         mediaPlayer.release();
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+                /*全屏的时候按返回键退出全屏*/
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                return true;
+            }
+        return super.onKeyDown(keyCode, event);
     }
 }
