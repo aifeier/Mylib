@@ -19,6 +19,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -42,6 +43,10 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     private MediaPlayer mediaPlayer;
     private Button start;
     private Button stop;
+    /*播放时间*/
+    private TextView time_now, time_all;
+    /*暂停界面*/
+    private ImageView stop_imageview;
 
     /*当前播放时间*/
     private int playseek = -1;
@@ -104,6 +109,9 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         });
 
         /*初始化surfaceview等*/
+        stop_imageview = (ImageView) findViewById(R.id.stop_imageview);
+        time_now = (TextView) findViewById(R.id.time_now);
+        time_all = (TextView) findViewById(R.id.time_all);
         surface = (SurfaceView) findViewById(R.id.surfaceview);
         surfaceHolder = surface.getHolder();
         surfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
@@ -113,8 +121,6 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mediaPlayer.isPlaying() && isPrepared)
-                    mediaPlayer.start();
                 ConfigurationChangeed();
             }
         });
@@ -134,8 +140,10 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                     if (mediaPlayer.isPlaying()) {
                         isManualPause = true;
                         mediaPlayer.pause();
+                        stop_imageview.setVisibility(View.VISIBLE);
                     } else {
                         mediaPlayer.start();
+                        stop_imageview.setVisibility(View.GONE);
                     }
                 }
             }
@@ -192,8 +200,8 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                 public void onBufferingUpdate(MediaPlayer mp, int percent) {
                     playseek = mp.getCurrentPosition();
                     seekBar.setProgress(mp.getCurrentPosition() * 100 / mp.getDuration());
-                    start.setText(TimeUtils.intToString(mp.getCurrentPosition() / 1000) + "/"
-                            + TimeUtils.intToString(mp.getDuration() / 1000) + "现在缓存：" + percent);
+                    start.setText("全屏");
+                    time_now.setText(TimeUtils.intToString(mp.getCurrentPosition() / 1000));
                 }
             });
             mediaPlayer.setOnTimedTextListener(new MediaPlayer.OnTimedTextListener() {
@@ -207,6 +215,8 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                 public void onPrepared(MediaPlayer mp) {
                     isPrepared = true;
                     seekBar.setClickable(true);
+                    if(!isManualPause)
+                        mediaPlayer.start();
                 }
             });
             mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -248,13 +258,13 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
             });
 
             mediaPlayer.prepare();
-            if(!isManualPause && isPrepared)
-                mediaPlayer.start();
             if(playseek !=-1){
                 mediaPlayer.seekTo(playseek);
             }
             isFrist = false;
             stop.setText(mediaPlayer.getVideoHeight() + "*" + mediaPlayer.getVideoWidth());
+            time_all.setText(TimeUtils.intToString(mediaPlayer.getDuration() / 1000));
+            time_now.setText("00:00");
         }catch (IllegalArgumentException e){
             e.printStackTrace();
         } catch (IllegalStateException e){

@@ -22,13 +22,37 @@
             >
         </SurfaceView>
 
+        <ImageView
+            android:id="@+id/stop_imageview"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/image_unselect"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/time_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/black"
+            android:background="#22FFFFFF"/>
         <SeekBar
             android:id="@+id/seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"/>
+        <TextView
+            android:id="@+id/time_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/black"
+            android:background="#22FFFFFF"/>
     </RelativeLayout>
 
     <LinearLayout
