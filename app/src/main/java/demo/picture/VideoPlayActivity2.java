@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -267,6 +268,8 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         surface.setLayoutParams(lp);
         if(surfaceHolder == null)
             return;
+        /*半透明背景*/
+        surfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
         resetMediaStatue();
         if(url==null || url.equals("")) {
             playVideoID = (playVideoID + 1) % videos.size();
