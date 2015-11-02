@@ -30,6 +30,8 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <!--调节亮度-->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!--保持屏幕唤醒-->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:allowBackup="true"

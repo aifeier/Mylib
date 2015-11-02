@@ -282,6 +282,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
             mediaPlayer.setDisplay(surfaceHolder);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setLooping(false);
+            mediaPlayer.setScreenOnWhilePlaying(true);
             mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
                 @Override
                 public void onBufferingUpdate(MediaPlayer mp, int percent) {
