@@ -11,13 +11,14 @@
         >
 
         <TextureView
-            android:layout_width="fill_parent"
+            android:id="@+id/textureview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:ignore="NewApi" />
 
         <SurfaceView
             android:id="@+id/surfaceview"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             >
         </SurfaceView>

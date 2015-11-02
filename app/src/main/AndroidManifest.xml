@@ -185,6 +185,15 @@
                 <category android:name="com.cwf.app.cwf.demo.picture"/>
             </intent-filter>
         </activity>
+        <activity android:name="demo.picture.VideoPlayInTextureView"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="VideoPlayInTextureView">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.cwf.app.cwf.demo.picture"/>
+            </intent-filter>
+        </activity>
 
 
         <!--List-->
