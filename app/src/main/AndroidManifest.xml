@@ -26,6 +26,10 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!--改变屏幕方向-->
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"></uses-permission>
+    <!--调节音量-->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!--调节亮度-->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
         android:allowBackup="true"
@@ -188,7 +192,7 @@
         <activity android:name="demo.picture.VideoPlayInTextureView"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:label="VideoPlayInTextureView">
+            android:label="VideoPlayInTextureView不完全">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.cwf.app.cwf.demo.picture"/>

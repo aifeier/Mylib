@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -125,5 +126,24 @@ public class ScreenUtils
         return bp;
 
     }
+
+    public static void setBrightness(Context mContext , float changeBrightness){
+
+            WindowManager.LayoutParams lp = ((Activity) mContext).getWindow().getAttributes();
+            int brightness =  Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.SCREEN_BRIGHTNESS,0);
+
+            lp.screenBrightness = (brightness + changeBrightness)/255.0f;
+            ((Activity) mContext).getWindow().setAttributes(lp);
+
+            Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightness);
+    }
+
+    public static float getBrightness(Context mContext){
+        WindowManager.LayoutParams lp = ((Activity) mContext).getWindow().getAttributes();
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SCREEN_BRIGHTNESS,0);
+    }
+
 
 }

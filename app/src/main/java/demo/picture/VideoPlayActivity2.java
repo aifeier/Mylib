@@ -2,6 +2,7 @@ package demo.picture;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
@@ -12,10 +13,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,6 +31,7 @@ import com.cwf.app.cwf.R;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import lib.utils.ActivityUtils;
 import lib.utils.ScreenUtils;
 import lib.utils.TimeUtils;
 
@@ -58,6 +63,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     private RelativeLayout.LayoutParams lp ;
     private  RelativeLayout relativelayout;
 
+    private  AudioManager audioManager ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +88,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         videos.add("http://he.yinyuetai.com/uploads/videos/common/0DA4015080D10E8F5D592F80220E92" +
                 "E5.flv?sc=14520cce7b04809b&br=3091&vid=2398409&aid=37822&area=KR&vst=0");
         playVideoID = -1;
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     }
 
     private void initView(){
@@ -93,6 +100,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
 
         /*初始化进度条*/
         seekBar = (SeekBar) findViewById(R.id.seekbar);
+        seekBar.setClickable(false);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -106,8 +114,8 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if(isPrepared && mediaPlayer != null)
-                    mediaPlayer.seekTo(mediaPlayer.getDuration()*seekBar.getProgress() / 100);
+                if (isPrepared && mediaPlayer != null)
+                    mediaPlayer.seekTo(mediaPlayer.getDuration() * seekBar.getProgress() / 100);
             }
         });
 
@@ -136,25 +144,69 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                 initPlay(null);
             }
         });
-        surface.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isPrepared) {
-                    if (mediaPlayer.isPlaying()) {
-                        isManualPause = true;
-                        mediaPlayer.pause();
-                        stop_imageview.setVisibility(View.VISIBLE);
-                    } else {
-                        mediaPlayer.start();
-                        stop_imageview.setVisibility(View.GONE);
-                    }
-                }
-            }
-        });
         relativelayout.setLayoutParams(lp);
         surface.setLayoutParams(lp);
+        surface.setOnTouchListener(surfaceview_touch_listener);
 
     }
+
+    private float start_x = 0;
+    private float start_y = 0;
+    private View.OnTouchListener surfaceview_touch_listener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if(isPrepared && mediaPlayer !=null)
+            switch(event.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    start_x = event.getX();
+                    start_y = event.getY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if(Math.abs(start_x - event.getX()) < 5
+                            && Math.abs(start_y - event.getY()) < 5) {
+                        /*点击事件*/
+                        if (isPrepared) {
+                            if (mediaPlayer.isPlaying()) {
+                                isManualPause = true;
+                                mediaPlayer.pause();
+                                stop_imageview.setVisibility(View.VISIBLE);
+                            } else {
+                                mediaPlayer.start();
+                                stop_imageview.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                    else if(Math.abs(start_y - event.getY()) < Math.abs(start_x - event.getX())){
+                        /*调节播放进度*/
+                        mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() +
+                                (mediaPlayer.getDuration() - mediaPlayer.getCurrentPosition())
+                                *(int) (Math.abs(start_x - event.getX())) / v.getWidth());
+                        ActivityUtils.showTip("播放：" +
+                                TimeUtils.intToString(mediaPlayer.getCurrentPosition()/1000)
+                                , false);
+                    }
+                    else if(start_x > v.getWidth() /2){
+                        /*调节音量*/
+                        float move_y = start_y -  event.getY();
+                        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) + (int)(move_y/v.getHeight() * 10);
+                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC , currentVolume, 1);
+                        ActivityUtils.showTip("声音：" + audioManager.getStreamVolume(AudioManager.STREAM_MUSIC), false);
+                    }else{
+                        /*调节亮度*/
+                        float move_y = start_y - event.getY();
+                        ScreenUtils.setBrightness(VideoPlayActivity2.this, move_y / v.getHeight() * 100);
+                        ActivityUtils.showTip("屏幕亮度：" +ScreenUtils.getBrightness(VideoPlayActivity2.this), false);
+                    }
+                    start_x = 0;
+                    start_y = 0;
+                    break;
+            }
+            return true;
+        }
+    };
+
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
@@ -176,7 +228,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-        mediaPlayer.stop();
+        mediaPlayer.release();
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -294,6 +346,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
             isManualPause = false;
             isPrepared = false;
             playseek = -1;
+            seekBar.setClickable(false);
             seekBar.setProgress(0);
         }
     }
@@ -339,7 +392,10 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     protected void onPause() {
         super.onPause();
         mediaPlayer.stop();
+        surfaceHolder.removeCallback(this);
+        mediaPlayer.release();
         isFrist = true;
+        isPrepared = false;
     }
 
     @Override
