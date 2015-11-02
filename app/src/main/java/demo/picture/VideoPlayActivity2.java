@@ -211,7 +211,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                         /*调节播放进度*/
                         mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() +
                                 (mediaPlayer.getDuration() - mediaPlayer.getCurrentPosition())
-                                *(int) (Math.abs(start_x - event.getX())) / v.getWidth());
+                                *(int) (Math.abs(start_x - event.getX())) / v.getWidth() / 10);
                         ActivityUtils.showTip("播放：" +
                                 TimeUtils.intToString(mediaPlayer.getCurrentPosition()/1000)
                                 , false);
