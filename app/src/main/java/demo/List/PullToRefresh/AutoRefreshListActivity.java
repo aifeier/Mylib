@@ -41,7 +41,7 @@ public class AutoRefreshListActivity extends Activity{
 
     private ArrayList<NewsInfo> mData;
     private AutoLoadAdapter<NewsInfo> mAdapter;
-    private int page;
+    private int page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,21 @@ public class AutoRefreshListActivity extends Activity{
                 lists.add(data.getPicUrl());
                 lists.add(data.getPicUrl());
                 holder.setPicturesToGridView(R.id.item_gridview, lists, R.drawable.error, R.drawable.loading4);
+                if (page ==1) {
+                    holder.setVideoToView(R.id.item_textureview, "http://115.231.144." +
+                            "58/6/j/t/s/d/jtsdhetjxhxpaawfotxqrzuknrohqk/hc.yin" +
+                            "yuetai.com/CA7A014F2176C6967B183E333F6C36FB.flv?sc=02fb295b193c140b&" +
+                            "br=784&vid=2349335&aid=1559&area=KR&vst=0");
+                }else if(page ==3){
+                    holder.setVideoToView(R.id.item_textureview,"http://hc.yinyuetai.com/uploads/v" +
+                            "ideos/common/05830150C2DB1B4F1FE5327FD2E052B0.flv?sc=bac6f524f1a3443a" +
+                            "&br=775&vid=2408908&aid=273&area=HT&vst=0");
+                }else if(page == 7){
+                    holder.setVideoToView(R.id.item_textureview,"http://hc.yinyuetai.com/uploa" +
+                            "ds/videos/common/647F0150B778E873B32628782EDAEA15.flv?sc=d4fdbe767cd" +
+                            "aa21a&br=781&vid=2409118&aid=39513&area=ML&vst=0");
+                }
+                page ++;
             }
 
             @Override

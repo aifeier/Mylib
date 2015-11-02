@@ -1,16 +1,24 @@
 package com.handmark.pulltorefresh.library.autoloadlist;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.SurfaceTexture;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.Surface;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -127,7 +135,74 @@ public class ViewHolder {
 				.into((ImageView) findViewById(viewId));
 		return this;
 	}
+	/*设置视频到TextureView中
+	* TextureView OR SurfaceView*/
+	public ViewHolder setVideoToView(int viewId, String video_uri){
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			initTextureView(viewId, video_uri);
+		}
+		return this;
+	}
 
+	private boolean isPreperad = false;
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+	private void initTextureView(int viewId,  final String video_uri){
+		final MediaPlayer mediaPlayer = new MediaPlayer();
+		TextureView textureView = (TextureView) findViewById(viewId);
+		textureView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 320));
+		textureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+			@Override
+			public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+				try {
+					mediaPlayer.setSurface(new Surface(surface));
+					mediaPlayer.setDataSource(mContext, Uri.parse(video_uri));
+					mediaPlayer.prepareAsync();
+					mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+						@Override
+						public void onPrepared(MediaPlayer mp) {
+							isPreperad = true;
+						}
+					});
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+
+			}
+
+			@Override
+			public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+				mediaPlayer.release();
+				return true;
+			}
+
+			@Override
+			public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+
+			}
+		});
+		textureView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(mediaPlayer!=null && isPreperad){
+					if(mediaPlayer.isPlaying())
+						mediaPlayer.pause();
+					else
+						mediaPlayer.start();
+				}
+			}
+		});
+	}
+
+
+	/*设置图片列表到GridView中*/
 	public ViewHolder setPicturesToGridView(int viewId,final ArrayList<String> strUrl, final int errImg, final int loadingImg){
 		GridView gridView = (GridView) findViewById(viewId);
 		AutoLoadAdapter<String> autoLoadAdapter = new AutoLoadAdapter<String>(mContext, R.layout.item_photo) {
