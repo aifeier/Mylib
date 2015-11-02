@@ -64,8 +64,12 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_videorecord);
         videos = new ArrayList<String>();
-        videos.add("http://hc.yinyuetai.com/uploads/videos/common/55880150C39863B173E1CE9422A1602" +
-                "0.flv?sc=306c63174fc2acec&br=782&vid=2408863&aid=13412&area=KR&vst=0");
+        videos.add("http://115.231.144.58/6/j/t/s/d/jtsdhetjxhxpaawfotxqrzuknrohqk/hc.yin" +
+                "yuetai.com/CA7A014F2176C6967B183E333F6C36FB.flv?sc=02fb295b193c140b&br=784&vid=2349335&aid=1559&area=KR&vst=0");
+        videos.add("http://he.yinyuetai.com/uploads/videos/common/6D04014F217B486A" +
+                "0B379CEE9924D14E.flv?sc=f5794470b4e2f81b&br=3098&vid=2349335&aid=1559&area=KR&vst=0");
+        videos.add("http://hc.yinyuetai.com/uploads/videos/common/97F901444C05EB571E045240C23" +
+                "51768.flv?sc=553d7df6599cef7c&br=777&vid=876958&aid=1559&area=KR&vst=0");
         videos.add("http://he.yinyuetai.com/uploads/videos/common/A60C014EBF4DA368A591526EA8712E8" +
                 "C.flv?sc=04b740fe57884841&br=3132&vid=721484&aid=25339&area=KR&vst=0");
         videos.add("http://he.yinyuetai.com/uploads/videos/common/DC08014E16B2FB6" +
@@ -197,11 +201,15 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
             mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
                 @Override
                 public void onBufferingUpdate(MediaPlayer mp, int percent) {
-                    playseek = mp.getCurrentPosition();
                     seekBar.setSecondaryProgress(percent);
-                    seekBar.setProgress(mp.getCurrentPosition() * 100 / mp.getDuration());
                     start.setText("全屏" + percent);
-                    time_now.setText(TimeUtils.intToString(mp.getCurrentPosition() / 1000));
+                    if(isPrepared && percent > 0) {
+                        playseek = mp.getCurrentPosition();
+                        seekBar.setProgress(mp.getCurrentPosition() * 100 / mp.getDuration());
+                        time_now.setText(TimeUtils.intToString(mp.getCurrentPosition() / 1000));
+                        stop.setText(mp.getVideoHeight() + "*" + mp.getVideoWidth());
+                        time_all.setText(TimeUtils.intToString(mp.getDuration() / 1000));
+                    }
                 }
             });
             mediaPlayer.setOnTimedTextListener(new MediaPlayer.OnTimedTextListener() {
@@ -222,8 +230,6 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                         mediaPlayer.start();
                     }
                     isFrist = false;
-                    stop.setText(mediaPlayer.getVideoHeight() + "*" + mediaPlayer.getVideoWidth());
-                    time_all.setText(TimeUtils.intToString(mediaPlayer.getDuration() / 1000));
                     time_now.setText("00:00");
                 }
             });
@@ -268,9 +274,6 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
 //            mediaPlayer.prepare();
             /*异步*/
             mediaPlayer.prepareAsync();
-            if(playseek !=-1){
-                mediaPlayer.seekTo(playseek);
-            }
         }catch (IllegalArgumentException e){
             e.printStackTrace();
         } catch (IllegalStateException e){
