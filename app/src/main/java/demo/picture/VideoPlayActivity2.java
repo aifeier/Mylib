@@ -20,6 +20,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,6 +28,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
+import com.handmark.pulltorefresh.library.autoloadlist.AutoLoadAdapter;
+import com.handmark.pulltorefresh.library.autoloadlist.AutoRefreshListView;
+import com.handmark.pulltorefresh.library.autoloadlist.ViewHolder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,6 +68,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     private  RelativeLayout relativelayout;
 
     private  AudioManager audioManager ;
+    private AutoRefreshListView autoRefreshListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +93,32 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         videos.add("http://he.yinyuetai.com/uploads/videos/common/0DA4015080D10E8F5D592F80220E92" +
                 "E5.flv?sc=14520cce7b04809b&br=3091&vid=2398409&aid=37822&area=KR&vst=0");
         playVideoID = -1;
+        autoRefreshListView = (AutoRefreshListView<String>)findViewById(R.id.videos_list);
+        AutoLoadAdapter<String> autoLoadAdapter = new AutoLoadAdapter<String>(VideoPlayActivity2.this, android.R.layout.activity_list_item) {
+            @Override
+            public void buildView(ViewHolder holder, String data) {
+                Uri uri = Uri.parse(data);
+                holder.setValueToTextView(android.R.id.text1,
+                        data);
+            }
+
+            @Override
+            public void getPage(int page) {
+
+            }
+        };
+        autoLoadAdapter.setmData(videos, autoRefreshListView);
+        autoRefreshListView.setAdapter(autoLoadAdapter);
+        autoRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(playVideoID != position - 1){
+                    isFrist = true;
+                    playVideoID = position;
+                    initPlay((String)parent.getAdapter().getItem(position));
+                }
+            }
+        });
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     }
 
@@ -136,11 +167,10 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
             }
         });
         stop = (Button) findViewById(R.id.stop);
+        stop.setText("Next");
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mediaPlayer.isPlaying())
-                    mediaPlayer.pause();
                 initPlay(null);
             }
         });

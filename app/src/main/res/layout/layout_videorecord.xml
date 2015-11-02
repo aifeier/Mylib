@@ -57,7 +57,16 @@
             android:background="#22FFFFFF"/>
     </RelativeLayout>
 
+    <com.handmark.pulltorefresh.library.autoloadlist.AutoRefreshListView
+        android:id="@+id/videos_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativelayout"
+        android:layout_above="@+id/linearlayout"
+        />
+
     <LinearLayout
+        android:id="@+id/linearlayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
