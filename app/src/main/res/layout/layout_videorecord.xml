@@ -22,16 +22,13 @@
             >
         </SurfaceView>
 
-        <ProgressBar
+        <SeekBar
+            android:id="@+id/seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_alignParentBottom="true"
-            android:max="100"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-             />
+            android:layout_marginRight="20dp"/>
     </RelativeLayout>
 
     <LinearLayout

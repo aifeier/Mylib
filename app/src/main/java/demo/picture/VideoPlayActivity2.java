@@ -12,13 +12,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
@@ -35,7 +38,7 @@ import lib.utils.TimeUtils;
 public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callback{
     private SurfaceView surface;
     private SurfaceHolder surfaceHolder;
-    private ProgressBar progressBar;
+    private SeekBar seekBar;
     private MediaPlayer mediaPlayer;
     private Button start;
     private Button stop;
@@ -79,10 +82,28 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                 ScreenUtils.getScreenWidth(this) / 16 * 9);
         relativelayout = (RelativeLayout) findViewById(R.id.relativelayout);
         relativelayout.setLayoutParams(lp);
-        surface.setLayoutParams(lp);
+
+        /*初始化进度条*/
+        seekBar = (SeekBar) findViewById(R.id.seekbar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if(isPrepared && mediaPlayer != null)
+                    mediaPlayer.seekTo(mediaPlayer.getDuration()*seekBar.getProgress() / 100);
+            }
+        });
 
         /*初始化surfaceview等*/
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         surface = (SurfaceView) findViewById(R.id.surfaceview);
         surfaceHolder = surface.getHolder();
         surfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
@@ -106,8 +127,6 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                 initPlay(null);
             }
         });
-        ArrayList<View> views = new ArrayList<View>();
-        final TextView a = new TextView(this);
         surface.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,6 +140,8 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                 }
             }
         });
+        relativelayout.setLayoutParams(lp);
+        surface.setLayoutParams(lp);
 
     }
 
@@ -130,9 +151,11 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                /*延时加载视频*/
+                /*优先加载其它界面*/
                 initPlay(null);
             }
-        }, 1000);
+        }, 200);
     }
 
     @Override
@@ -168,7 +191,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                 @Override
                 public void onBufferingUpdate(MediaPlayer mp, int percent) {
                     playseek = mp.getCurrentPosition();
-                    progressBar.setSecondaryProgress(mp.getCurrentPosition() * 100 / mp.getDuration());
+                    seekBar.setProgress(mp.getCurrentPosition() * 100 / mp.getDuration());
                     start.setText(TimeUtils.intToString(mp.getCurrentPosition() / 1000) + "/"
                             + TimeUtils.intToString(mp.getDuration() / 1000) + "现在缓存：" + percent);
                 }
@@ -183,6 +206,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     isPrepared = true;
+                    seekBar.setClickable(true);
                 }
             });
             mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -246,11 +270,12 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         if(mediaPlayer !=null)
             mediaPlayer.reset();
         mediaPlayer = new MediaPlayer();
+        seekBar.setClickable(false);
         if(!isFrist) {
             isManualPause = false;
             isPrepared = false;
             playseek = -1;
-            progressBar.setProgress(0);
+            seekBar.setProgress(0);
         }
     }
 
@@ -259,6 +284,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }else{
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
         /*为了使方向感应有效，屏幕方向又设置为不确定*/
         /*setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);*/

@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CWFAll.iml" filepath="$PROJECT_DIR$/CWFAll.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CWFAll.iml" filepath="$PROJECT_DIR$/CWFAll.iml" />
       <module fileurl="file://$PROJECT_DIR$/Cwf.iml" filepath="$PROJECT_DIR$/Cwf.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/photolibrary/photolibrary.iml" filepath="$PROJECT_DIR$/photolibrary/photolibrary.iml" />

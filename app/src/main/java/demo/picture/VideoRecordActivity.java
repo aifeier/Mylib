@@ -86,9 +86,12 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
             e.printStackTrace();
         }
 
-        RelativeLayout.LayoutParams cameraFL = new RelativeLayout.LayoutParams(
+        RelativeLayout.LayoutParams cameraFL =
+/*                new RelativeLayout.LayoutParams(
                 cameraManager.getCameraResolution().y,
-                cameraManager.getCameraResolution().x);
+                cameraManager.getCameraResolution().x);*/
+        new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                ScreenUtils.getScreenWidth(this) / 16 * 9);
         surfaceview.setLayoutParams(cameraFL);
     }
 
