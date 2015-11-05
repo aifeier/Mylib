@@ -1,12 +1,8 @@
 package demo.baidumap;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -23,6 +19,7 @@ import java.util.ArrayList;
 
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
+import lib.utils.TimeUtils;
 
 /**
  * Created by n-240 on 2015/9/25.
@@ -47,7 +44,8 @@ public class BaseMapActivity extends BaseActivity{
         autoLoadAdapter = new AutoLoadAdapter<BDLocation>(this, android.R.layout.simple_list_item_1) {
             @Override
             public void buildView(ViewHolder holder, BDLocation data) {
-                ((TextView) holder.findViewById(android.R.id.text1)).setText(data.getTime()+"\n"
+                ((TextView) holder.findViewById(android.R.id.text1)).setText(
+                        data.getTime()+"\n"
                 +data.getLatitude()+", " + data.getLongitude());
             }
 
@@ -61,8 +59,8 @@ public class BaseMapActivity extends BaseActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(mLocClient!=null) {
-//                    mLocClient.requestLocation();
-                    mLocClient.requestNotifyLocation();
+                    mLocClient.requestLocation();
+//                    mLocClient.requestNotifyLocation();
 //                    mLocClient.requestOfflineLocation();
                 }
             }
@@ -87,13 +85,13 @@ public class BaseMapActivity extends BaseActivity{
     public class MyLocationListenner implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation location) {
-            if (location != null ) {
-                autoLoadAdapter.resetAdapterAndRefresh();
-                arrayList.add(0, location);
-                autoLoadAdapter.setmData(arrayList, autoRefreshListView);
-                autoRefreshListView.onRefreshComplete();
+            if (location == null || location.getLatitude() == 4.9E-324) {
+
                 return;
             }
+                location.setTime(TimeUtils.getSimpleDate()+ "\n" +location.getTime());
+                arrayList.add(0, location);
+                autoLoadAdapter.setmData(arrayList, autoRefreshListView);
 
         }
 
