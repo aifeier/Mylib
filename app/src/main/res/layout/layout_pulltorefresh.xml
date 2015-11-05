@@ -20,7 +20,7 @@
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true"
         android:scrollbars="none"
-        ptr:ptrMode="both"
+        ptr:ptrMode="disabled"
         />
 
 </LinearLayout>

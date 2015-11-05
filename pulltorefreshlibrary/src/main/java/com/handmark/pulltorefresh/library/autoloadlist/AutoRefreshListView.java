@@ -361,7 +361,6 @@ public class AutoRefreshListView<T> extends PullToRefreshAdapterViewBase<ListVie
 
 
 	public void setListAdapter(ListAdapter adapter) {
-		setMode(Mode.BOTH);
 		getRefreshableView().setAdapter(adapter);
 		final AutoLoadAdapter<T> mAdapter = (AutoLoadAdapter<T>) adapter;
 		setOnRefreshListener(new OnRefreshListener2<ListView>() {

@@ -261,6 +261,15 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="demo.custom.tabhost.TabHostActivity"
+            android:screenOrientation="portrait"
+            android:label="TabHostActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="demo.custom.CustomLayoutList"></category>
+            </intent-filter>
+        </activity>
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
