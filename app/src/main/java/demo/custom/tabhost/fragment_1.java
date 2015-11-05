@@ -37,10 +37,8 @@ public class fragment_1 extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (mView == null){
-            mView = inflater.inflate(R.layout.layout_text_img, container, false);
-            textView = (TextView) mView.findViewById(R.id.textview);
-        }
+        mView = inflater.inflate(R.layout.layout_text_img, container, false);
+        textView = (TextView) mView.findViewById(R.id.textview);
         textView.setText("this is a way");
         return mView;
     }
