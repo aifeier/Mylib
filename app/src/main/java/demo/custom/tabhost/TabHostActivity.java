@@ -1,12 +1,18 @@
 package demo.custom.tabhost;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -42,7 +48,17 @@ public class TabHostActivity extends FragmentActivity {
         initView();
     }
 
+    @SuppressLint("NewApi")
     private void initView(){
+        View actionbar_custom = View.inflate(this, R.layout.actionbar_customview, null);
+        getActionBar().setCustomView(actionbar_custom, new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+//        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ao2));
+        getActionBar().setTitle("tab");
+        getActionBar().setDisplayShowCustomEnabled(true);
+        getActionBar().setDisplayShowHomeEnabled(false);
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         //实例化布局对象
         layoutInflater = LayoutInflater.from(this);
 
