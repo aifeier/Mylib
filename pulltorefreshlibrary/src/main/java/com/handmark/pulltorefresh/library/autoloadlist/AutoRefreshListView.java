@@ -340,7 +340,7 @@ public class AutoRefreshListView<T> extends PullToRefreshAdapterViewBase<ListVie
 	}
 
 	/*设置显示的头部*/
-	public void setVisiableHeader(View v, int height){
+	public void addVisiableHeader(View v, int height){
 		if(v !=null) {
 			final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 					height, Gravity.CENTER_HORIZONTAL);

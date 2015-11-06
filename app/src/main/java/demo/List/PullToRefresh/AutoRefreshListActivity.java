@@ -40,9 +40,6 @@ import lib.utils.ActivityUtils;
 public class AutoRefreshListActivity extends Activity{
 
     private AutoRefreshListView autoRefreshListView;
-    private LinkedList<String> mListItems;
-
-    private ArrayList<NewsInfo> mData;
     private AutoLoadAdapter<NewsInfo> mAdapter;
     private int page = 1;
 
@@ -52,7 +49,6 @@ public class AutoRefreshListActivity extends Activity{
         setContentView(R.layout.layout_pulltorefresh);
         EventBus.getDefault().register(this);
         autoRefreshListView = (AutoRefreshListView) findViewById(R.id.pull_refresh_list);
-        mData = new ArrayList<NewsInfo>();
         mAdapter = new AutoLoadAdapter<NewsInfo>(getApplicationContext(), R.layout.listitem) {
             @Override
             public void buildView(ViewHolder holder, NewsInfo data) {
@@ -114,7 +110,7 @@ public class AutoRefreshListActivity extends Activity{
                 startActivity(new Intent(AutoRefreshListActivity.this, RecyclerViewActivity4.class));
             }
         });
-        autoRefreshListView.setVisiableHeader(imageView, 300);
+        autoRefreshListView.addVisiableHeader(imageView, 300);
 
     }
 
