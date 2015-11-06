@@ -53,7 +53,6 @@ public class TabHostActivity extends FragmentActivity {
         View actionbar_custom = View.inflate(this, R.layout.actionbar_customview, null);
         getActionBar().setCustomView(actionbar_custom, new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
                 ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
-//        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.ao2));
         getActionBar().setTitle("tab");
         getActionBar().setDisplayShowCustomEnabled(true);
         getActionBar().setDisplayShowHomeEnabled(false);
