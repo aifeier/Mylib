@@ -272,6 +272,7 @@
 
         <activity android:name="demo.custom.ViewpagerActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/ToolBarTheme"
             android:label="ViewpagerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>

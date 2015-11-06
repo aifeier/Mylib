@@ -1,13 +1,11 @@
 package demo.custom;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.TabHost;
-import android.widget.Toolbar;
 
 import com.cwf.app.cwf.R;
 
@@ -20,7 +18,7 @@ import demo.custom.tabhost.fragment_3;
 /**
  * Created by n-240 on 2015/11/6.
  */
-public class ViewpagerActivity extends FragmentActivity{
+public class ViewpagerActivity extends AppCompatActivity {
 
     private TabHost tabHost;
     private ViewPager viewPager;
@@ -34,6 +32,15 @@ public class ViewpagerActivity extends FragmentActivity{
     }
 
     private void initView(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if(toolbar !=null){
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(R.drawable.image_select);
+        }
+        getSupportActionBar().setTitle("this is toolbar");
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.tab_item_view);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         fragments = new ArrayList<Fragment>();
