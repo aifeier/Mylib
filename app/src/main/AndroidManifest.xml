@@ -73,7 +73,12 @@
         <activity android:name="demo.systembartint.SamplesListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActionBarTheme"
+            android:label="状态栏变色"
             >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="demo.custom.CustomLayoutList"></category>
+            </intent-filter>
         </activity>
 
         <!--systembartint-->

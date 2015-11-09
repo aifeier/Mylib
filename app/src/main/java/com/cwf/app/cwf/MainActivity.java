@@ -21,7 +21,7 @@ import lib.MainApplication;
 public class MainActivity extends BaseActivity implements OnItemClickListener{
 
     private ListView mList;
-    private final String[] demo = {"百度地图" , "网络请求使用" , "状态栏变色", "多媒体", "ListDemo" , "QRCode" ,  "动画", "自定义控件"};
+    private final String[] demo = {"百度地图" , "网络请求使用" , "多媒体", "ListDemo" , "QRCode" ,  "动画", "自定义控件"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,19 +46,16 @@ public class MainActivity extends BaseActivity implements OnItemClickListener{
                 i = new Intent(MainActivity.this, VolleyDemoList.class);
                 break;
             case 2:
-                i = new Intent(MainActivity.this, SamplesListActivity.class);
-                break;
-            case 3:
                 i = new Intent(MainActivity.this, PictureDemoList.class);
                 break;
-            case 4:
+            case 3:
                 i = new Intent(MainActivity.this, DemoListActivity.class);
                 break;
-            case 5:
+            case 4:
                 i = new Intent(MainActivity.this, QRCodeMain.class);
-            case 6:
+            case 5:
                 break;
-            case 7:
+            case 6:
                 i = new Intent(MainActivity.this, CustomLayoutList.class);
                 break;
             default:
