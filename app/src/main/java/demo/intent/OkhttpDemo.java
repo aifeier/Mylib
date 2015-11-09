@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -50,6 +51,8 @@ public class OkhttpDemo extends BaseActivity implements Callback{
             }
         }
     };
+
+
 
     private TextView textview;
 
