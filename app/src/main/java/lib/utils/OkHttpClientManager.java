@@ -271,12 +271,16 @@ public class OkHttpClientManager
                 FileOutputStream fos = null;
                 try
                 {
+                    long allSize = response.body().contentLength();
+                    long donwSize = 0;
                     is = response.body().byteStream();
                     File file = new File(destFileDir, getFileName(url));
                     fos = new FileOutputStream(file);
                     while ((len = is.read(buf)) != -1)
                     {
                         fos.write(buf, 0, len);
+                        donwSize += len;
+                        callback.onFileDownSize(donwSize, allSize);
                     }
                     fos.flush();
                     //如果下载文件成功，第一个参数为文件的绝对路径
@@ -665,6 +669,8 @@ public class OkHttpClientManager
             ParameterizedType parameterized = (ParameterizedType) superclass;
             return $Gson$Types.canonicalize(parameterized.getActualTypeArguments()[0]);
         }
+
+        public abstract void onFileDownSize(long downsize, long allSize);
 
         public abstract void onError(Request request, Exception e);
 

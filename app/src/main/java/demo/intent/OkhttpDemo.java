@@ -1,5 +1,6 @@
 package demo.intent;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -7,7 +8,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
@@ -56,6 +59,17 @@ public class OkhttpDemo extends BaseActivity implements Callback{
 
     private TextView textview;
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what == 1){
+                textview.setText((String) msg.obj);
+            }
+        }
+
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,17 +94,27 @@ public class OkhttpDemo extends BaseActivity implements Callback{
                         textview.setText(news.getNewslist().get(0).getTitle());//UI线程
                     }
                 });*/
-
-        OkHttpClientManager.downloadAsyn("http://zx.kaitao.cn/UserFiles/Image/beijingtupian6.jpg",
+        OkHttpClientManager.downloadAsyn("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6o.jpg",
                 FileUtils.createPath("files"), new OkHttpClientManager.ResultCallback<String>() {
+                    @Override
+                    public void onFileDownSize(long downsize, long allSize) {
+                        Log.e(getPackageName(), downsize + "/" + allSize);
+                        ActivityUtils.showTip("正在下载" + downsize * 100 / allSize + "%", false);
+                        Message message = new Message();
+                        message.what = 1;
+                        message.obj = "正在下载" +downsize * 100 / allSize + "%";
+                        handler.sendMessage(message);
+                    }
+
                     @Override
                     public void onError(Request request, Exception e) {
                         ActivityUtils.showTip("下载失败", false);
                     }
 
+
                     @Override
                     public void onResponse(String response) {
-                        ActivityUtils.showTip("下载成功", false);
+                        ActivityUtils.showTip("下载完成", false);
                     }
                 });
         bindService(new Intent(ServiceDemo.ACTION), serviceConnection, BIND_AUTO_CREATE);
