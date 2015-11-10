@@ -29,8 +29,9 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter{
         return list.get(arg0);
     }
 
-
-
-
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return "tab " + position;
+    }
 }
 
