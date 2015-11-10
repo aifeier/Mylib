@@ -56,7 +56,7 @@ public class ServiceDemo extends Service{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "onStartCommand");
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     @Override

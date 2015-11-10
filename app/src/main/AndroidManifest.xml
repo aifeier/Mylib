@@ -303,11 +303,13 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" >
+            android:process=":remote"
+            >
         </service>
 
         <service android:name="demo.intent.ServiceDemo"
-            >
+            android:enabled="true"
+            android:process=":servicedemo">
             <intent-filter>
                 <action android:name="com.cwf.ai.service"/>
             </intent-filter>
