@@ -10,8 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[]{"tab1","tab2","tab3"};
+    final int PAGE_COUNT = 10;
     private Context context;
 
     public SimpleFragmentPagerAdapter(FragmentManager fm,Context context) {
@@ -31,6 +30,6 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabTitles[position];
+        return "tab" + position;
     }
 }

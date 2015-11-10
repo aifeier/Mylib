@@ -1,21 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-     android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+<!--    <android.support.design.widget.AppBarLayout
+        android:layout_height="256dp"
         android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
+        app:expanded="true"
+        >-->
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/design_collapsingtoolbarlayout"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
+        app:contentScrim="@color/holo_blue_bright"
+        app:expandedTitleMarginStart="48dp"
+        app:statusBarScrim="@color/abs__bright_foreground_disabled_holo_dark"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/penguins"
+            android:scaleType="fitXY"/>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/dodgerblue"
+            >
+            <TextView
+                android:text="my TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.CollapsingToolbarLayout>
+<!--</android.support.design.widget.AppBarLayout>-->
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/dodgerblue">
-        <TextView
-            android:text="my TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/dodgerblue"/>
-    </android.support.v7.widget.Toolbar>
+        android:visibility="gone"/>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -49,8 +76,12 @@
             android:id="@+id/design_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/MyCustomTabLayout">
-
+            app:tabGravity="center"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/holo_blue_light"
+            app:tabTextColor="@color/holo_blue_bright"
+            >
+    <!--style="@style/MyCustomTabLayout"-->
         </android.support.design.widget.TabLayout>
         <android.support.v4.view.ViewPager
             android:id="@+id/design_viewpager"
