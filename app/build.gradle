@@ -45,4 +45,5 @@ dependencies {
     compile project(':pulltorefreshlibrary')
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.squareup.okio:okio:1.6.0'
+    compile 'com.android.support:design:23.1.0'
 }
