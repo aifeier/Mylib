@@ -289,6 +289,16 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="demo.custom.AndroidDesignActivity"
+            android:screenOrientation="portrait"
+            android:label="AndroidDesignActivity"
+            android:theme="@style/ToolBarTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="demo.custom.CustomLayoutList"></category>
+            </intent-filter>
+        </activity>
+
         <!--服务-->
         <service
             android:name="com.baidu.location.f"
