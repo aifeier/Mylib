@@ -298,6 +298,15 @@
                 <category android:name="demo.custom.CustomLayoutList"></category>
             </intent-filter>
         </activity>
+        <activity android:name="demo.custom.CoordinatorActivity"
+            android:screenOrientation="portrait"
+            android:label="CoordinatorActivity"
+            android:theme="@style/ToolBarTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="demo.custom.CustomLayoutList"></category>
+            </intent-filter>
+        </activity>
 
         <!--服务-->
         <service
