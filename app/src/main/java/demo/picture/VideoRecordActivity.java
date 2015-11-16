@@ -41,6 +41,9 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
 
     private CameraManager cameraManager;
 
+    private int width;
+    private int height;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,12 +89,16 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
             e.printStackTrace();
         }
 
+         width = PreferenceConfig.PreviewCameraWidth > cameraManager.getCameraResolution().y
+                ? PreferenceConfig.PreviewCameraWidth : cameraManager.getCameraResolution().y;
+         height = PreferenceConfig.PreviewCameraHeight > cameraManager.getCameraResolution().x
+                ? PreferenceConfig.PreviewCameraHeight : cameraManager.getCameraResolution().x;
         RelativeLayout.LayoutParams cameraFL =
 /*                new RelativeLayout.LayoutParams(
                 cameraManager.getCameraResolution().y,
                 cameraManager.getCameraResolution().x);*/
         new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                ScreenUtils.getScreenWidth(this) / 16 * 9);
+                ScreenUtils.getScreenWidth(this) * height / width);
         surfaceview.setLayoutParams(cameraFL);
     }
 
@@ -134,12 +141,11 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
                 mediarecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
                 /*设置比特率*/
                 mediarecorder.setAudioEncodingBitRate(44100);
-                int width = PreferenceConfig.PreviewCameraWidth;
-                int height = PreferenceConfig.PreviewCameraHeight;
 //                mediarecorder.setVideoEncodingBitRate(5 * 1920 * 1080);
                 mediarecorder.setVideoEncodingBitRate(5 * width * height);
                 // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
-                mediarecorder.setVideoSize(height, width);
+//                mediarecorder.setVideoSize(height, width);
+                mediarecorder.setVideoSize(width  , height);
                 // 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
                 mediarecorder.setVideoFrameRate(30);
                 mediarecorder.setPreviewDisplay(surfaceHolder.getSurface());
@@ -151,6 +157,7 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
                 try {
                     // 准备录制
                     mediarecorder.prepare();
+                    cameraManager.stopPreview();
                     // 开始录制
                     mediarecorder.start();
                     start.setEnabled(false);
