@@ -108,7 +108,7 @@ public class TimeUtils {
 			}else
 				str = "00:";
 			if(second > 0 || minutes> 0){
-				if(minutes > 0 && second < 10){
+				if(second < 10){
 					if(second == 0)
 						str = str + "00";
 					else
