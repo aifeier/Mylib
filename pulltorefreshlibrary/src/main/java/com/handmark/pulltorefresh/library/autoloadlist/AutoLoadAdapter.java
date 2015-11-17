@@ -10,6 +10,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public abstract class AutoLoadAdapter<T> extends BaseAdapter {
@@ -69,6 +70,19 @@ public abstract class AutoLoadAdapter<T> extends BaseAdapter {
             getPage(mCurrentPage);
             mFirstRun = false;
         }
+    }
+
+    public void setmData(List<T> datalist, PullToRefreshBase autoRefreshListView){
+        if(autoRefreshListView !=null)
+            autoRefreshListView.onRefreshComplete();
+        if(datalist.size()>0) {
+            if(mCurrentPage == 1){
+                mData.clear();
+            }
+            mData.addAll(datalist);
+            notifyDataSetChanged();
+        }else
+            Toast.makeText(mContext , "加载失败！请重试！", Toast.LENGTH_SHORT).show();
     }
 
     public void setmData(ArrayList<T> datalist, PullToRefreshBase autoRefreshListView){

@@ -1,9 +1,13 @@
 package demo.List;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageInstaller;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -42,8 +46,12 @@ public class AppListActivity extends Activity {
             public void buildView(ViewHolder holder, AppInfo data) {
                 //noinspection ResourceType
                 holder.getConvertView().setBackgroundColor(R.color.black);
-                holder.setValueToTextView(android.R.id.text1, data.appName + "|" + data.packageName);
-                holder.setValueToTextView(android.R.id.text2, data.versionName+"|"+data.versionCode);
+                if(data!=null) {
+                    holder.setValueToTextView(android.R.id.text1, data.appName  +
+                            "|" + data.packageName);
+                    holder.setValueToTextView(android.R.id.text2, data.versionName
+                            +"|"+ data.getVersionCode());
+                }
             }
 
             @Override
@@ -52,9 +60,19 @@ public class AppListActivity extends Activity {
             }
         };
         autoRefreshListView.setListAdapter(mAdapter);
+        mAdapter.setmData(getRunningProcess(), autoRefreshListView);
+        autoRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                uninstall(mAdapter.getItem(--position).packageName);
+            }
+        });
+    }
+
+    /*获取已经安装了的应用*/
+    private List<AppInfo> getInstalledPackages(){
         ArrayList<AppInfo> appList = new ArrayList<AppInfo>(); //用来存储获取的应用信息数据
         List<PackageInfo> packages = getPackageManager().getInstalledPackages(0);
-
         for(int i=0;i<packages.size();i++) {
             PackageInfo packageInfo = packages.get(i);
             AppInfo tmpInfo =new AppInfo();
@@ -65,20 +83,62 @@ public class AppListActivity extends Activity {
             tmpInfo.appIcon = packageInfo.applicationInfo.loadIcon(getPackageManager());
             if((packageInfo.applicationInfo.flags& ApplicationInfo.FLAG_SYSTEM)==0) {
                 //非系统应用
-                appList.add(tmpInfo);
+//                appList.add(tmpInfo);
             }
             else {
                 //系统应用　　　　　　　　
             }
-//            appList.add(tmpInfo);
+            appList.add(tmpInfo);
         }
-        mAdapter.setmData(appList, autoRefreshListView);
-        autoRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                uninstall(mAdapter.getItem(--position).packageName);
+        return appList;
+    }
+
+    /*获取正在运行的应用*/
+    private List<AppInfo> getRunningProcess(){
+        PackagesInfo pi = new PackagesInfo(this);
+        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        //获取正在运行的应用
+        List<ActivityManager.RunningAppProcessInfo> run = activityManager.getRunningAppProcesses();
+        List<AppInfo> list = new ArrayList<AppInfo>();
+        for(ActivityManager.RunningAppProcessInfo ra : run){
+            if(ra.processName.equals("system") || ra.processName.equals("com.Android.phone")) {
+                continue;
             }
-        });
+            AppInfo appInfo = pi.getInfo(ra.processName);
+            if(appInfo!=null) {
+                appInfo.setVersionCode(ra.lastTrimLevel);
+                list.add(appInfo);
+            }
+        }
+            return list;
+    }
+
+    private class PackagesInfo{
+        private List<AppInfo> appList;
+        public PackagesInfo(Context context){
+           //通包管理器，检索所有的应用程序（甚至卸载的）与数据目录
+            appList = getInstalledPackages();
+        }
+
+
+
+        /**
+              * 通过一个程序名返回该程序的一个Application对象。
+              * @param name  程序名
+              * @return  ApplicationInfo
+              */
+        public AppInfo getInfo(String name){
+               if(name == null){
+                   return null;
+               }
+               for(AppInfo appinfo : appList){
+                   if(name.equals(appinfo.packageName)){
+                        return appinfo;
+                    }
+               }
+            return null;
+        }
+
     }
 
     public void install(View v){
