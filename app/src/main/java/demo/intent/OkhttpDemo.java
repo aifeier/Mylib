@@ -121,7 +121,7 @@ public class OkhttpDemo extends BaseActivity implements Callback{
         startService(new Intent(ServiceDemo.ACTION));
 
         registerReceiver(broadcastReceiver, new IntentFilter(ACTION));
-//        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
+        registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
         registerReceiver(broadcastReceiver, new IntentFilter((Intent.ACTION_SCREEN_OFF)));
 
     }
