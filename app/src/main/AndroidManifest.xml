@@ -245,6 +245,14 @@
                 <category android:name="com.cwf.demo_list"/>
             </intent-filter>
         </activity>
+        <activity android:name="demo.List.AppListActivity"
+            android:screenOrientation="portrait"
+            android:label="AppListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.cwf.demo_list"/>
+            </intent-filter>
+        </activity>
         <activity android:name="demo.List.DemoListActivity"
             android:screenOrientation="portrait"
             />
