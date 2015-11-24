@@ -258,6 +258,8 @@
             />
         <activity android:name="demo.intent.EventBusDemo"
             android:screenOrientation="portrait"/>
+        <activity android:name="lib.utils.FileExploreActivity"
+            android:screenOrientation="portrait"/>
 
         <!--QRCode-->
         <activity android:name="demo.qrcode.QRCodeMain"
