@@ -260,6 +260,14 @@
             android:screenOrientation="portrait"/>
         <activity android:name="lib.utils.FileExploreActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name="demo.custom.FileActivity"
+            android:label="文件管理器"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="demo.custom.CustomLayoutList"></category>
+            </intent-filter>
+        </activity>
 
         <!--QRCode-->
         <activity android:name="demo.qrcode.QRCodeMain"

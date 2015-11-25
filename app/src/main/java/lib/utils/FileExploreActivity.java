@@ -46,7 +46,7 @@ public class FileExploreActivity extends Activity implements AdapterView.OnItemC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_base_list);
-        setTitle("缓存文件查看");
+        setTitle("文件管理器");
         initData();
         initView();
     }
