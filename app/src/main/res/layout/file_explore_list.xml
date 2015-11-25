@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    
+
+
+    <ListView
+        android:id="@+id/file_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/file_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="这里什么也没有"
+        android:textSize="@dimen/text_large"
+        android:drawableTop="@drawable/ic_other_filetype"
+        android:visibility="visible"></TextView>
+
+
+</LinearLayout>

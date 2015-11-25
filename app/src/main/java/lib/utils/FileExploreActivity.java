@@ -1,29 +1,37 @@
 package lib.utils;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 
 import com.cwf.app.cwf.R;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lib.BaseActivity;
+
 /**
  * Created by n-240 on 2015/11/24.
  */
-public class FileExploreActivity extends Activity implements AdapterView.OnItemClickListener{
+public class FileExploreActivity extends BaseActivity
+        implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
 
     public static final String FILEDIALOG_PATH = "path";
     public static final String FILEDIALOG_NAME = "name";
@@ -36,8 +44,8 @@ public class FileExploreActivity extends Activity implements AdapterView.OnItemC
     public static final String sFolder = ".";
 
     private ListView listView;
-    private List<Map<String, Object>> listData = null;
-    private SimpleAdapter adapter;
+    private TextView empty_view;
+
     private Map<String, Integer> images;/*不同文件显示的图片*/
     private String root;/*显示的文件根目录*/
     private String path;/*显示的文件当前目录*/
@@ -45,16 +53,18 @@ public class FileExploreActivity extends Activity implements AdapterView.OnItemC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_base_list);
-        setTitle("文件管理器");
+        setContentView(R.layout.file_explore_list);
+        setTitle("缓存文件查看");
         initData();
         initView();
     }
 
     private void initView(){
-        listView = (ListView) findViewById(R.id.base_list);
-        refreshListData();
+        empty_view = (TextView) findViewById(R.id.file_empty);
+        listView = (ListView) findViewById(R.id.file_list);
         listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
+        refreshListData();
     }
 
     private void refreshListData(){
@@ -69,64 +79,110 @@ public class FileExploreActivity extends Activity implements AdapterView.OnItemC
             // 访问出错
             ActivityUtils.showTip("访问出错", false);
         }
-        if(listData!=null){
-            listData.clear();
-        }else{
-            listData = new ArrayList<>(files.length);
+        List<File> fileList = new ArrayList<>();
+        if(!path.equals(root)){
+            File file = new File(root);
+            fileList.add(file);
+            file = new File(path.substring(0, path.lastIndexOf("/")));
+            fileList.add(file);
+        }
+        for(File file : files){
+            if(file.exists())
+                fileList.add(file);
         }
 
-        // for saving the file and folder
-        ArrayList<Map<String, Object>> lfolders = new ArrayList<Map<String, Object>>();
-        ArrayList<Map<String, Object>> lfiles = new ArrayList<Map<String, Object>>();
+        listView.setAdapter(new baseAdapter(fileList));
+    }
 
-        if (!this.path.equals(root)) {
-            // add root folder and previous folder
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put(FILEDIALOG_NAME, sRoot);
-            map.put(FILEDIALOG_PATH, root);
-            map.put(FILEDIALOG_IMG, getImageId(sRoot));
-            listData.add(map);
+    private class baseAdapter extends BaseAdapter {
 
-            String pathParent = path.substring(0, path.lastIndexOf("/"));
-            map = new HashMap<String, Object>();
-            map.put(FILEDIALOG_NAME, sParent);
-            map.put(FILEDIALOG_PATH, pathParent);
-            map.put(FILEDIALOG_IMG, getImageId(sParent));
-            listData.add(map);
-        }
-
-        for (File file : files) {
-            if (file.isDirectory() && file.listFiles() != null) {
-                // add folder
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put(FILEDIALOG_NAME, file.getName());
-                map.put(FILEDIALOG_PATH, file.getPath());
-                map.put(FILEDIALOG_IMG, getImageId(sFolder));
-                lfolders.add(map);
-            } else if (file.isFile()) {
-                // add file
-                String sf = getSuffix(file.getName()).toLowerCase();
-                    Map<String, Object> map = new HashMap<String, Object>();
-                    map.put(FILEDIALOG_NAME, file.getName());
-                    map.put(FILEDIALOG_PATH, file.getPath());
-                    map.put(FILEDIALOG_IMG, getImageId(sf));
-                    lfiles.add(map);
+        private List<File> list;
+        public baseAdapter(List<File> list){
+            if(list!=null)
+                this.list = list;
+            else
+                this.list = new ArrayList<>();
+            if(list==null||(root == path? list.size() == 0 : list.size() == 2)){
+                empty_view.setVisibility(View.VISIBLE);
+            }else{
+                empty_view.setVisibility(View.GONE);
             }
         }
 
-        listData.addAll(lfolders);
-        listData.addAll(lfiles);
+        @Override
+        public int getCount() {
+            return list.size();
+        }
 
-        SimpleAdapter adapter = new SimpleAdapter(
-                this,
-                listData,
-                R.layout.filedialogitem,
-                new String[] { FILEDIALOG_IMG, FILEDIALOG_NAME, FILEDIALOG_PATH },
-                new int[] { R.id.filedialogitem_img,
-                        R.id.filedialogitem_name, R.id.filedialogitem_path });
-        listView.setAdapter(adapter);
+        @Override
+        public File getItem(int position) {
+            return list.get(position);
+        }
 
-    }
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder = null;
+            if(convertView ==null){
+                convertView = LayoutInflater.from(FileExploreActivity.this)
+                        .inflate(R.layout.file_item, null);
+                viewHolder = new ViewHolder();
+                viewHolder.file_item_img =
+                        (ImageView)convertView.findViewById(R.id.file_item_img);
+                viewHolder.file_item_name =
+                        (TextView) convertView.findViewById(R.id.file_item_name);
+                viewHolder.file_item_time =
+                        (TextView) convertView.findViewById(R.id.file_item_time);
+                convertView.setTag(viewHolder);
+            }else{
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            File item = getItem(position);
+            if(item.isDirectory())
+                viewHolder.file_item_img.setImageResource(R.drawable.ic_logo_about);
+            else {
+                int img = getImageId(
+                        getSuffix(item.getName().toLowerCase()));
+                if (img != 0)
+                    viewHolder.file_item_img.setImageResource(img);
+                else
+                    viewHolder.file_item_img.setImageResource(R.drawable.ic_other_filetype);
+            }
+            if(item.isFile())
+                viewHolder.file_item_time.setText(
+                    FileSizeUtil.FormetFileSize(item.length()) + " | " +
+                    TimeUtils.getSimpleDate(
+                    new Date(item.lastModified())));
+            else{
+                viewHolder.file_item_time.setText(
+                        TimeUtils.getSimpleDate(
+                                new Date(item.lastModified())));
+            }
+
+
+            if(!root.equals(path) && (position == 0 || position == 1)){
+                if(position == 0){
+                    viewHolder.file_item_name.setText("返回主目录");
+                }else {
+                    viewHolder.file_item_name.setText("返回上级目录");
+                }
+                viewHolder.file_item_time.setText(item.getPath());
+            }else {
+                viewHolder.file_item_name.setText(item.getName());
+            }
+            return convertView;
+        }
+
+        private class ViewHolder{
+            ImageView file_item_img;
+            TextView file_item_name;
+            TextView file_item_time;
+        }
+    };
 
     private String getSuffix(String filename) {
         int dix = filename.lastIndexOf('.');
@@ -144,7 +200,7 @@ public class FileExploreActivity extends Activity implements AdapterView.OnItemC
         } else if (images.containsKey(s)) {
             return images.get(s);
         } else if (images.containsKey("")) {
-            return images.get("");
+            return images.get(".");
         } else {
             return 0;
         }
@@ -158,51 +214,48 @@ public class FileExploreActivity extends Activity implements AdapterView.OnItemC
         path = root;
 
         images = new HashMap<String, Integer>();
-/*        images.put(sRoot, R.drawable.filedialog_root);
-        images.put(sParent, R.drawable.filedialog_parent);
-        images.put(sFolder, R.drawable.filedialog_folder);
-        images.put("bmp", R.drawable.filedialog_bmpfile);
-        images.put("jpg", R.drawable.filedialog_jpgfile);
-        images.put("png", R.drawable.filedialog_pngfile);
-        images.put("doc", R.drawable.filedialog_docfile);
-        images.put("docx", R.drawable.filedialog_docfile);
-        images.put("ppt", R.drawable.filedialog_pptfile);
-        images.put("pptx", R.drawable.filedialog_pptfile);
-        images.put("xls", R.drawable.filedialog_xlsfile);
-        images.put("xlsx", R.drawable.filedialog_xlsfile);
-        images.put("txt", R.drawable.filedialog_txtfile);
-        images.put("wps", R.drawable.filedialog_docfile);
-        images.put("log", R.drawable.filedialog_txtfile);*/
-    }
+        images.put("bmp", R.drawable.ic_picture_filetype);
+        images.put("jpeg", R.drawable.ic_picture_filetype);
+        images.put("jpg", R.drawable.ic_picture_filetype);
+        images.put("png", R.drawable.ic_picture_filetype);
+        images.put("doc", R.drawable.ic_document_filetype);
+        images.put("docx", R.drawable.ic_document_new);
+        images.put("ppt", R.drawable.ic_ppt_filetype);
+        images.put("pptx", R.drawable.ic_ppt_filetype);
+        images.put("xls", R.drawable.ic_excel_filetype);
+        images.put("xlsx", R.drawable.ic_excel_new);
+        images.put("txt", R.drawable.ic_txt_filetype);
+        images.put("wps", R.drawable.ic_document_filetype);
+        images.put("log", R.drawable.ic_txt_filetype);
+        images.put("apk", R.drawable.ic_apk_filetype);
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // select item
-        String pt = (String) listData.get(position).get(FILEDIALOG_PATH);
-        String fn = (String) listData.get(position).get(FILEDIALOG_NAME);
-        if (fn.equals(root)){
-            // return root folder
-            path = root;
-        } else if(fn.equals(sParent)) {
-            // return previous folder
-            if(!pt.contains(root))
-                path = root;
-            else
-                path = pt;
-        } else {
-            File fl = new File(pt);
-            if (fl.isFile()) {
-                openFile(fl);
-                return;
-            } else if (fl.isDirectory()) {
-                // if it is a folder, so enters the folder
-                if(!pt.contains(root))
-                    path = root;
-                else
-                    path = pt;
-            }
-        }
-        refreshListData();
+        images.put("3gp", R.drawable.ic_video_filetype);
+        images.put("avi", R.drawable.ic_video_filetype);
+        images.put("mp4", R.drawable.ic_video_filetype);
+        images.put("wmv", R.drawable.ic_video_filetype);
+        images.put("asf", R.drawable.ic_video_filetype);
+        images.put("mov", R.drawable.ic_video_filetype);
+        images.put("mpeg", R.drawable.ic_video_filetype);
+        images.put("mpg", R.drawable.ic_video_filetype);
+        images.put("mpe", R.drawable.ic_video_filetype);
+        images.put("mpg4", R.drawable.ic_video_filetype);
+        images.put("mpga", R.drawable.ic_video_filetype);
+
+
+
+        images.put("mp3", R.drawable.ic_audio_filetype);
+        images.put("aac", R.drawable.ic_audio_filetype);
+        images.put("m4c", R.drawable.ic_audio_filetype);
+        images.put("dms", R.drawable.ic_audio_filetype);
+        images.put("m4a", R.drawable.ic_audio_filetype);
+        images.put("m4b", R.drawable.ic_audio_filetype);
+        images.put("m4p", R.drawable.ic_audio_filetype);
+        images.put("mp2", R.drawable.ic_audio_filetype);
+        images.put("ogg", R.drawable.ic_audio_filetype);
+
+
+
+
     }
 
     @Override
@@ -215,6 +268,7 @@ public class FileExploreActivity extends Activity implements AdapterView.OnItemC
                 path = path.substring(0, path.lastIndexOf("/"));
                 if(!path.contains(root))
                     path = root;
+                refreshListData();
             }
 
             return true;
@@ -334,4 +388,61 @@ public class FileExploreActivity extends Activity implements AdapterView.OnItemC
             {".zip",    "application/x-zip-compressed"},
             {"",        "*/*"}
     };
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // select item
+        final File item = (File) listView.getAdapter().getItem(position);
+        String pt = item.getPath();
+        String fn = item.getName();
+        if (fn.equals(root)){
+            // return root folder
+            path = root;
+        } else if(fn.equals(sParent)) {
+            // return previous folder
+            if(!pt.contains(root))
+                path = root;
+            else
+                path = pt;
+        } else {
+            if (item.isFile()) {
+                openFile(item);
+                return;
+            } else if (item.isDirectory()) {
+                // if it is a folder, so enters the folder
+                if(!pt.contains(root))
+                    path = root;
+                else
+                    path = pt;
+            }
+        }
+        refreshListData();
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        // select item
+        final File item = (File) listView.getAdapter().getItem(position);
+        String pt = item.getPath();
+        String fn = item.getName();
+        if(!fn.equals(sParent)&&!fn.equals(root)) {
+            if (item.isFile()) {
+/*                new BaseDialog.Builder(this)
+                        .setTitle("删除文件")
+                        .addCloseIcon()
+                        .setMessage("是否确认删除文件：" + item.getName())
+                        .addPositiveButton(this.getString(R.string.confirm),
+                                new BaseDialog.Builder.OnDialogButtonClickListener() {
+                                    @Override
+                                    public boolean onDialogButtonClick(View view) {
+                                        item.delete();
+                                        refreshListData();
+                                        return false;
+                                    }
+                                }).addNegativeButton(this.getString(R.string.cancel), null).show();
+   */         }
+        }
+        refreshListData();
+        return false;
+    }
 }
