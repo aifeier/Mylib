@@ -20,6 +20,8 @@ import com.cwf.app.cwf.R;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +93,59 @@ public class FileExploreActivity extends BaseActivity
                 fileList.add(file);
         }
 
+        Collections.sort(fileList, new FileComparator(3, true));
+
         listView.setAdapter(new baseAdapter(fileList));
+    }
+
+    //通过重写Comparator的实现类FileComparator来实现按文件创建时间排序。
+    public class FileComparator implements Comparator<File> {
+
+        /*@order_by 按什么排序
+        * @drop 是否降序排列*/
+        private int type ;
+        private boolean up;
+        public FileComparator(int order_by, boolean  up){
+            type = order_by;
+            this.up = up;
+        }
+        public int compare(File file1, File file2) {
+            /*文件夹显示在前面*/
+            if(file1.isDirectory() && file2.isFile())
+                return -1;
+            else if(file1.isFile() && file2.isDirectory())
+                return 1;
+            else {
+                switch (type) {
+                    case 0:
+                        /*不排序*/
+                        return 1;
+                    case 1:
+                        /*按时间排序*/
+                        if (file1.lastModified() < file2.lastModified()) {
+                            return up ? -1 : 1;
+                        }  else {
+                            return up ? 1 : -1;
+                        }
+                    case 2:
+                        /*按大小排序，文件夹不会排序*/
+                        if(file1.length() > file2.length())
+                            return up ? -1 : 1;
+                        else
+                            return up ? 1 : -1;
+                    case 3:
+                        /*按文件名排序*/
+                        if(file1.getName().compareToIgnoreCase(file2.getName()) < 0)
+                            return up ? -1 : 1;
+                        else
+                            return up ? 1 : -1;
+                    default:
+                        return 1;
+
+
+                }
+            }
+        }
     }
 
     private class baseAdapter extends BaseAdapter {
