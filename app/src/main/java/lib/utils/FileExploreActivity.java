@@ -72,6 +72,12 @@ public class FileExploreActivity extends BaseActivity
     private void refreshListData(){
         // 刷新文件列表
         File[] files = null;
+        if(!new File(path).exists()){
+            /*防止返回时目录不存在报错*/
+            ActivityUtils.showTip("目录不存在", false);
+            finish();
+            return;
+        }
         try {
             files = new File(path).listFiles();
         } catch (Exception e) {
@@ -80,6 +86,8 @@ public class FileExploreActivity extends BaseActivity
         if (files == null) {
             // 访问出错
             ActivityUtils.showTip("访问出错", false);
+            finish();
+            return;
         }
         List<File> fileList = new ArrayList<>();
         if(!path.equals(root)){
@@ -191,6 +199,8 @@ public class FileExploreActivity extends BaseActivity
                         (TextView) convertView.findViewById(R.id.file_item_name);
                 viewHolder.file_item_time =
                         (TextView) convertView.findViewById(R.id.file_item_time);
+                viewHolder.file_item_right=
+                        (ImageView) convertView.findViewById(R.id.file_item_right);
                 convertView.setTag(viewHolder);
             }else{
                 viewHolder = (ViewHolder) convertView.getTag();
@@ -208,9 +218,9 @@ public class FileExploreActivity extends BaseActivity
             }
             if(item.isFile())
                 viewHolder.file_item_time.setText(
-                    FileSizeUtil.FormetFileSize(item.length()) + " | " +
-                    TimeUtils.getSimpleDate(
-                    new Date(item.lastModified())));
+                        FileSizeUtil.FormetFileSize(item.length()) + " | " +
+                                TimeUtils.getSimpleDate(
+                                        new Date(item.lastModified())));
             else{
                 viewHolder.file_item_time.setText(
                         TimeUtils.getSimpleDate(
@@ -228,6 +238,12 @@ public class FileExploreActivity extends BaseActivity
             }else {
                 viewHolder.file_item_name.setText(item.getName());
             }
+
+            if(item.isDirectory())
+                viewHolder.file_item_right.setVisibility(View.VISIBLE);
+            else
+                viewHolder.file_item_right.setVisibility(View.GONE);
+
             return convertView;
         }
 
@@ -235,6 +251,7 @@ public class FileExploreActivity extends BaseActivity
             ImageView file_item_img;
             TextView file_item_name;
             TextView file_item_time;
+            ImageView file_item_right;
         }
     };
 

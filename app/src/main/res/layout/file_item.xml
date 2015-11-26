@@ -4,7 +4,6 @@
     android:layout_height="fill_parent"
     android:paddingLeft="@dimen/short_margin"
     android:paddingRight="@dimen/short_margin"
-    android:background="@color/white"
     android:orientation="horizontal"
     >
 
@@ -13,9 +12,12 @@
         android:layout_width="48dip"
         android:layout_height="48dip"
         android:layout_margin="5dip" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dip"
         android:orientation="vertical" >
@@ -26,7 +28,6 @@
             android:layout_height="wrap_content"
             android:textColor="#000000"
             android:textSize="@dimen/text_large" />
-
             <TextView
                 android:id="@+id/file_item_time"
                 android:layout_width="wrap_content"
@@ -35,5 +36,12 @@
                 android:textColor="#888"
                 android:textSize="@dimen/text_small" />
     </LinearLayout>
+        <ImageView
+            android:id="@+id/file_item_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:background="@drawable/ic_right_go"></ImageView>
+</FrameLayout>
 
 </LinearLayout>
