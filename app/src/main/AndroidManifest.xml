@@ -287,6 +287,14 @@
                 <category android:name="demo.custom.CustomLayoutList"></category>
             </intent-filter>
         </activity>
+        <activity android:name="demo.Html5Activity"
+            android:screenOrientation="portrait"
+            android:label="Html5Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="demo.custom.CustomLayoutList"></category>
+            </intent-filter>
+        </activity>
 
         <activity android:name="demo.custom.tabhost.TabHostActivity"
             android:screenOrientation="portrait"
