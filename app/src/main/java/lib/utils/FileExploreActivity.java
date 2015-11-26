@@ -238,9 +238,9 @@ public class FileExploreActivity extends BaseActivity
 
 
             if(!root.equals(path) && (position == 0 || position == 1)){
-                if(position == 0){
+                if(item.getPath().equals(root)){
                     viewHolder.file_item_name.setText("返回主目录");
-                }else {
+                }else if(item.getPath().equals(path.substring(0, path.lastIndexOf("/")))){
                     viewHolder.file_item_name.setText("返回上级目录");
                 }
                 viewHolder.file_item_time.setText(item.getPath());
