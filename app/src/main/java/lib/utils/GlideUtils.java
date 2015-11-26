@@ -264,6 +264,16 @@ public class GlideUtils {
                 .into(img);
     }
 
+    /*圆形的图片*/
+/*Glide.with(context).load(url).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView) {
+        @Override
+        protected void setResource(Bitmap resource) {
+            RoundedBitmapDrawable circularBitmapDrawable =
+                    RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+            circularBitmapDrawable.setCircular(true);
+            imageView.setImageDrawable(circularBitmapDrawable);
+        }
+    });*/
 
 
 }

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.cwf.app.cwf.R;
 
 import java.io.File;
@@ -207,14 +210,20 @@ public class FileExploreActivity extends BaseActivity
             }
             File item = getItem(position);
             if(item.isDirectory())
-                viewHolder.file_item_img.setImageResource(R.drawable.ic_logo_about);
+                Glide.with(FileExploreActivity.this)
+                        .load(R.drawable.ic_logo_about)
+                        .into(viewHolder.file_item_img);
             else {
                 int img = getImageId(
                         getSuffix(item.getName().toLowerCase()));
                 if (img != 0)
-                    viewHolder.file_item_img.setImageResource(img);
+                    Glide.with(FileExploreActivity.this)
+                            .load(img)
+                            .into(viewHolder.file_item_img);
                 else
-                    viewHolder.file_item_img.setImageResource(R.drawable.ic_other_filetype);
+                    Glide.with(FileExploreActivity.this)
+                            .load(R.drawable.ic_other_filetype)
+                            .into(viewHolder.file_item_img);
             }
             if(item.isFile())
                 viewHolder.file_item_time.setText(
@@ -243,7 +252,24 @@ public class FileExploreActivity extends BaseActivity
                 viewHolder.file_item_right.setVisibility(View.VISIBLE);
             else
                 viewHolder.file_item_right.setVisibility(View.GONE);
-
+            if(item.getName().contains(".jpg")||
+                    item.getName().contains(".png") ||
+                    item.getName().contains(".jpeg")) {
+                Glide.with(FileExploreActivity.this)
+                        .load(item)
+                        .into(viewHolder.file_item_img);
+            }else if(item.getName().contains(".mp4")||
+                        item.getName().contains(".avi")||
+                            item.getName().contains(".mkt")) {
+                Glide.with(FileExploreActivity.this)
+                        .load(item)
+                        .into(viewHolder.file_item_img);
+            }else if(item.getName().contains(".mp3")||
+                        item.getName().contains(".aac")||
+                            item.getName().contains(".flac")){
+ /*               viewHolder.file_item_img.setImageBitmap(
+                        MediaThumbnailUtils.createAlbumThumbnail(item.getPath()));*/
+            }
             return convertView;
         }
 
@@ -303,6 +329,7 @@ public class FileExploreActivity extends BaseActivity
         images.put("3gp", R.drawable.ic_video_filetype);
         images.put("avi", R.drawable.ic_video_filetype);
         images.put("mp4", R.drawable.ic_video_filetype);
+        images.put("mkt", R.drawable.ic_video_filetype);
         images.put("wmv", R.drawable.ic_video_filetype);
         images.put("asf", R.drawable.ic_video_filetype);
         images.put("mov", R.drawable.ic_video_filetype);
@@ -315,6 +342,7 @@ public class FileExploreActivity extends BaseActivity
 
 
         images.put("mp3", R.drawable.ic_audio_filetype);
+        images.put("flac", R.drawable.ic_audio_filetype);
         images.put("aac", R.drawable.ic_audio_filetype);
         images.put("m4c", R.drawable.ic_audio_filetype);
         images.put("dms", R.drawable.ic_audio_filetype);
@@ -428,6 +456,7 @@ public class FileExploreActivity extends BaseActivity
             {".mov",    "video/quicktime"},
             {".mp2",    "audio/x-mpeg"},
             {".mp3",    "audio/x-mpeg"},
+            {".flac",    "audio/x-mpeg"},
             {".mp4",    "video/mp4"},
             {".mpc",    "application/vnd.mpohun.certificate"},
             {".mpe",    "video/mpeg"},
