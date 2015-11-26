@@ -93,18 +93,18 @@ public class FileExploreActivity extends BaseActivity
             return;
         }
         List<File> fileList = new ArrayList<>();
-        if(!path.equals(root)){
-            File file = new File(root);
-            fileList.add(file);
-            file = new File(path.substring(0, path.lastIndexOf("/")));
-            fileList.add(file);
-        }
         for(File file : files){
             if(file.exists())
                 fileList.add(file);
         }
 
         Collections.sort(fileList, new FileComparator(3, true));
+        if(!path.equals(root)){
+            File file = new File(root);
+            fileList.add(0, file);
+            file = new File(path.substring(0, path.lastIndexOf("/")));
+            fileList.add(1, file);
+        }
 
         listView.setAdapter(new baseAdapter(fileList));
     }
@@ -238,9 +238,9 @@ public class FileExploreActivity extends BaseActivity
 
 
             if(!root.equals(path) && (position == 0 || position == 1)){
-                if(item.getPath().equals(root)){
+                if(position == 0){
                     viewHolder.file_item_name.setText("返回主目录");
-                }else if(item.getPath().equals(path.substring(0, path.lastIndexOf("/")))){
+                }else {
                     viewHolder.file_item_name.setText("返回上级目录");
                 }
                 viewHolder.file_item_time.setText(item.getPath());
