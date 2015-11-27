@@ -3,6 +3,9 @@ package demo;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.cwf.app.cwf.R;
@@ -21,6 +24,9 @@ public class Html5Activity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_webview);
         webView = (WebView) findViewById(R.id.web_view);
+        WebSettings webSettings =  webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
         webView.loadUrl("file:///android_asset/html/first.htm");
 
     }
