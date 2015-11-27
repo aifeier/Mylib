@@ -31,7 +31,7 @@ public class Html5Activity extends Activity{
         webView = (WebView) findViewById(R.id.web_view);
         WebSettings webSettings =  webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webSettings.setUseWideViewPort(true);
+//        webSettings.setUseWideViewPort(true);
         webSettings.setSupportZoom(true);
  /*       webSettings.setAppCacheEnabled(true);
         webSettings.setAppCachePath(SDCardUtils.getAbleDirectoryPath());*/
