@@ -1,0 +1,69 @@
+<html>
+
+<body>
+
+<form>
+    名：
+    <input type="text" name="firstname" src="20">
+    <br />
+    姓：
+    <input type="text" name="lastname" size="20">
+    <br />
+    密码：
+    <input type="password" name="password" size="20" >
+    <input type="submit" value="Submit" />
+    <br />
+    <input type="checkbox" name="bike" />
+    I have a bike
+    <br />
+    <input type="checkbox" name="car" />
+    I have a car
+    <br/>
+    <select name="cars">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="fiat" selected="selected">Fiat</option>
+        <option value="audi">Audi</option>
+    </select>
+    <br/>
+    <form>
+        <fieldset>
+            <legend>健康信息</legend>
+            身高：<input type="text" />
+            体重：<input type="text" />
+        </fieldset>
+    </form>
+
+
+
+    <form name="input" action="/html/html_form_action.asp" method="get">
+        Male:
+        <input type="radio" name="Sex" value="Male" checked="checked">
+        <br />
+        Female:
+        <input type="radio" name="Sex" value="Female">
+        <br />
+        <input type ="submit" value ="Submit">
+    </form>
+
+    <p>如果您点击 "Submit" 按钮，
+        您将把输入传送到名为 html_form_action.asp 的新页面。</p>
+</form>
+
+<form name="input" action="/html/html_form_action.asp" method="get">
+    I have a bike:
+    <input type="checkbox" name="vehicle" value="Bike" checked="checked" />
+    <br />
+    I have a car:
+    <input type="checkbox" name="vehicle" value="Car" />
+    <br />
+    I have an airplane:
+    <input type="checkbox" name="vehicle" value="Airplane" />
+    <br /><br />
+    <input type="submit" value="Submit" />
+</form>
+
+<p>如果您点击 "Submit" 按钮，您将把输入传送到名为 html_form_action.asp 的新页面。</p>
+
+</body>
+</html>
