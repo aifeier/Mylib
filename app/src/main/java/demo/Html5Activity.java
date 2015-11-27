@@ -3,22 +3,26 @@ package demo;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.cwf.app.cwf.R;
 
 import java.io.IOException;
 
 import lib.utils.ActivityUtils;
+import lib.utils.SDCardUtils;
 
 /**
  * Created by n-240 on 2015/11/26.
  */
 public class Html5Activity extends Activity{
     private  WebView webView;
+    private String load = "file:///android_asset/html/first.htm";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +30,29 @@ public class Html5Activity extends Activity{
         webView = (WebView) findViewById(R.id.web_view);
         WebSettings webSettings =  webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+ /*       webSettings.setAppCacheEnabled(true);
+        webSettings.setAppCachePath(SDCardUtils.getAbleDirectoryPath());*/
 
-        webView.loadUrl("file:///android_asset/html/first.htm");
+        webView.setWebViewClient(new WebViewClient(){
+            /*重写shouldOverrideUrlLoading方法，使点击链接后不使用其他的浏览器打开。*/
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
+                if(event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+                    if(!webView.getUrl().equals(load)) {
+                        return true;
+                    }
+                }
+                return super.shouldOverrideKeyEvent(view, event);
+            }
+        });
+
+        webView.loadUrl(load);
 
     }
 

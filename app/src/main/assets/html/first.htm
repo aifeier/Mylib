@@ -1,19 +1,50 @@
 <!DOCTYPE html> 
 <html>
+<head >
+<!--  <meta name="viewport"
+        content="width=device-height, height=device-wight initial-scale=1.0,
+         minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />-->
+</head>
+
+<!--width=device-width ：表示宽度是设备屏幕的宽度
+initial-scale=1.0：表示初始的缩放比例
+minimum-scale=0.5：表示最小的缩放比例
+maximum-scale=2.0：表示最大的缩放比例
+user-scalable=yes：表示用户是否可以调整缩放比例
+如果是想要一打开网页，则自动以原始比例显示，并且不允许用户修改的话，则是：
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" /> -->
 <body  >
+
+<script type="text/javascript">
+        var phoneWidth =  parseInt(window.screen.width);
+        var phoneScale = phoneWidth/640;
+        var ua = navigator.userAgent;
+        if (/Android (\d+\.\d+)/.test(ua)){
+            var version = parseFloat(RegExp.$1);
+            if(version>2.3){
+                document.write(‘<meta name="viewport" content="width=640, minimum-scale = ‘+phoneScale+‘, maximum-scale = ‘+phoneScale+‘, target-densitydpi=device-dpi">‘);
+            }else{
+                document.write(‘<meta name="viewport" content="width=640, target-densitydpi=device-dpi">‘);
+            }
+        } else {
+            document.write(‘<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">‘);
+        }
+    </script>
 
 <div style="text-align:center;">
   <button onclick="playPause()">播放/暂停</button>
   <button onclick="makeBig()">大</button>
   <button onclick="makeNormal()">中</button>
   <button onclick="makeSmall()">小</button>
-  <a href="http://www.baidu.com">百度</a>
+  <a href="http://www.baidu.com" target="_parent">百度</a>
+  <a href="file:///android_asset/html/first.htm">本地</a>
   <br />
   <audio id="audio1" controls="controls" style="margin-top:10px;">
     <source src="http://115.231.144.58/6/j/t/s/d/jtsdhetjxhxpaawfotxqrzuknrohqk/hc.yinyuetai.com/CA7A014F2176C6967B183E333F6C36FB.flv?sc=02fb295b193c140b&br=784&vid=2349335&aid=1559&area=KR&vst=0"
             type="audio/mp3">
   </audio>
-  <video id="video1" width="320" height="240" controls="controls" style="margin-top:15px;" >
+  <video id="video1" width="320" height="240" controls="controls"
+         style="margin-top:15px;" >
     <source src="http://115.231.144.58/6/j/t/s/d/jtsdhetjxhxpaawfotxqrzuknrohqk/hc.yinyuetai.com/CA7A014F2176C6967B183E333F6C36FB.flv?sc=02fb295b193c140b&br=784&vid=2349335&aid=1559&area=KR&vst=0" type="video/mp4" />    
     Your browser does not support HTML5 video.
 
