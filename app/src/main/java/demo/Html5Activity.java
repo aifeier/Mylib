@@ -15,12 +15,31 @@ import lib.utils.ActivityUtils;
  * Created by n-240 on 2015/11/26.
  */
 public class Html5Activity extends Activity{
+    private  WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_webview);
-        WebView webView = (WebView) findViewById(R.id.web_view);
+        webView = (WebView) findViewById(R.id.web_view);
         webView.loadUrl("file:///android_asset/html/first.htm");
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        webView.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        webView.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        webView.destroy();
     }
 }
