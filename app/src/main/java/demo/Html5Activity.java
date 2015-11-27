@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -30,6 +31,8 @@ public class Html5Activity extends Activity{
         webView = (WebView) findViewById(R.id.web_view);
         WebSettings webSettings =  webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setSupportZoom(true);
  /*       webSettings.setAppCacheEnabled(true);
         webSettings.setAppCachePath(SDCardUtils.getAbleDirectoryPath());*/
 
@@ -44,14 +47,23 @@ public class Html5Activity extends Activity{
             @Override
             public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
                 if(event.getKeyCode() == KeyEvent.KEYCODE_BACK){
-                    if(!webView.getUrl().equals(load)) {
-                        return true;
-                    }
+                    webView.goBack();
+                    return true;
                 }
                 return super.shouldOverrideKeyEvent(view, event);
             }
         });
-
+        webView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()){
+                    /*返回键*/
+                    webView.goBack();
+                    return true;
+                }
+                return false;
+            }
+        });
         webView.loadUrl(load);
 
     }
