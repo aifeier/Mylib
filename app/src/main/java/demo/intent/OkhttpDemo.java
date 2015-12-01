@@ -17,6 +17,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
+import com.cwf.app.okhttputilslibrary.okhttp.callback.ResultCallback;
+import com.cwf.app.okhttputilslibrary.okhttp.request.OkHttpGetRequest;
+import com.cwf.app.okhttputilslibrary.okhttp.request.OkHttpRequest;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -32,6 +35,7 @@ import lib.BaseActivity;
 import lib.utils.ActivityUtils;
 import lib.utils.FileUtils;
 import lib.utils.OkHttpClientManager;
+import lib.utils.TimeUtils;
 
 /**
  * Created by n-240 on 2015/9/24.
@@ -94,7 +98,7 @@ public class OkhttpDemo extends BaseActivity implements Callback{
                         textview.setText(news.getNewslist().get(0).getTitle());//UI线程
                     }
                 });*/
-        OkHttpClientManager.downloadAsyn("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6o.jpg",
+        /*OkHttpClientManager.downloadAsyn("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6o.jpg",
                 FileUtils.createPath("files"), new OkHttpClientManager.ResultCallback<String>() {
                     @Override
                     public void onFileDownSize(long downsize, long allSize) {
@@ -102,7 +106,7 @@ public class OkhttpDemo extends BaseActivity implements Callback{
                         ActivityUtils.showTip("正在下载" + downsize * 100 / allSize + "%", false);
                         Message message = new Message();
                         message.what = 1;
-                        message.obj = "正在下载" +downsize * 100 / allSize + "%";
+                        message.obj = "正在下载" + downsize * 100 / allSize + "%";
                         handler.sendMessage(message);
                     }
 
@@ -116,14 +120,66 @@ public class OkhttpDemo extends BaseActivity implements Callback{
                     public void onResponse(String response) {
                         ActivityUtils.showTip("下载完成", false);
                     }
-                });
+
+                });*/
         bindService(new Intent(ServiceDemo.ACTION), serviceConnection, BIND_AUTO_CREATE);
         startService(new Intent(ServiceDemo.ACTION));
 
         registerReceiver(broadcastReceiver, new IntentFilter(ACTION));
         registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
         registerReceiver(broadcastReceiver, new IntentFilter((Intent.ACTION_SCREEN_OFF)));
+        new OkHttpRequest.Builder()
+                .url("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6o.jpg")
+                .destFileDir(FileUtils.createPath("files"))
+                .destFileName("abc.jpg")
+                .download(new ResultCallback<String>() {
+                    @Override
+                    public void onBefore(Request request) {
+                        ActivityUtils.showTip("开始下载", false);
+                        super.onBefore(request);
+                    }
 
+                    @Override
+                    public void onAfter() {
+                        ActivityUtils.showTip("下载结束", false);
+                        super.onAfter();
+                    }
+
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        ActivityUtils.showTip("下载失败", false);
+                    }
+
+                    @Override
+                    public void onResponse(String response) {
+                        ActivityUtils.showTip("下载完成", false);
+                    }
+
+                    @Override
+                    public void inProgress(float progress) {
+                        textview.setText("" + progress);
+                        ActivityUtils.showTip("下载进度：" + ((int) (progress * 100)) + "%", false);
+                        super.inProgress(progress);
+                    }
+                });
+
+
+        new OkHttpRequest.Builder()
+                .url("http://www.baidu.com")
+                .headers(null)
+                .params(null)
+                .tag(1)
+                .get(new ResultCallback<String>() {
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        ActivityUtils.showTip("失败" + e.getMessage(), false);
+                    }
+
+                    @Override
+                    public void onResponse(String response) {
+                        ActivityUtils.showTip(response, false);
+                    }
+                });
     }
 
     ServiceConnection serviceConnection = new ServiceConnection() {

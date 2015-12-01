@@ -33,26 +33,15 @@ public class FileUtils {
 		}
 	}
 	/*
-	* path is end with '/'
-	* fileFullName end with .mp4 or .txt ...
+	*
+	*
 	* */
 
 	public static String createPath(String path){
-		try {
-			if (!isFileExist("")) {
-				File tempf = createSDDir("");
-			}
-			if (!isFileExist(path)) {
-				File tempf = createSDDir(path);
-				return tempf.getParent();
-			}else
-				return SDPATH + path;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
+			File file = new File(SDPATH+path);
+			if(!file.exists())
+				file.mkdirs();
+			return SDPATH + path;
 	}
 
 	public static File createSDDir(String dirName) throws IOException {

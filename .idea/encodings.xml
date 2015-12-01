@@ -1,39 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/app/src/main/java/okhttp/ImageUtils.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/okhttp/L.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/okhttp/OkHttpClientManager.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/okhttp/callback/ResultCallback.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/okhttp/request/CountingRequestBody.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/okhttp/request/OkHttpDisplayImgRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/okhttp/request/OkHttpDownloadRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/okhttp/request/OkHttpGetRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/okhttp/request/OkHttpPostRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/okhttp/request/OkHttpRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/okhttp/request/OkHttpUploadRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/ImageUtils.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/L.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/OkHttpClientManager.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/callback/ResultCallback.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/okhttp/ImageUtils.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/okhttp/L.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/okhttp/OkHttpClientManager.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/okhttp/callback/ResultCallback.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/okhttp/request/CountingRequestBody.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/okhttp/request/OkHttpDisplayImgRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/okhttp/request/OkHttpDownloadRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/okhttp/request/OkHttpGetRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/okhttp/request/OkHttpPostRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/okhttp/request/OkHttpRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/okhttp/request/OkHttpUploadRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/request/CountingRequestBody.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/request/OkHttpDisplayImgRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/request/OkHttpDownloadRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/request/OkHttpGetRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/request/OkHttpPostRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/request/OkHttpRequest.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/okhttplibrary/src/main/java/com/cwf/app/okhttplibrary/okhttp/request/OkHttpUploadRequest.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/okhttputilslibrary/src/main/java/com/cwf/app/okhttputilslibrary/okhttp/ImageUtils.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/okhttputilslibrary/src/main/java/com/cwf/app/okhttputilslibrary/okhttp/L.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/okhttputilslibrary/src/main/java/com/cwf/app/okhttputilslibrary/okhttp/OkHttpClientManager.java" charset="GBK" />

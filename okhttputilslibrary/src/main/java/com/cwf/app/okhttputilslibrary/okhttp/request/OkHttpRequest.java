@@ -1,5 +1,6 @@
 package com.cwf.app.okhttputilslibrary.okhttp.request;
 
+import android.util.Log;
 import android.util.Pair;
 import android.widget.ImageView;
 
@@ -40,6 +41,7 @@ public abstract class OkHttpRequest
         this.tag = tag;
         this.params = params;
         this.headers = headers;
+        Log.e("OkHttpRequest" , url);
     }
 
     protected abstract Request buildRequest();

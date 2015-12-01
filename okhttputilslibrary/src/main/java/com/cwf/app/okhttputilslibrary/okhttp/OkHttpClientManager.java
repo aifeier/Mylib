@@ -3,6 +3,7 @@ package com.cwf.app.okhttputilslibrary.okhttp;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -155,7 +156,7 @@ public class OkHttpClientManager
                 } catch (IOException e)
                 {
                     sendFailResultCallback(response.request(), e, resCallBack);
-                } catch (com.google.gson.JsonParseException e)//Json½âÎöµÄ´íÎó
+                } catch (com.google.gson.JsonParseException e)
                 {
                     sendFailResultCallback(response.request(), e, resCallBack);
                 }
@@ -176,6 +177,7 @@ public class OkHttpClientManager
     public void sendFailResultCallback(final Request request, final Exception e, final ResultCallback callback)
     {
         if (callback == null) return;
+        Log.e("OkhttpRequest", e.getMessage());
 
         mDelivery.post(new Runnable()
         {
@@ -191,6 +193,7 @@ public class OkHttpClientManager
     public void sendSuccessResultCallback(final Object object, final ResultCallback callback)
     {
         if (callback == null) return;
+        Log.e("OkhttpRequest", object.toString());
         mDelivery.post(new Runnable()
         {
             @Override
