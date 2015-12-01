@@ -1,6 +1,5 @@
 package com.cwf.app.okhttputilslibrary.okhttp.callback;
 
-import android.util.Log;
 
 import com.google.gson.internal.$Gson$Types;
 import com.squareup.okhttp.Request;
