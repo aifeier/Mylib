@@ -131,9 +131,9 @@ public class OkhttpDemo extends BaseActivity implements Callback{
         registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
         registerReceiver(broadcastReceiver, new IntentFilter((Intent.ACTION_SCREEN_OFF)));
         new OkHttpDisplayImgRequest.Builder()
-                .url("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6.jpg")
-                .imageView((ImageView) findViewById(R.id.imageview))
+                .url("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6o.jpg")
                 .errResId(R.drawable.error)
+                .imageView((ImageView) findViewById(R.id.imageview))
                 .displayImage(null);
         new OkHttpRequest.Builder()
                 .url("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6o.jpg")
