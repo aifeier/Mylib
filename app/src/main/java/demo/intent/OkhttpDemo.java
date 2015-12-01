@@ -14,10 +14,12 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
 import com.cwf.app.okhttputilslibrary.okhttp.callback.ResultCallback;
+import com.cwf.app.okhttputilslibrary.okhttp.request.OkHttpDisplayImgRequest;
 import com.cwf.app.okhttputilslibrary.okhttp.request.OkHttpGetRequest;
 import com.cwf.app.okhttputilslibrary.okhttp.request.OkHttpRequest;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -128,6 +130,11 @@ public class OkhttpDemo extends BaseActivity implements Callback{
         registerReceiver(broadcastReceiver, new IntentFilter(ACTION));
         registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
         registerReceiver(broadcastReceiver, new IntentFilter((Intent.ACTION_SCREEN_OFF)));
+        new OkHttpDisplayImgRequest.Builder()
+                .url("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6.jpg")
+                .imageView((ImageView) findViewById(R.id.imageview))
+                .errResId(R.drawable.error)
+                .displayImage(null);
         new OkHttpRequest.Builder()
                 .url("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6o.jpg")
                 .destFileDir(FileUtils.createPath("files"))
