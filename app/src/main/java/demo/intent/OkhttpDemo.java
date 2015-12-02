@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -30,6 +33,7 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import demo.intent.entity.News;
 import demo.intent.entity.WeaherData;
@@ -124,8 +128,8 @@ public class OkhttpDemo extends BaseActivity implements Callback{
                     }
 
                 });*/
-        bindService(new Intent(ServiceDemo.ACTION), serviceConnection, BIND_AUTO_CREATE);
-        startService(new Intent(ServiceDemo.ACTION));
+        bindService(ActivityUtils.getServiceIntent(this, ServiceDemo.ACTION), serviceConnection, BIND_AUTO_CREATE);
+        startService(ActivityUtils.getServiceIntent(this, ServiceDemo.ACTION));
 
         registerReceiver(broadcastReceiver, new IntentFilter(ACTION));
         registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
@@ -204,7 +208,7 @@ public class OkhttpDemo extends BaseActivity implements Callback{
     @Override
     protected void onDestroy() {
         unregisterReceiver(broadcastReceiver);
-        stopService(new Intent(this, ServiceDemo.class));
+        stopService(ActivityUtils.getServiceIntent(this, ServiceDemo.ACTION));
         unbindService(serviceConnection);
         super.onDestroy();
     }
@@ -227,5 +231,6 @@ public class OkhttpDemo extends BaseActivity implements Callback{
 
         });
     }
+
 
 }

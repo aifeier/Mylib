@@ -8,20 +8,24 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.net.ParseException;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.text.Spannable;
@@ -430,7 +434,7 @@ public class ActivityUtils {
 	/**
 	 * 功能：判断字符串是否为日期格式
 	 * 
-	 * @param str
+	 * @param strDate
 	 * @return
 	 */
 	public static boolean isDate(String strDate) {
@@ -453,5 +457,38 @@ public class ActivityUtils {
 			c.startActivityForResult(intent, requestCode);
 		}
 	}
+
+	/*Android 5.0一出来后，其中有个特性就是Service Intent  must be explitict，
+	也就是说从Lollipop开始，service服务必须采用显示方式启动*/
+	public static Intent getServiceIntent(Context context, String action){
+		if(Build.VERSION.SDK_INT >= 21){
+			return new Intent(
+					getExplicitIntent(context, new Intent(action)));
+		}else {
+			return new Intent(action);
+		}
+	}
+
+	/*隐式启动转换为显示启动，官方推荐*/
+	private static Intent getExplicitIntent(Context context, Intent implicitIntent) {
+		// Retrieve all services that can match the given intent
+		PackageManager pm = context.getPackageManager();
+		List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
+		// Make sure only one match was found
+		if (resolveInfo == null || resolveInfo.size() != 1) {
+			return null;
+		}
+		// Get component info and create ComponentName
+		ResolveInfo serviceInfo = resolveInfo.get(0);
+		String packageName = serviceInfo.serviceInfo.packageName;
+		String className = serviceInfo.serviceInfo.name;
+		ComponentName component = new ComponentName(packageName, className);
+		// Create a new intent. Use the old one for extras and such reuse
+		Intent explicitIntent = new Intent(implicitIntent);
+		// Set the component to be explicit
+		explicitIntent.setComponent(component);
+		return explicitIntent;
+	}
+
 
 }

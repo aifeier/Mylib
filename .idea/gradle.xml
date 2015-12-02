@@ -10,6 +10,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/alllibrary" />
+            <option value="$PROJECT_DIR$/animationutilslibrary" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/okhttputilslibrary" />
             <option value="$PROJECT_DIR$/photolibrary" />

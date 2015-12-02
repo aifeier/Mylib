@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.cwf.app.cwf"
-        minSdkVersion 15
+        minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
         versionName "1.1"
@@ -34,18 +34,9 @@ android {
 }
 
 dependencies {
-    compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.google.code.gson:gson:2.2.4'
-    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
-    compile files('libs/BaiduLBS_Android.jar')
-    compile 'com.android.support:recyclerview-v7:23.0.0'
-    compile 'com.android.support:cardview-v7:23.0.0'
-    compile 'de.greenrobot:eventbus:3.0.0-beta1'
     compile project(':photolibrary')
     compile project(':simpleqrcodelibrary')
     compile project(':pulltorefreshlibrary')
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile 'com.squareup.okio:okio:1.6.0'
-    compile 'com.android.support:design:23.1.0'
     compile project(':okhttputilslibrary')
+    compile project(':animationutilslibrary')
 }

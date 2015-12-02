@@ -1,18 +1,5 @@
 package demo.intent.mode.eventbus;
 
-import android.os.Message;
-import android.util.Log;
-
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import de.greenrobot.event.Subscribe;
 
 
 

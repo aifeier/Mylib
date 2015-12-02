@@ -193,7 +193,6 @@
         <activity android:name="demo.picture.VideoPlayActivity2"
             android:screenOrientation="unspecified"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:label="VideoPlayActivity2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
