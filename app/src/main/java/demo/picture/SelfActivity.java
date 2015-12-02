@@ -203,6 +203,7 @@ public class SelfActivity extends BaseActivity{
                         .error(R.drawable.error)
                         .placeholder(R.drawable.loading4)
                         .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                        .fitCenter()
                         .into((ImageView) holder.findViewById(R.id.item_grid_image));
             }
 

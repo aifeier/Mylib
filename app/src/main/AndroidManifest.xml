@@ -157,7 +157,8 @@
             </intent-filter>
         </activity>
         <activity android:name="demo.picture.toolbox.GalleryActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name="demo.picture.toolbox.ImageFileActivity"
             android:screenOrientation="portrait"/>
 
