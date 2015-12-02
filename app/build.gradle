@@ -38,5 +38,4 @@ dependencies {
     compile project(':simpleqrcodelibrary')
     compile project(':pulltorefreshlibrary')
     compile project(':okhttputilslibrary')
-    compile project(':animationutilslibrary')
 }

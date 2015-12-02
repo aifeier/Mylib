@@ -91,7 +91,6 @@
     <orderEntry type="library" exported="" name="okhttp-2.6.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="glide-3.6.1" level="project" />
-    <orderEntry type="module" module-name="animationutilslibrary" exported="" />
     <orderEntry type="module" module-name="okhttputilslibrary" exported="" />
     <orderEntry type="module" module-name="simpleqrcodelibrary" exported="" />
     <orderEntry type="module" module-name="photolibrary" exported="" />
