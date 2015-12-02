@@ -1,2 +1,2 @@
-include ':app', ':photolibrary', ':simpleqrcodelibrary', ':pulltorefreshlibrary', ':okhttputilslibrary', ':alllibrary'
-
+include ':app', ':simpleqrcodelibrary', ':pulltorefreshlibrary', ':okhttputilslibrary', ':alllibrary'
+//, ':photolibrary'

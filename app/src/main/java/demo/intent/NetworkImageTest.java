@@ -19,11 +19,11 @@ public class NetworkImageTest extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_text_img);
-        mImg = (NetworkImageView) findViewById(R.id.NetWorkImg);
+/*        mImg = (NetworkImageView) findViewById(R.id.NetWorkImg);
         mImg.setDefaultImageResId(R.drawable.penguins);
         mImg.setErrorImageResId(R.drawable.penguins);
         mImg.setImageUrl("http://img0.imgtn.bdimg.com/it/u=1070902365,2619384777&fm=21&gp=0.jpg",
-                RequestManager.getImageLoader());
+                RequestManager.getImageLoader());*/
 
     }
 

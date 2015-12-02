@@ -34,7 +34,6 @@ android {
 }
 
 dependencies {
-    compile project(':photolibrary')
     compile project(':simpleqrcodelibrary')
     compile project(':pulltorefreshlibrary')
     compile project(':okhttputilslibrary')

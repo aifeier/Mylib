@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cwf.app.cwf.R;
@@ -30,7 +31,6 @@ import lib.utils.ActivityUtils;
 import lib.utils.DirectoryUtil;
 import lib.utils.GlideUtils;
 
-import com.cwf.app.photolibrary.utils.photoviewlibs.PhotoView;
 
 /**
  * Created by n-240 on 2015/9/25.

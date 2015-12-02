@@ -10,19 +10,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cwf.app.cwf.R;
-import com.cwf.app.photolibrary.utils.photoviewlibs.PhotoView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import demo.picture.SelfActivity;
 import demo.picture.toolbox.entiy.ImageItem;
 import lib.BaseActivity;
-import lib.utils.ActivityUtils;
 
 /**
  * Created by n-240 on 2015/9/28.
@@ -80,12 +76,13 @@ public class GalleryActivity extends BaseActivity{
             PhotoView mView = new PhotoView(container.getContext());
             mView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT));
+            mView.enable();
 //            mView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             Glide.with(container.getContext())
                     .load(mList.get(position).getImagePath())
                     .error(R.drawable.error)
                     .placeholder(R.drawable.loading4)
-                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+//                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(mView);
             container.addView(mView);
             return mView;

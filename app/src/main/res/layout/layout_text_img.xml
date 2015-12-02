@@ -17,14 +17,14 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:scaleType="fitXY"/>
-    <com.cwf.app.photolibrary.utils.photoviewlibs.PhotoView
+    <com.bm.library.PhotoView
         android:id="@+id/img"
         android:src="@drawable/penguins"
         android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:scaleType="fitXY"/>
-    <com.android.volley.toolbox.NetworkImageView
+    <!--<com.android.volley.toolbox.NetworkImageView
         android:id="@+id/NetWorkImg"
         android:layout_width="200dp"
         android:layout_height="match_parent"
@@ -38,6 +38,6 @@
         android:layout_weight="1"
         android:scaleType="fitXY"
         android:src="@drawable/penguins"
-        />
+        />-->
 
 </LinearLayout>

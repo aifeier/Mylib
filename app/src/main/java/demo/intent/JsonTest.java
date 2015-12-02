@@ -19,8 +19,6 @@ import java.util.Map;
 import demo.intent.entity.Weather;
 import demo.intent.mode.toolbox.RequestManager;
 import lib.BaseActivity;
-import com.cwf.app.photolibrary.utils.photoviewlibs.CircleNetworkImageView;
-import com.cwf.app.photolibrary.utils.photoviewlibs.ZoomNetworkImageView;
 
 /**
  * Created by n-240 on 2015/9/23.
@@ -29,7 +27,6 @@ public class JsonTest extends BaseActivity implements  Response.Listener,Respons
 
     private TextView text;
     private NetworkImageView mImg;
-    private ZoomNetworkImageView zoomImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +46,11 @@ public class JsonTest extends BaseActivity implements  Response.Listener,Respons
         RequestManager.getRequestQueue().add(
                 RequestManager.getStringRequestGet("http://apis.baidu.com/apistore/weatherservice/weather?citypinyin=hangzhou"
                         , this, this));
-        mImg = (NetworkImageView) findViewById(R.id.NetWorkImg);
+/*        mImg = (NetworkImageView) findViewById(R.id.NetWorkImg);
         mImg.setDefaultImageResId(R.drawable.penguins);
         mImg.setErrorImageResId(R.drawable.penguins);
         mImg.setImageUrl("http://img0.imgtn.bdimg.com/it/u=1070902365,2619384777&fm=21&gp=0.jpg",
-                RequestManager.getImageLoader());
+                RequestManager.getImageLoader());*/
 //        CircleNetworkImageView photoview = new CircleNetworkImageView(this);
 //        photoview.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        photoview.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
