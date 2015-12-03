@@ -47,8 +47,8 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="fPVI4Tj6QcHglL0R5RfyFdVo" />
-        <meta-data android:name="demo.intent.mode.GlideConfiguration"
-            android:value="GlideModule"/>
+<!--        <meta-data android:name="demo.intent.mode.GlideConfiguration"
+            android:value="GlideModule"/>-->
 
         <activity
             android:name=".MainActivity"
