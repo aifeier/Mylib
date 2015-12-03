@@ -12,12 +12,20 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.cwf.app.cwf.R;
 
+import java.io.File;
 import java.util.ArrayList;
+
+import lib.utils.FileUtils;
+import lib.utils.SDCardUtils;
+import lib.widget.GridAdapter;
+import lib.widget.NoScrollGridView;
+import lib.widget.ViewHolder;
 
 
 /**
@@ -30,6 +38,8 @@ public class fragment_1 extends Fragment{
     private ImageView imageView;
 
     private ViewPager viewPager;
+
+    private NoScrollGridView noScrollGridView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,9 +82,6 @@ public class fragment_1 extends Fragment{
                         .load(lists.get(position))
                         .fitCenter()
                         .into(photoView);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    photoView.setBackgroundColor(getResources().getColor(R.color.white_e, null));
-                }
                 container.addView(photoView);
                 return photoView;
             }
@@ -85,6 +92,40 @@ public class fragment_1 extends Fragment{
             }
         });
         viewPager.setCurrentItem(0);
+
+        ArrayList<File> files = new ArrayList<>();
+
+        noScrollGridView = (NoScrollGridView) view.findViewById(R.id.noScrollgridview);
+        noScrollGridView.setAdapter(new GridAdapter<File>(getContext(), R.layout.item_photo,
+                new File(SDCardUtils.getAbleDirectoryPath()).listFiles()) {
+            @Override
+            public void buildView(ViewHolder holder, File data) {
+                Glide.with(fragment_1.this.getContext())
+                        .load(R.drawable.ic_logo_about)
+                        .error(R.drawable.error)
+                        .fitCenter()
+                        .into((ImageView) holder.findViewById(R.id.item_imageview));
+                TextView text = (TextView) holder.findViewById(R.id.item_textview);
+                text.setVisibility(View.VISIBLE);
+                text.setText(data.getName());
+
+            }
+
+            @Override
+            public void buildAddView(ViewHolder holder) {
+
+            }
+
+            @Override
+            public boolean canAddItem() {
+                return false;
+            }
+
+            @Override
+            public int getMaxSize() {
+                return 12;
+            }
+        });
 
     }
 

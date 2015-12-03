@@ -13,15 +13,27 @@
         android:padding="@dimen/margin_xsmall">
 
     </android.support.v4.view.ViewPager>
+        <View
+            android:background="@color/blanchedalmond"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
     <ImageView
         android:id="@+id/imageview"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_xsmall" />
+        android:layout_height="@dimen/height_xsmall"
+        />
+        <View
+            android:background="@color/blanchedalmond"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></View>
     <lib.widget.NoScrollGridView
         android:id="@+id/noScrollgridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="4"></lib.widget.NoScrollGridView>
+        android:numColumns="4"
+        android:scrollbars="none"
+        android:horizontalSpacing="@dimen/margin_xsmall"
+        android:verticalSpacing="@dimen/margin_xsmall"></lib.widget.NoScrollGridView>
 
 </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

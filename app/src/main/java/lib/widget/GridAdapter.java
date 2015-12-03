@@ -1,5 +1,6 @@
 package lib.widget;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -10,7 +11,18 @@ import android.widget.BaseAdapter;
 public abstract class GridAdapter<T> extends BaseAdapter {
     private Context mContext;
     private int mItemLayoutId;
-    protected List<T> mData;
+    protected List<T> mData = new ArrayList<>();
+
+    public GridAdapter(Context mContext, int mItemLayoutId, T[] mData) {
+        super();
+        this.mItemLayoutId = mItemLayoutId;
+        this.mContext = mContext;
+        if(mData!=null && mData.length>0)
+        for(T item: mData)
+            this.mData.add(item);
+        if(this.mData == null && this.mData.size() <= 0)
+            this.mData = new ArrayList<>();
+    }
 
     public GridAdapter(Context mContext, int mItemLayoutId, List<T> mData) {
         super();
@@ -18,6 +30,8 @@ public abstract class GridAdapter<T> extends BaseAdapter {
         this.mContext = mContext;
         if (mData != null)
             this.mData = mData;
+        if(this.mData == null && this.mData.size() <= 0)
+            this.mData = new ArrayList<>();
     }
 
     @Override
@@ -45,7 +59,7 @@ public abstract class GridAdapter<T> extends BaseAdapter {
         if(canAddItem() && position == getCount()-1 && mData.size()< getMaxSize()) {
                 buildAddView(holder);
         }
-        else {
+        else if(position < getMaxSize()){
             T data = mData.get(position);
             buildView(holder, data);
         }
