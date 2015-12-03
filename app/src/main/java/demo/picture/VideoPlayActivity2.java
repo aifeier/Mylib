@@ -371,8 +371,10 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     private void resetMediaStatue(){
         if(mediaPlayer.isPlaying())
             mediaPlayer.stop();
-        if(mediaPlayer !=null)
+        if(mediaPlayer !=null) {
             mediaPlayer.reset();
+            mediaPlayer.release();
+        }
         mediaPlayer = new MediaPlayer();
         seekBar.setClickable(false);
         if(!isFrist) {

@@ -1,16 +1,23 @@
 package demo.custom.tabhost;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.TextView;
+import android.widget.ImageView;
 
+import com.bm.library.PhotoView;
+import com.bumptech.glide.Glide;
 import com.cwf.app.cwf.R;
+
+import java.util.ArrayList;
 
 
 /**
@@ -18,13 +25,67 @@ import com.cwf.app.cwf.R;
  */
 public class fragment_1 extends Fragment{
 
-    private TextView textView;
-
     private View mView;
+
+    private ImageView imageView;
+
+    private ViewPager viewPager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    private void initView(View view){
+        imageView = (ImageView) view.findViewById(R.id.imageview);
+        Glide.with(this)
+                .load(R.drawable.ic_audio_filetype)
+                .crossFade()
+                .into(imageView);
+        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        viewPager.setOffscreenPageLimit(1);
+        final ArrayList<Integer> lists = new ArrayList<>();
+        lists.add(R.drawable.ic_apk_filetype);
+        lists.add(R.drawable.ic_audio_filetype);
+        lists.add(R.drawable.ic_audiofolder_filetype);
+        lists.add(R.drawable.ic_bluetooth_menu);
+        lists.add(R.drawable.ic_compress_filetype);
+        lists.add(R.drawable.ic_device_menu);
+        lists.add(R.drawable.ic_excel_filetype);
+        viewPager.setAdapter(new PagerAdapter() {
+            @Override
+            public int getCount() {
+                return lists.size();
+            }
+
+            @Override
+            public boolean isViewFromObject(View view, Object object) {
+                return view == object;
+            }
+
+
+            @Override
+            public View instantiateItem(ViewGroup container, int position) {
+                PhotoView photoView = new PhotoView(container.getContext());
+                photoView.enable();
+                Glide.with(container.getContext())
+                        .load(lists.get(position))
+                        .fitCenter()
+                        .into(photoView);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    photoView.setBackgroundColor(getResources().getColor(R.color.white_e, null));
+                }
+                container.addView(photoView);
+                return photoView;
+            }
+
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object object) {
+                container.removeView((View) object);
+            }
+        });
+        viewPager.setCurrentItem(0);
+
     }
 
     @Override
@@ -37,9 +98,9 @@ public class fragment_1 extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.layout_text_img, container, false);
-        textView = (TextView) mView.findViewById(R.id.textview);
-        textView.setText("this is a way");
+        mView = inflater.inflate(R.layout.layout_fragment1, container, false);
+        initView(mView);
         return mView;
     }
+
 }

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -53,11 +54,11 @@ public class TabHostActivity extends FragmentActivity {
         View actionbar_custom = View.inflate(this, R.layout.actionbar_customview, null);
         getActionBar().setCustomView(actionbar_custom, new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
                 ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
-        getActionBar().setTitle("tab");
+        getActionBar().setTitle("me");
         getActionBar().setDisplayShowCustomEnabled(true);
         getActionBar().setDisplayShowHomeEnabled(false);
-        getActionBar().setHomeButtonEnabled(true);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActionBar().setHomeButtonEnabled(true);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
         //实例化布局对象
         layoutInflater = LayoutInflater.from(this);
 
@@ -99,5 +100,6 @@ public class TabHostActivity extends FragmentActivity {
 
         return view;
     }
+
 
 }
