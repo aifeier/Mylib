@@ -35,6 +35,11 @@
             android:scrollbars="none"
             android:horizontalSpacing="@dimen/margin_xsmall"
             android:verticalSpacing="@dimen/margin_xsmall"></lib.widget.NoScrollGridView>
+        <com.squareup.timessquare.CalendarPickerView
+            android:id="@+id/calendar_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

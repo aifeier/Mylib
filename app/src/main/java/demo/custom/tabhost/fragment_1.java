@@ -18,9 +18,12 @@ import com.bumptech.glide.Glide;
 import com.cwf.app.cwf.R;
 import com.handmark.pulltorefresh.library.autoloadlist.AutoLoadAdapter;
 import com.handmark.pulltorefresh.library.autoloadlist.AutoRefreshListView;
+import com.squareup.timessquare.CalendarPickerView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import lib.utils.SDCardUtils;
 import lib.widget.GridAdapter;
@@ -128,6 +131,15 @@ public class fragment_1 extends Fragment{
                 return 12;
             }
         });
+
+        /*时间*/
+        Calendar nextYear = Calendar.getInstance();
+        nextYear.add(Calendar.YEAR, 1);
+        CalendarPickerView calendar = (CalendarPickerView) view.findViewById(R.id.calendar_view);
+        Date today = new Date();
+        calendar.init(today, nextYear.getTime())
+                .inMode(CalendarPickerView.SelectionMode.SINGLE)
+                .withSelectedDate(today);
         initList();
     }
 
