@@ -18,10 +18,9 @@ public abstract class GridAdapter<T> extends BaseAdapter {
         this.mItemLayoutId = mItemLayoutId;
         this.mContext = mContext;
         if(mData!=null && mData.length>0)
-        for(T item: mData)
-            this.mData.add(item);
-        if(this.mData == null && this.mData.size() <= 0)
-            this.mData = new ArrayList<>();
+        for(int i = 0; i< mData.length && i< getMaxSize();i++)
+            this.mData.add(mData[i]);
+        checkData();
     }
 
     public GridAdapter(Context mContext, int mItemLayoutId, List<T> mData) {
@@ -29,9 +28,14 @@ public abstract class GridAdapter<T> extends BaseAdapter {
         this.mItemLayoutId = mItemLayoutId;
         this.mContext = mContext;
         if (mData != null)
-            this.mData = mData;
-        if(this.mData == null && this.mData.size() <= 0)
-            this.mData = new ArrayList<>();
+            this.mData = mData.subList(0,
+                    mData.size() < getMaxSize() ? mData.size() : getMaxSize());
+        checkData();
+    }
+
+    private void checkData(){
+        if(mData == null && mData.size() <= 0)
+            mData = new ArrayList<>();
     }
 
     @Override
