@@ -1,6 +1,5 @@
 package demo.custom.tabhost;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,11 +16,12 @@ import android.widget.TextView;
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.cwf.app.cwf.R;
+import com.handmark.pulltorefresh.library.autoloadlist.AutoLoadAdapter;
+import com.handmark.pulltorefresh.library.autoloadlist.AutoRefreshListView;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import lib.utils.FileUtils;
 import lib.utils.SDCardUtils;
 import lib.widget.GridAdapter;
 import lib.widget.NoScrollGridView;
@@ -40,6 +40,8 @@ public class fragment_1 extends Fragment{
     private ViewPager viewPager;
 
     private NoScrollGridView noScrollGridView;
+
+    private AutoRefreshListView autoRefreshListView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -126,7 +128,33 @@ public class fragment_1 extends Fragment{
                 return 12;
             }
         });
+        initList();
+    }
 
+    private void initList(){
+        AutoLoadAdapter<String> autoLoadAdapter =
+                new AutoLoadAdapter<String>(getContext(), android.R.layout.simple_expandable_list_item_1) {
+                    @Override
+                    public void buildView(com.handmark.pulltorefresh.library.autoloadlist.ViewHolder holder, String data) {
+                        holder.setValueToTextView(android.R.id.text1, data);
+                    }
+
+                    @Override
+                    public void getPage(int page) {
+
+                    }
+                };
+        autoRefreshListView.setListAdapter(autoLoadAdapter);
+        ArrayList<String> lists = new ArrayList<>();
+        lists.add("a");
+        lists.add("b");
+        lists.add("j");
+        lists.add("h");
+        lists.add("g");
+        lists.add("f");
+        lists.add("d");
+        lists.add("c");
+        autoLoadAdapter.setmData(lists, autoRefreshListView);
     }
 
     @Override
@@ -140,6 +168,9 @@ public class fragment_1 extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.layout_fragment1, container, false);
+        autoRefreshListView = (AutoRefreshListView) mView.findViewById(R.id.tab_autolist);
+        View header = inflater.inflate(R.layout.layout_header, container, false);
+        autoRefreshListView.addVisiableHeader(header, 0);
         initView(mView);
         return mView;
     }
