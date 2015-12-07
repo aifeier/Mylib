@@ -10,6 +10,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.cwf.app.cwf.R;
 
 import java.util.List;
@@ -45,7 +46,6 @@ public class ShowAlbumActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("选择图片");
         getActionBar().setDisplayShowHomeEnabled(false);
         setTitle(getResources().getString(R.string.select_photos));
         setContentView(R.layout.layout_file_photos_list);

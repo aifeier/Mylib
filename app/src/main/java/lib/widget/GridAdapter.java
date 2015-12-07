@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 public abstract class GridAdapter<T> extends BaseAdapter {
     private Context mContext;
     private int mItemLayoutId;
-    protected List<T> mData = new ArrayList<>();
+    protected ArrayList<T> mData = new ArrayList<>();
 
     public GridAdapter(Context mContext, int mItemLayoutId, T[] mData) {
         super();
@@ -23,13 +23,12 @@ public abstract class GridAdapter<T> extends BaseAdapter {
         checkData();
     }
 
-    public GridAdapter(Context mContext, int mItemLayoutId, List<T> mData) {
+    public GridAdapter(Context mContext, int mItemLayoutId, ArrayList<T> mData) {
         super();
         this.mItemLayoutId = mItemLayoutId;
         this.mContext = mContext;
         if (mData != null)
-            this.mData = mData.subList(0,
-                    mData.size() < getMaxSize() ? mData.size() : getMaxSize());
+            this.mData = mData;
         checkData();
     }
 
@@ -42,6 +41,8 @@ public abstract class GridAdapter<T> extends BaseAdapter {
     public int getCount() {
         if(canAddItem() && mData.size() < getMaxSize() && getMaxSize() != -1)
             return mData.size() + 1;
+        else if(getMaxSize() !=-1)
+            return mData.size() < getMaxSize() ? mData.size() : getMaxSize();
         else
             return mData.size();
     }
@@ -63,7 +64,7 @@ public abstract class GridAdapter<T> extends BaseAdapter {
         if(canAddItem() && position == getCount()-1 && mData.size()< getMaxSize()) {
                 buildAddView(holder);
         }
-        else if(position < getMaxSize()){
+        else if(getMaxSize()==-1 || position < getMaxSize()){
             T data = mData.get(position);
             buildView(holder, data);
         }
