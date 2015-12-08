@@ -50,6 +50,7 @@ public class ImageFileActivity extends BaseActivity{
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 }
 
 

@@ -5,13 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TimeUtils {
-	static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	static SimpleDateFormat simpleDateFormat1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	static SimpleDateFormat simpleDateFormat2=new SimpleDateFormat("yyyy-MM-dd");
 	/**
 	 * yyyy-MM-dd HH:mm:ss
 	 * @return
 	 */
 	public static SimpleDateFormat getSimpleDateFormat(){
-		return simpleDateFormat;
+		return simpleDateFormat1;
 	}
 	
 	
@@ -28,7 +29,7 @@ public class TimeUtils {
 	public static String getSimpleDate(String formatString){
 		return new SimpleDateFormat(formatString).format(new Date());
 	}
-	
+
 	/**
 	 * 获得当前时间  按照格式：yyyy-MM-dd HH:mm:ss
 	 * @return
@@ -43,6 +44,10 @@ public class TimeUtils {
 	 */
 	public static String getSimpleDate(Date date){
 		return getSimpleDateFormat().format(date);
+	}
+
+	public static String getSimpleDate2(Date date){
+		return simpleDateFormat2.format(date);
 	}
 
 	/**
@@ -74,8 +79,8 @@ public class TimeUtils {
 	 */
 	public static int dateTimeCompara(String time1, String time2)
 			throws ParseException {
-		Date dt1 = simpleDateFormat.parse(time1);
-		Date dt2 = simpleDateFormat.parse(time2);
+		Date dt1 = simpleDateFormat1.parse(time1);
+		Date dt2 = simpleDateFormat1.parse(time2);
 		if (dt1.getTime() > dt2.getTime()) {
 //			System.out.println("dt1 在dt2前");
 			return 1;

@@ -113,4 +113,10 @@ public class GalleryActivity extends BaseActivity{
         }
     };
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mViewPager.destroyDrawingCache();
+        mViewPager.removeAllViews();
+    }
 }
