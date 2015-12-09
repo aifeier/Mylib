@@ -303,7 +303,7 @@ public class CalendarView extends LinearLayout{
                     }
                     break;
             }
-            return true;
+            return false;
         }
     };
 
