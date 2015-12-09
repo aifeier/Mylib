@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -154,9 +155,8 @@ public class CalendarView extends LinearLayout{
     private void initGrid() {
         initDay();
         refreshDate();
-
         calendar_grid.setAdapter(new GridAdapter<CalendarDate>(getContext()
-                , R.layout.layout_calendar_item,calendarDateArrayList) {
+                , R.layout.layout_calendar_item, calendarDateArrayList) {
             @Override
             public void buildView(ViewHolder holder, CalendarDate data) {
                 TextView textView = (TextView) holder.findViewById(R.id.calendar_item_day);
@@ -172,10 +172,10 @@ public class CalendarView extends LinearLayout{
                     textView.setTextColor(Color.parseColor("#ff1111ee"));
                 }
 
-                if(data.isSelected()){
-                    if(data.getType() == CalendarDate.TYPE_TODAY){
+                if (data.isSelected()) {
+                    if (data.getType() == CalendarDate.TYPE_TODAY) {
                         textView.setBackgroundResource(R.color.skyblue);
-                    }else if(data.getType() == CalendarDate.TYPE_PRESENT){
+                    } else if (data.getType() == CalendarDate.TYPE_PRESENT) {
                         textView.setBackgroundResource(R.color.divide_line);
                     }
                 }
@@ -203,12 +203,25 @@ public class CalendarView extends LinearLayout{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CalendarDate calendarDate = (CalendarDate) parent.getAdapter().getItem(position);
                 Toast.makeText(getContext(), +calendarDate.getCalendar().get(Calendar.YEAR)
-                        +"-" +(calendarDate.getCalendar().get(Calendar.MONTH)+1)
-                        +"-" + calendarDate.getCalendar().get(Calendar.DAY_OF_MONTH), Toast.LENGTH_SHORT).show();
+                        + "-" + (calendarDate.getCalendar().get(Calendar.MONTH) + 1)
+                        + "-" + calendarDate.getCalendar().get(Calendar.DAY_OF_MONTH), Toast.LENGTH_SHORT).show();
                 mCalendar = calendarDate.getCalendar();
                 initGrid();
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(parent, view, position, id);
+                }
             }
         });
+        calendar_grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if(onItemLongClickListener!=null)
+                    return onItemLongClick(parent, view, position, id);
+                return false;
+            }
+        });
+
+        calendar_grid.setOnTouchListener(onTouchListener);
     }
 
     private OnClickListener onClickListener = new OnClickListener() {
@@ -236,4 +249,98 @@ public class CalendarView extends LinearLayout{
     public void setmCalendar(Calendar calendar) {
         this.mCalendar = calendar;
     }
+
+    private AdapterView.OnItemClickListener onItemClickListener;
+
+    public void setOnItemClick(AdapterView.OnItemClickListener onItemClick){
+        onItemClickListener = onItemClick;
+    }
+
+    private AdapterView.OnItemLongClickListener onItemLongClickListener;
+
+    public void setOnItemLongClick(AdapterView.OnItemLongClickListener onItemLongClick){
+        onItemLongClickListener = onItemLongClick;
+    }
+
+    public CalendarDate getItem(int position){
+        if(position>=0&&position<=calendar_grid.getAdapter().getCount())
+            return (CalendarDate) calendar_grid.getAdapter().getItem(position);
+        else
+            return null;
+    }
+
+
+    private OnTouchListener onTouchListener = new OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    start_x = event.getX();
+                    start_y = event.getY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    break;
+                case MotionEvent.ACTION_UP:
+                    end_x = event.getX();
+                    end_y = event.getY();
+                    if(Math.abs(end_x-start_x) > Math.abs(end_y- start_y)){
+                        float move = end_x- start_x;
+                        if(move >0.0){
+                            if(move > 50) {
+                            /*下个月*/
+                                mCalendar.set(year, month - 1, dayofmonth);
+                                initGrid();
+                                return true;
+                            }
+                        }else{
+                            if(-move > 50) {
+                            /*上个月*/
+                                mCalendar.set(year, month + 1, dayofmonth);
+                                initGrid();
+                                return true;
+                            }
+                        }
+                    }
+                    break;
+            }
+            return true;
+        }
+    };
+
+    private float start_x, start_y, end_x, end_y;
+
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                start_x = event.getX();
+//                start_y = event.getY();
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                end_x = event.getX();
+//                end_y = event.getY();
+//                if(Math.abs(end_x-start_x) > Math.abs(end_y- start_y)){
+//                    float move = end_x- start_x;
+//                    if(move >0.0){
+//                        if(move>100) {
+//                            /*下个月*/
+//                            mCalendar.set(year, month + 1, dayofmonth);
+//                            initGrid();
+//                            return true;
+//                        }
+//                    }else{
+//                        if(-move > 100) {
+//                            /*上个月*/
+//                            mCalendar.set(year, month - 1, dayofmonth);
+//                            initGrid();
+//                            return true;
+//                        }
+//                    }
+//                }
+//                break;
+//        }
+//        return super.onTouchEvent(event);
+//    }
 }
