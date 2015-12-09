@@ -7,6 +7,7 @@ import java.util.Date;
 public class TimeUtils {
 	static SimpleDateFormat simpleDateFormat1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	static SimpleDateFormat simpleDateFormat2=new SimpleDateFormat("yyyy-MM-dd");
+	static SimpleDateFormat simpleDateFormat3=new SimpleDateFormat("yyyy-MM");
 	/**
 	 * yyyy-MM-dd HH:mm:ss
 	 * @return
@@ -48,6 +49,9 @@ public class TimeUtils {
 
 	public static String getSimpleDate2(Date date){
 		return simpleDateFormat2.format(date);
+	}
+	public static String getSimpleDate3(Date date){
+		return simpleDateFormat3.format(date);
 	}
 
 	/**

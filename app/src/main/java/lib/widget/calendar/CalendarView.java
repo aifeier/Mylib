@@ -3,11 +3,13 @@ package lib.widget.calendar;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import com.cwf.app.cwf.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import lib.utils.TimeUtils;
 import lib.widget.GridAdapter;
@@ -46,80 +49,135 @@ public class CalendarView extends LinearLayout{
     private TextView calendar_day;
     private NoScrollGridView calendar_grid;
     private Calendar mCalendar;
+    private Button btn_precious, btn_next;
     private void initView(){
         mCalendar = getmCalendar();
         if(mCalendar == null)
             mCalendar = Calendar.getInstance();
         LayoutInflater.from(getContext()).inflate(R.layout.layout_calendar, this, true);
         calendar_day = (TextView) findViewById(R.id.calendar_day);
-        calendar_day.setText(TimeUtils.getSimpleDate2(mCalendar.getTime()));
         calendar_grid = (NoScrollGridView) findViewById(R.id.calendar_grid);
+        btn_precious = (Button) findViewById(R.id.calendar_previous);
+        btn_next = (Button) findViewById(R.id.calendar_next);
+        btn_precious.setOnClickListener(onClickListener);
+        btn_next.setOnClickListener(onClickListener);
+        mCalendar.add(Calendar.MONTH, 0);
+        initDay();
         initGrid();
     }
 
+    /*当前选择日期的年月*/
+    private int month;
+    private int year;
+    private int dayofmonth;
+
+    private void initDay(){
+        year = mCalendar.get(Calendar.YEAR);
+        month = mCalendar.get(Calendar.MONTH);
+        dayofmonth = mCalendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    private void resetCalendar(){
+        mCalendar.set(Calendar.YEAR, year);
+        mCalendar.set(Calendar.MONTH, month);
+        mCalendar.set(Calendar.DAY_OF_MONTH, dayofmonth);
+    }
+
     private ArrayList<CalendarDate> calendarDateArrayList;
-    private void initGrid(){
-        calendarDateArrayList = new ArrayList<>();
+    private void refreshDate(){
+        if(calendarDateArrayList==null)
+            calendarDateArrayList = new ArrayList<>();
+        else
+            calendarDateArrayList.clear();
         /*上月*/
-        Calendar calendar = mCalendar;
-        calendar.add(Calendar.MONTH, 0);
-        int sizeOfLastMonth = CalendarUtils.getSizeoflastMonth(calendar)
-                - CalendarUtils.getFristDayIntofWeek(calendar);
-        for(int i = 0; i <= CalendarUtils.getFristDayIntofWeek(calendar); i++){
+        resetCalendar();
+        int start = CalendarUtils.getSizeoflastMonth(mCalendar);
+        resetCalendar();
+        int size = CalendarUtils.getFristDayIntofWeek(mCalendar);
+        for(int i = size; i > 1; i--){
+
             CalendarDate calendarDate = new CalendarDate();
             calendarDate.setType(CalendarDate.TYPE_PREVIOUS);
-            calendarDate.setStringnum(sizeOfLastMonth + "");
-            calendarDate.setMdate(CalendarUtils.getDayofMonth(sizeOfLastMonth, calendar));
-            sizeOfLastMonth++;
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.YEAR, year);
+            c.set(Calendar.MONTH, month - 1);
+            c.set(Calendar.DAY_OF_MONTH, start - i + 2);
+            calendarDate.setCalendar(c);
+            calendarDate.setStringnum(c.get(Calendar.DAY_OF_MONTH) + "");
             calendarDateArrayList.add(calendarDate);
         }
         /*本月*/
-        calendar = mCalendar;
-        calendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH) + 1);
-        int today = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-        for(int i =1 ; i<= mCalendar.getActualMaximum(Calendar.DATE); i++) {
+        resetCalendar();
+        resetCalendar();
+        size = mCalendar.getActualMaximum(Calendar.DATE);
+        for(int i =1 ; i<= size; i++) {
             CalendarDate calendarDate = new CalendarDate();
             calendarDate.setType(CalendarDate.TYPE_PRESENT);
             calendarDate.setStringnum(i + "");
-            if(i== today)
+
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.YEAR, year);
+            c.set(Calendar.MONTH, month);
+            c.set(Calendar.DAY_OF_MONTH, i);
+            calendarDate.setCalendar(c);
+            if(year == Calendar.getInstance().get(Calendar.YEAR)
+                    && month == Calendar.getInstance().get(Calendar.MONTH)
+                    && i == Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) {
                 calendarDate.setType(CalendarDate.TYPE_TODAY);
-            calendarDate.setMdate(CalendarUtils.getDayofMonth(i, calendar));
+            }
+
+            if(i == dayofmonth){
+                calendarDate.setSelected(true);
+            }
             calendarDateArrayList.add(calendarDate);
         }
 
         /*下个月*/
-        int sizeOfNextMonth = CalendarUtils.getLastDayIntofWeek(mCalendar);
-        calendar = mCalendar;
-        calendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH) + 2);
+        resetCalendar();
+        int sizeOfNextMonth = 7- CalendarUtils.getLastDayIntofWeek(mCalendar);
         for(int i=1; i<= sizeOfNextMonth; i++){
             CalendarDate calendarDate = new CalendarDate();
             calendarDate.setType(CalendarDate.TYPE_NEXT);
             calendarDate.setStringnum(i + "");
-            calendarDate.setMdate(CalendarUtils.getDayofMonth(i, calendar));
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.YEAR, year);
+            c.set(Calendar.MONTH, month + 1);
+            c.set(Calendar.DAY_OF_MONTH, i);
+            calendarDate.setCalendar(c);
             calendarDateArrayList.add(calendarDate);
         }
+
+        resetCalendar();
+        calendar_day.setText(mCalendar.get(Calendar.YEAR) + "-"
+                + (month + 1));
+    }
+    private void initGrid() {
+        initDay();
+        refreshDate();
 
         calendar_grid.setAdapter(new GridAdapter<CalendarDate>(getContext()
                 , R.layout.layout_calendar_item,calendarDateArrayList) {
             @Override
             public void buildView(ViewHolder holder, CalendarDate data) {
                 TextView textView = (TextView) holder.findViewById(R.id.calendar_item_day);
-                if (data.getType() == CalendarDate.TYPE_DAY) {
-                    textView.setBackgroundResource(R.color.white);
-                } else if (data.getType() == CalendarDate.TYPE_PREVIOUS) {
-                    textView.setBackgroundResource(R.color.silver);
+                if (data.getType() == CalendarDate.TYPE_PREVIOUS) {
+//                    textView.setBackgroundResource(R.color.silver);
                 } else if (data.getType() == CalendarDate.TYPE_PRESENT) {
-                    textView.setBackgroundResource(R.color.lightsteelblue);
+//                    textView.setBackgroundResource(R.color.lightsteelblue);
+                    textView.setTextColor(Color.parseColor("#ff000000"));
                 } else if (data.getType() == CalendarDate.TYPE_NEXT) {
-                    textView.setBackgroundResource(R.color.silver);
+//                    textView.setBackgroundResource(R.color.silver);
                 } else if (data.getType() == CalendarDate.TYPE_TODAY) {
-                    textView.setBackgroundResource(R.color.blueviolet);
+//                    textView.setBackgroundResource(R.color.skyblue);
+                    textView.setTextColor(Color.parseColor("#ff1111ee"));
                 }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    textView.setTextColor(
-                            getContext().getResources().getColor(R.color.black, null));
-                }else{
-                    textView.setTextColor(Color.parseColor("#ff0000ff"));
+
+                if(data.isSelected()){
+                    if(data.getType() == CalendarDate.TYPE_TODAY){
+                        textView.setBackgroundResource(R.color.skyblue);
+                    }else if(data.getType() == CalendarDate.TYPE_PRESENT){
+                        textView.setBackgroundResource(R.color.divide_line);
+                    }
                 }
                 textView.setText(data.getStringnum());
             }
@@ -144,10 +202,32 @@ public class CalendarView extends LinearLayout{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CalendarDate calendarDate = (CalendarDate) parent.getAdapter().getItem(position);
-                Toast.makeText(getContext(), TimeUtils.getSimpleDate2(calendarDate.getMdate()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), +calendarDate.getCalendar().get(Calendar.YEAR)
+                        +"-" +(calendarDate.getCalendar().get(Calendar.MONTH)+1)
+                        +"-" + calendarDate.getCalendar().get(Calendar.DAY_OF_MONTH), Toast.LENGTH_SHORT).show();
+                mCalendar = calendarDate.getCalendar();
+                initGrid();
             }
         });
     }
+
+    private OnClickListener onClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.calendar_previous:
+                    mCalendar.set(year, month-1, dayofmonth);
+                    initGrid();
+                    break;
+                case R.id.calendar_next:
+                    mCalendar.set(year, month+1, dayofmonth);
+                    initGrid();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     public Calendar getmCalendar() {
         return mCalendar;

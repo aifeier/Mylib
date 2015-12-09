@@ -11,6 +11,6 @@
     android:padding="@dimen/margin_small"
     android:text="1"
     android:textSize="@dimen/text_medium"
-    android:textColor="@color/black"/>
+    android:textColor="@color/status_view"/>
 
 </LinearLayout>

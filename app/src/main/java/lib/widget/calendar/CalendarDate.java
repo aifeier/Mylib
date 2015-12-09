@@ -1,6 +1,7 @@
 package lib.widget.calendar;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -10,11 +11,10 @@ import java.util.Date;
  */
 public class CalendarDate implements Serializable {
 
-    public static int TYPE_PREVIOUS = 1;
-    public static int TYPE_PRESENT = 2;
-    public static int TYPE_NEXT = 3;
-    public static int TYPE_TODAY = 4;
-    public static int TYPE_DAY = 5;/*上面的日期备注，不能选择*/
+    public static int TYPE_PREVIOUS = 1;/*上月*/
+    public static int TYPE_PRESENT = 2;/*本月*/
+    public static int TYPE_NEXT = 3;/*下个月*/
+    public static int TYPE_TODAY = 4;/*今天*/
 
 
     /*日期*/
@@ -24,7 +24,9 @@ public class CalendarDate implements Serializable {
     private int type;
 
     /*当前日期*/
-    private Date mdate;
+    private Calendar calendar;
+
+    private boolean selected;
 
     public String getStringnum() {
         return stringnum;
@@ -42,11 +44,19 @@ public class CalendarDate implements Serializable {
         this.type = type;
     }
 
-    public Date getMdate() {
-        return mdate;
+    public Calendar getCalendar() {
+        return calendar;
     }
 
-    public void setMdate(Date mdate) {
-        this.mdate = mdate;
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }
