@@ -19,6 +19,7 @@ import wintone.idcard.android.RecogParameterMessage;
 import wintone.idcard.android.ResultMessage;
 import wintone.idcard.android.TimeService;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -145,7 +146,7 @@ public class RecogService extends Service {
 		}
 		this.mafr = this.mafo.ReadAuthFile(this.miwenxml);
 
-		TelephonyManager telephonyManager = (TelephonyManager) getSystemService("phone");
+		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		StringBuilder sb = new StringBuilder();
 		sb.append(telephonyManager.getDeviceId());
 		String deviceId = sb.toString();
@@ -215,7 +216,7 @@ public class RecogService extends Service {
 			String[] str = { "", "", "", "", "", "", "", "", "", "", "", "" };
 			DeviceFP deviceFP = new DeviceFP();
 			Boolean bool = Boolean.valueOf(false);
-			telephonyManager = (TelephonyManager) getSystemService("phone");
+			telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 			try {
 				if ((this.miwenxml != null) && (this.mafr.isSIM("11"))) {
 					if ((simId != null) && (!(simId.equals(""))) && (!(simId.equals("null")))) {
@@ -254,7 +255,7 @@ public class RecogService extends Service {
 				}
 
 				String oldDateInitFilePath = Environment.getExternalStorageDirectory()
-						+ "/wintone/idcarddateinit.lsc";
+						+ "/Android/data/com.cwf.app.cwf/WT/idcarddateinit.lsc";
 				String newDateInitFilePath = Environment.getExternalStorageDirectory()
 						+ "/Android/data/com.cwf.app.cwf/WT/wtdateinit.lsc";
 				File oldDateInitFile = new File(oldDateInitFilePath);
@@ -355,7 +356,7 @@ public class RecogService extends Service {
 								}
 
 								File originalAuthRootFile = new File(Environment
-										.getExternalStorageDirectory().toString() + "/wintone/");
+										.getExternalStorageDirectory().toString() + "/Android/data/com.cwf.app.cwf/WT/");
 								if (!(originalAuthRootFile.exists()))
 									originalAuthRootFile.mkdirs();
 								FileOutputStream outStream = new FileOutputStream(path);
@@ -367,7 +368,7 @@ public class RecogService extends Service {
 						} else {
 							WintoneLSCXMLInformation wlxi = null;
 
-							TelephonyManager telephonyManager2 = (TelephonyManager) getSystemService("phone");
+							TelephonyManager telephonyManager2 = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
 							if ((telephonyManager2.getDeviceId() != null)
 									&& (!(telephonyManager2.getDeviceId().equals("")))) {
@@ -737,7 +738,7 @@ public class RecogService extends Service {
 				} catch (Resources.NotFoundException e) {
 					e.printStackTrace();
 					Toast.makeText(RecogService.this.getApplicationContext(),
-							"在strings文件中未找到company_name字段", 1).show();
+							"在strings文件中未找到company_name字段", Toast.LENGTH_SHORT).show();
 				}
 				if ((app_name != null) && (company_name != null)) {
 					RecogService.this.resultMessage.ReturnAuthority = RecogService.this.mafr
@@ -792,7 +793,7 @@ public class RecogService extends Service {
 				fleg = cdKey.checkjhm(result[2], RecogService.this.mcode, result[1]);
 
 				File originalAuthRootFile = new File(Environment.getExternalStorageDirectory()
-						.toString() + "/wintone/");
+						.toString() + "/Android/data/com.cwf.app.cwf/WT/");
 				if (!(originalAuthRootFile.exists()))
 					originalAuthRootFile.mkdirs();
 				FileOutputStream outStream = new FileOutputStream(originalAuthFilePath);
