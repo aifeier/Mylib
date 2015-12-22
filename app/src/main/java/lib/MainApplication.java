@@ -20,7 +20,7 @@ public class MainApplication extends Application{
         super.onCreate();
         mInstance = this;
         RequestManager.init(this);
-        SDKInitializer.initialize(this);
+//        SDKInitializer.initialize(this);
     }
 
     public static int getSDKVersionNumber() {

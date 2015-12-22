@@ -35,4 +35,10 @@ dependencies {
     compile 'com.squareup:android-times-square:1.6.4@aar'
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/volly-1.0.11.jar')
+    compile files('libs/android_auth.jar')
+    compile files('libs/android_auth.jar')
+    compile files('libs/bcprov-ext-jdk15-146.jar')
+    compile files('libs/idcard_sdk_scan.jar')
+    compile files('libs/ksoap2-android-assembly-2.4-jar-with-dependencies.jar')
+    compile files('libs/pki.jar')
 }
