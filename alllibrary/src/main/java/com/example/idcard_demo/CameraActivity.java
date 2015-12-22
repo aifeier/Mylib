@@ -67,7 +67,7 @@ import com.cwf.app.alllibrary.R;
 @SuppressLint("NewApi")
 public class CameraActivity extends Activity implements SurfaceHolder.Callback,
 		Camera.PreviewCallback, OnClickListener {
-	public String PATH = Environment.getExternalStorageDirectory().toString() + "/wtimage/";
+	public String PATH = Environment.getExternalStorageDirectory().toString() + "/Android/data/com.cwf.app.cwf/WT/";
 	private String strCaptureFilePath;
 	private int width, height, srcwidth, srcheight, WIDTH, HEIGHT;
 	private Camera camera;
@@ -102,7 +102,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback,
 	// end
 	private int quality = 100;
 	private final String IDCardPath = Environment.getExternalStorageDirectory().toString()
-			+ "/AndroidWT/IdCapture/";
+			+ "/Android/data/com.cwf.app.cwf/WT/IdCapture/";
 	private String picPathString = PATH + "WintoneIDCard.jpg";
 	private String HeadJpgPath = PATH + "head.jpg";
 	private String recogResultPath = PATH + "idcapture.txt", recogResultString = "";

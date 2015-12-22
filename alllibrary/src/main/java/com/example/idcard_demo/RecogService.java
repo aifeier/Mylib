@@ -52,8 +52,8 @@ public class RecogService extends Service {
 	private int ReturnAuthority = -10015;
 	private String mcode;
 	private Common common = new Common();
-	private String idcardpath = this.common.getSDPath() + "/AndroidWT/IDCard/";
-	private String rootpath = this.common.getSDPath() + "/AndroidWT";
+	private String idcardpath = this.common.getSDPath() + "/Android/data/com.cwf.app.cwf/WT/IDCard/";
+	private String rootpath = this.common.getSDPath() + "/Android/data/com.cwf.app.cwf/WT";
 	private ResultMessage resultMessage;
 	private Boolean isTF = Boolean.valueOf(false);
 	private static Intent service;
@@ -83,7 +83,7 @@ public class RecogService extends Service {
 		if ((paths == null) || (paths.equals(""))) {
 			return "";
 		}
-		String fullpath = paths + "/AndroidWT/idcard.cfg";
+		String fullpath = paths + "/Android/data/com.cwf.app.cwf/WT/idcard.cfg";
 		File file = new File(fullpath);
 		if (!(file.exists())) {
 			return "";
@@ -236,7 +236,7 @@ public class RecogService extends Service {
 				}
 
 				String versionInitFilePatnString = Environment.getExternalStorageDirectory()
-						+ "/AndroidWT/wtversioninit.lsc";
+						+ "/Android/data/com.cwf.app.cwf/WT/wtversioninit.lsc";
 				File versionInitFile = new File(versionInitFilePatnString);
 				if (versionInitFile.exists()) {
 					if (telephonyManager.getDeviceId() == null) {
@@ -256,7 +256,7 @@ public class RecogService extends Service {
 				String oldDateInitFilePath = Environment.getExternalStorageDirectory()
 						+ "/wintone/idcarddateinit.lsc";
 				String newDateInitFilePath = Environment.getExternalStorageDirectory()
-						+ "/AndroidWT/wtdateinit.lsc";
+						+ "/Android/data/com.cwf.app.cwf/WT/wtdateinit.lsc";
 				File oldDateInitFile = new File(oldDateInitFilePath);
 				File newDateInitFile = new File(newDateInitFilePath);
 				if ((newDateInitFile.exists()) || (oldDateInitFile.exists())) {
@@ -285,7 +285,7 @@ public class RecogService extends Service {
 
 				ProcedureAuthOperate pao = new ProcedureAuthOperate(this);
 				String path = pao.getOriginalAuthFilePathByProjectType("11");
-				String wintoneLSCFilePathString = common.getSDPath() + "/AndroidWT/wt.lsc";
+				String wintoneLSCFilePathString = common.getSDPath() + "/Android/data/com.cwf.app.cwf/WT/wt.lsc";
 				File oldLscFile = new File(path);
 				File wintoneLSCFile = new File(wintoneLSCFilePathString);
 				CDKey cdKey = new CDKey();
@@ -499,7 +499,7 @@ public class RecogService extends Service {
 
 	public void mergeFile(String[] file, String filename) throws IOException {
 		Common common = new Common();
-		String filepath = common.getSDPath() + "/AndroidWT/IDCard/" + filename;
+		String filepath = common.getSDPath() + "/Android/data/com.cwf.app.cwf/WT/IDCard/" + filename;
 
 		File newfile = new File(filepath);
 		if ((newfile != null) && (newfile.exists()) && (newfile.isFile())) {
@@ -523,7 +523,7 @@ public class RecogService extends Service {
 
 	public void copyDataBase() throws IOException {
 		Common common = new Common();
-		String dst = common.getSDPath() + "/AndroidWT/IDCard/";
+		String dst = common.getSDPath() + "/Android/data/com.cwf.app.cwf/WT/IDCard/";
 		String[] filename = { "Special.txt", "OEMtest.txt", "ProvName.txt",
 				"IDCLASSIFIERANDROID.xml", "THOCR_pspt.lib", "THOCR_LP.lib",
 				"thocr_Driver_License.lib", "IssueAndBirth.txt", "THOCR_Num_Char.lib",
@@ -694,7 +694,7 @@ public class RecogService extends Service {
 			if ((rpm.versionfile != null) && (!(rpm.versionfile.equals("")))) {
 				if (rpm.versionfile.equals("assets"))
 					rpm.versionfile = Environment.getExternalStorageDirectory().toString()
-							+ "/AndroidWT/IDCard/wtversion.lsc";
+							+ "/Android/data/com.cwf.app.cwf/WT/IDCard/wtversion.lsc";
 				VersionAuthFileOperate vafo = new VersionAuthFileOperate();
 				RecogService.this.resultMessage.ReturnAuthority = vafo.verifyVersionAuthFile(
 						rpm.versionfile, rpm.devcode, "11", rpm.nMainID + "");

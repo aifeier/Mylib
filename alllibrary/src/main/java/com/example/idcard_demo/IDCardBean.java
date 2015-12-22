@@ -503,7 +503,7 @@ public class IDCardBean extends Activity {
 		if ((paths == null) || (paths.equals(""))) {
 			return "";
 		}
-		String fullpath = paths + "/AndroidWT/idcard.cfg";
+		String fullpath = paths + "/Android/data/com.cwf.app.cwf/WT/idcard.cfg";
 		File file = new File(fullpath);
 		if (!(file.exists())) {
 			return "";
