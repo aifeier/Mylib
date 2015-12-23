@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.cwf.app.cwf.R;
 
+import java.util.Observable;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import de.greenrobot.event.EventBus;
@@ -44,6 +45,7 @@ public class EventBusDemo extends BaseActivity{
                 EventBus.getDefault().post(time);
             }
         });
+
     }
 
 

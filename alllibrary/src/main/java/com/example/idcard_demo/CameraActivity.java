@@ -314,7 +314,21 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback,
 			int previewheight = 480;
 			int second_previewWidth = 0;
 			int second_previewheight = 0;
-			if ((float) width / height == (float) 4 / 3 || (float) width / height == (float) 3 / 4) {
+			float scan = (float) width / height;
+			for (int i = 0; i < list.size(); i++) {
+				size = list.get(i);
+				if ((float) size.width / size.height == scan
+						|| (float) size.height / size.width == scan) {
+					if (second_previewWidth < size.width) {
+						second_previewWidth = size.width;
+						second_previewheight = size.height;
+					}
+				}
+			}
+			if (second_previewWidth != 0) {
+				previewWidth = second_previewWidth;
+				previewheight = second_previewheight;
+			} else if ((float) width / height == (float) 4 / 3 || (float) width / height == (float) 3 / 4) {
 
 				int length = list.size();
 
