@@ -23,7 +23,6 @@
     
     <style name="ActionBarTheme" parent="android:Theme.Light">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-
     </style>
 
     <style name="ToolBarTheme" parent="AppTheme.Base">
