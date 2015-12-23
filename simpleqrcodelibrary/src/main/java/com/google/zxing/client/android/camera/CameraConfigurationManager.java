@@ -47,7 +47,7 @@ final class CameraConfigurationManager {
   // This is bigger than the size of a small screen, which is still supported. The routine
   // below will still select the default (presumably 320x240) size for these. This prevents
   // accidental selection of very low resolution on some devices.
-  private static final int MIN_PREVIEW_PIXELS = 470 * 320; // normal screen
+  private static final int MIN_PREVIEW_PIXELS = 480 * 320; // normal screen
   private static final int MAX_PREVIEW_PIXELS = 1280 * 720;
 
   private final Context context;
@@ -239,7 +239,7 @@ void setDesiredCameraParameters(Camera camera, boolean safeMode) {
       int realWidth = supportedPreviewSize.width;
       int realHeight = supportedPreviewSize.height;
       int pixels = realWidth * realHeight;
-      if (pixels < MIN_PREVIEW_PIXELS || pixels > MAX_PREVIEW_PIXELS) {
+      if (pixels < MIN_PREVIEW_PIXELS ) {
         continue;
       }
       boolean isCandidatePortrait = realWidth < realHeight;
@@ -304,7 +304,7 @@ void setDesiredCameraParameters(Camera camera, boolean safeMode) {
       Log.i(TAG, "Supported preview sizes: " + previewSizesString);
     }
 
-    Point bestSize = null;
+    Point bestSize = new Point(screenResolution.x, screenResolution.y);
     float screenAspectRatio = (float) screenResolution.x / (float) screenResolution.y;
 
     float diff = Float.POSITIVE_INFINITY;
@@ -312,22 +312,20 @@ void setDesiredCameraParameters(Camera camera, boolean safeMode) {
       int realWidth = supportedPreviewSize.width;
       int realHeight = supportedPreviewSize.height;
       int pixels = realWidth * realHeight;
-      if (pixels < MIN_PREVIEW_PIXELS || pixels > MAX_PREVIEW_PIXELS) {
+      if (pixels < MIN_PREVIEW_PIXELS ) {
         continue;
       }
       boolean isCandidatePortrait = realWidth < realHeight;
       int maybeFlippedWidth = isCandidatePortrait ? realHeight : realWidth;
       int maybeFlippedHeight = isCandidatePortrait ? realWidth : realHeight;
-      if (maybeFlippedWidth == screenResolution.x && maybeFlippedHeight == screenResolution.y) {
-        Point exactPoint = new Point(realWidth, realHeight);
-        Log.i(TAG, "Found preview size exactly matching screen size: " + exactPoint);
-        return exactPoint;
-      }
       float aspectRatio = (float) maybeFlippedWidth / (float) maybeFlippedHeight;
       float newDiff = Math.abs(aspectRatio - screenAspectRatio);
-      if (newDiff < diff) {
-        bestSize = new Point(realWidth, realHeight);
-        diff = newDiff;
+      if(newDiff == 0.0 && maybeFlippedWidth > bestSize.x){
+          bestSize = new Point(realWidth, realHeight);
+          diff = newDiff;
+      }else if (newDiff < diff) {
+          bestSize = new Point(realWidth, realHeight);
+          diff = newDiff;
       }
     }
 
