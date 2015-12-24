@@ -589,8 +589,7 @@ public class RecogService extends Service {
 		public ResultMessage getRecogResult(RecogParameterMessage rpm) throws Exception {
 			if (rpm != null) {
 				int ReturnAuthority = IDCardAuthAndInit(rpm);
-//				int ReturnAuthority = 0;
-//				RecogService.this.ReturnInitIDCard = 0;
+
 				if ((RecogService.this.ReturnInitIDCard == 0) && (ReturnAuthority == 0)) {
 					System.out.println("裁切++");
 					if (rpm.nMainID == 1036) {
@@ -674,10 +673,11 @@ public class RecogService extends Service {
 				for (int i = 0; i < resultStrings.length; ++i) {
 					if (resultStrings[i].equals(nMainIDString)) {
 						typebool = true;
+						break;
 					}
 				}
 			}
-			typebool = true;
+//			typebool = true;
 			if (!(typebool)) {
 				RecogService.this.resultMessage.ReturnAuthority = -10016;
 				return RecogService.this.resultMessage.ReturnAuthority;
@@ -808,8 +808,8 @@ public class RecogService extends Service {
 				}
 			} catch (Exception e) {
 			}
-			RecogService.this.resultMessage.ReturnAuthority = 0;
-			RecogService.this.resultMessage.ReturnInitIDCard = RecogService.this.ReturnInitIDCard;
+/*			RecogService.this.resultMessage.ReturnAuthority = 0;
+			RecogService.this.resultMessage.ReturnInitIDCard = 0;*/
 
 			return RecogService.this.resultMessage.ReturnAuthority;
 		}
