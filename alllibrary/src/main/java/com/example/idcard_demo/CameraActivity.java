@@ -319,7 +319,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback,
 				size = list.get(i);
 				if ((float) size.width / size.height == scan
 						|| (float) size.height / size.width == scan) {
-					if (second_previewWidth < size.width) {
+					if (second_previewWidth < size.width && size.height <= height) {
 						second_previewWidth = size.width;
 						second_previewheight = size.height;
 					}
@@ -561,7 +561,37 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback,
 								(int) (size.width * 0.85),
 								(int) (size.height + 0.45 * size.width) / 2);// 预留参数
 					}
-					if (isConfirmSideLine) {
+
+					/*修改图片验证，去除验证照片清晰度，
+					验证2次边缘后就开始识别，提高时间但降低识别率*/
+					if (nMainIDX == 5 || nMainIDX == 6) {
+						api.SetConfirmSideMethod(1);
+					} else if (nMainIDX == 13 || nMainIDX == 9 || nMainIDX == 10
+							|| nMainIDX == 11 || nMainIDX == 12) {
+						api.SetConfirmSideMethod(2);
+					} else {
+						api.SetConfirmSideMethod(0);
+					}
+					int ConfirmSideSuccess1 = api.ConfirmSideLine(data, size.width, size.height,
+							nflag);
+					int ConfirmSideSuccess2 = api.ConfirmSideLine(data, size.width, size.height,
+							nflag);
+					/*int ConfirmSideSuccess3 = api.ConfirmSideLine(data, size.width, size.height,
+							nflag);*/
+					if (ConfirmSideSuccess1 == 1 && ConfirmSideSuccess2 == 1) {
+						CheckPicIsClear = 1;
+						ConfirmSideSuccess =1;
+						CheckPicIsClearCounts = 0;
+						viewfinder_view.setCheckLeftFrame(nflag[0]);
+						viewfinder_view.setCheckTopFrame(nflag[1]);
+						viewfinder_view.setCheckRightFrame(nflag[2]);
+						viewfinder_view.setCheckBottomFrame(nflag[3]);
+					}else{
+						return;
+					}
+
+					/*原先的判断*/
+					/*if (isConfirmSideLine) {
 						// 0是二代证、健保卡等，1适用于驾照行驶证,2适用于护照类的
 						if (nMainIDX == 5 || nMainIDX == 6) {
 							api.SetConfirmSideMethod(1);
@@ -595,10 +625,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback,
 							viewfinder_view.setCheckRightFrame(nflag[2]);
 							viewfinder_view.setCheckBottomFrame(nflag[3]);
 						}
-					}
-					// System.out.println("ConfirmSideSuccess:"
-					// + ConfirmSideSuccess + "--" + "CheckPicIsClear:"
-					// + CheckPicIsClear);
+					}*/
 					if (ConfirmSideSuccess == 1 && CheckPicIsClear == 1) {
 
 						data1 = data;
