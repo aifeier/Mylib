@@ -1,19 +1,5 @@
 package com.example.idcard_demo;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import wintone.idcard.android.IDCardAPI;
-import wintone.idcard.android.RecogParameterMessage;
-import wintone.idcard.android.ResultMessage;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -53,6 +39,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cwf.app.alllibrary.R;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import wintone.idcard.android.IDCardAPI;
+import wintone.idcard.android.RecogParameterMessage;
+import wintone.idcard.android.ResultMessage;
 
 /**
  * 
@@ -572,22 +573,20 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback,
 					} else {
 						api.SetConfirmSideMethod(0);
 					}
-					int ConfirmSideSuccess1 = api.ConfirmSideLine(data, size.width, size.height,
+					int ConfirmSideSuccess = api.ConfirmSideLine(data, size.width, size.height,
 							nflag);
-					int ConfirmSideSuccess2 = api.ConfirmSideLine(data, size.width, size.height,
-							nflag);
-					/*int ConfirmSideSuccess3 = api.ConfirmSideLine(data, size.width, size.height,
-							nflag);*/
-					if (ConfirmSideSuccess1 == 1 && ConfirmSideSuccess2 == 1) {
-						CheckPicIsClear = 1;
-						ConfirmSideSuccess =1;
+					if (ConfirmSideSuccess == 1 ) {
+						CheckPicIsClearCounts++;
+						if(CheckPicIsClearCounts > 1) {
+							CheckPicIsClear = 1;
+							CheckPicIsClearCounts = 0;
+							viewfinder_view.setCheckLeftFrame(nflag[0]);
+							viewfinder_view.setCheckTopFrame(nflag[1]);
+							viewfinder_view.setCheckRightFrame(nflag[2]);
+							viewfinder_view.setCheckBottomFrame(nflag[3]);
+						}
+					}else {
 						CheckPicIsClearCounts = 0;
-						viewfinder_view.setCheckLeftFrame(nflag[0]);
-						viewfinder_view.setCheckTopFrame(nflag[1]);
-						viewfinder_view.setCheckRightFrame(nflag[2]);
-						viewfinder_view.setCheckBottomFrame(nflag[3]);
-					}else{
-						return;
 					}
 
 					/*原先的判断*/
