@@ -218,7 +218,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback,
 		default:
 			break;
 		}
-
 	}
 
 	@Override
@@ -577,7 +576,9 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback,
 							nflag);
 					if (ConfirmSideSuccess == 1 ) {
 						CheckPicIsClearCounts++;
-						if(CheckPicIsClearCounts > 1) {
+						isTakePic = true;
+//						CheckPicIsClear = api.CheckPicIsClear(data, size.width, size.height);
+						if(CheckPicIsClearCounts > 0) {
 							CheckPicIsClear = 1;
 							CheckPicIsClearCounts = 0;
 							viewfinder_view.setCheckLeftFrame(nflag[0]);
@@ -587,7 +588,10 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback,
 						}
 					}else {
 						CheckPicIsClearCounts = 0;
+						isTakePic = false;
 					}
+
+					Log.w("ABC", CheckPicIsClearCounts+"");
 
 					/*原先的判断*/
 					/*if (isConfirmSideLine) {

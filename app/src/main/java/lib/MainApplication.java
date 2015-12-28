@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import demo.intent.mode.toolbox.RequestManager;
 
@@ -21,6 +22,9 @@ public class MainApplication extends Application{
         mInstance = this;
         RequestManager.init(this);
         SDKInitializer.initialize(this);
+
+        /*设备的物理高度进行百分比化*/
+//        AutoLayoutConifg.getInstance().useDeviceSize();
     }
 
     public static int getSDKVersionNumber() {

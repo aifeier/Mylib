@@ -33,6 +33,7 @@ dependencies {
     compile 'org.glassfish.main.appclient:client:4.1.1'
     compile 'com.bm.photoview:library:1.3.6+'
     compile 'com.squareup:android-times-square:1.6.4@aar'
+    compile 'com.zhy:autolayout:1.3.6+'
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/volly-1.0.11.jar')
     compile files('libs/idcard_sdk_scan.jar')
