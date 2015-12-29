@@ -81,6 +81,14 @@
         android:layout_alignParentBottom="true"
         >
 
+        <lib.widget.customview.RecordImage
+            android:id="@+id/recordbutton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Start"
+            android:visibility="gone"
+            />
         <Button
             android:id="@+id/start"
             android:layout_width="fill_parent"

@@ -2,11 +2,13 @@ package demo.picture;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -25,14 +27,17 @@ import java.io.IOException;
 import lib.utils.FileUtils;
 import lib.utils.ScreenUtils;
 import lib.utils.TimeUtils;
+import lib.widget.customview.RecordImage;
 
 /**
  * Created by n-240 on 2015/10/22.
  */
-public class VideoRecordActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener{
+public class VideoRecordActivity extends Activity implements SurfaceHolder.Callback
+        , View.OnClickListener{
 
     private Button start;// 开始录制按钮
     private Button stop;// 停止录制按钮
+    private RecordImage recordImage;
     private MediaRecorder mediarecorder;// 录制视频的类
     private SurfaceView surfaceview;// 显示视频的控件
     // 用来显示视频的一个接口，我靠不用还不行，也就是说用mediarecorder录制视频还得给个界面看
@@ -60,7 +65,27 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
         cameraManager = new CameraManager(getApplication());
         start = (Button) this.findViewById(R.id.start);
         stop = (Button) this.findViewById(R.id.stop);
-        start.setOnClickListener(this);
+        recordImage = (RecordImage) this.findViewById(R.id.recordbutton);
+        recordImage.setVisibility(View.VISIBLE);
+        recordImage.setOnRecordTouchListener(new RecordImage.OnRecordTouchListener() {
+            @Override
+            public void OnActionDown() {
+                startRecord();
+                recordImage.setText("抬起取消");
+            }
+
+            @Override
+            public void OnActionMove() {
+
+            }
+
+            @Override
+            public void OnActionUp() {
+                stopRecord();
+                recordImage.setText("按住录制");
+            }
+        });
+//        start.setOnClickListener(this);
         stop.setOnClickListener(this);
         stop.setEnabled(false);
         surfaceview = (SurfaceView) this.findViewById(R.id.surfaceview);
@@ -123,65 +148,73 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.start:
-                mediarecorder = new MediaRecorder();// 创建mediarecorder对象
-                Camera camera = cameraManager.getCamera();
-                if (camera != null) {
-                    camera.unlock();
-                    mediarecorder.setCamera(camera);
-                }
-                // 设置录制视频源为Camera(相机)
-                mediarecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
-                mediarecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-//                mediarecorder.setOrientationHint(90);
-
-                // 设置录制完成后视频的封装格式THREE_GPP为3gp.MPEG_4为mp4
-                mediarecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
-                // 设置录制的视频编码,音频编码
-                mediarecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-                mediarecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-                /*设置比特率*/
-                mediarecorder.setAudioEncodingBitRate(44100);
-//                mediarecorder.setVideoEncodingBitRate(5 * 1920 * 1080);
-                mediarecorder.setVideoEncodingBitRate(5 * width * height);
-                // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
-//                mediarecorder.setVideoSize(height, width);
-//                mediarecorder.setVideoSize(width  , height);
-                mediarecorder.setVideoSize(cameraManager.getCameraResolution().y, cameraManager.getCameraResolution().x);
-                // 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
-                mediarecorder.setVideoFrameRate(30);
-                mediarecorder.setPreviewDisplay(surfaceHolder.getSurface());
-                // 设置视频文件输出的路径
-                mediarecorder.setOutputFile(FileUtils.createPath("video/")
-                        +"/"+TimeUtils.getSimpleDate().replace(" ", "-").replace(":", "-") + ".mp4");
-                /*/storage/emulated/0/cwf/video/2015-10-24-23-47-21.mp4*/
-                /*/storage/sdcard0/cwf/video/2015-10-25-00-02-50.mp4*/
-                try {
-                    // 准备录制
-                    mediarecorder.prepare();
-                    cameraManager.stopPreview();
-                    // 开始录制
-                    mediarecorder.start();
-                    start.setEnabled(false);
-                    stop.setEnabled(true);
-                } catch (IllegalStateException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                startRecord();
                 break;
             case R.id.stop:
-                if (mediarecorder != null) {
-                    // 停止录制
-                    mediarecorder.stop();
-                    // 释放资源
-                    mediarecorder.release();
-                    mediarecorder = null;
-                    start.setEnabled(true);
-                    stop.setEnabled(false);
-                }
+                stopRecord();
                 break;
+        }
+    }
+
+    private void startRecord(){
+        mediarecorder = new MediaRecorder();// 创建mediarecorder对象
+        Camera camera = cameraManager.getCamera();
+        if (camera != null) {
+            camera.unlock();
+            mediarecorder.setCamera(camera);
+        }
+        // 设置录制视频源为Camera(相机)
+        mediarecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
+        mediarecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+//                mediarecorder.setOrientationHint(90);
+
+        // 设置录制完成后视频的封装格式THREE_GPP为3gp.MPEG_4为mp4
+        mediarecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+        // 设置录制的视频编码,音频编码
+        mediarecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+        mediarecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+                /*设置比特率*/
+        mediarecorder.setAudioEncodingBitRate(44100);
+//                mediarecorder.setVideoEncodingBitRate(5 * 1920 * 1080);
+        mediarecorder.setVideoEncodingBitRate(5 * width * height);
+        // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
+//                mediarecorder.setVideoSize(height, width);
+//                mediarecorder.setVideoSize(width  , height);
+        mediarecorder.setVideoSize(cameraManager.getCameraResolution().y, cameraManager.getCameraResolution().x);
+        // 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
+        mediarecorder.setVideoFrameRate(30);
+        mediarecorder.setPreviewDisplay(surfaceHolder.getSurface());
+        // 设置视频文件输出的路径
+        mediarecorder.setOutputFile(FileUtils.createPath("video/")
+                +"/"+TimeUtils.getSimpleDate().replace(" ", "-").replace(":", "-") + ".mp4");
+                /*/storage/emulated/0/cwf/video/2015-10-24-23-47-21.mp4*/
+                /*/storage/sdcard0/cwf/video/2015-10-25-00-02-50.mp4*/
+        try {
+            // 准备录制
+            mediarecorder.prepare();
+            cameraManager.stopPreview();
+            // 开始录制
+            mediarecorder.start();
+            start.setEnabled(false);
+            stop.setEnabled(true);
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    private void stopRecord(){
+        if (mediarecorder != null) {
+            // 停止录制
+            mediarecorder.stop();
+            // 释放资源
+            mediarecorder.release();
+            mediarecorder = null;
+            start.setEnabled(true);
+            stop.setEnabled(false);
         }
     }
 
@@ -206,4 +239,5 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
         initView();
         super.onResume();
     }
+
 }
