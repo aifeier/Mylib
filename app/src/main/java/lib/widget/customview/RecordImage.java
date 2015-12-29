@@ -54,9 +54,9 @@ public class RecordImage extends Button{
     }
 
     public interface OnRecordTouchListener{
-        public void OnActionDown();
-        public void OnActionMove();
-        public void OnActionUp();
+        void OnActionDown();
+        void OnActionMove();
+        void OnActionUp();
     }
 
 }
