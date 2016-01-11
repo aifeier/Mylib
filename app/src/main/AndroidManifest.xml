@@ -349,6 +349,11 @@
             </intent-filter>
         </activity>
 
+        <!--动画-->
+        <activity android:name="demo.anim.AnimDemo">
+
+        </activity>
+
         <!--服务-->
         <service
             android:name="com.baidu.location.f"

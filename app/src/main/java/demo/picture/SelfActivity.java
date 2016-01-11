@@ -191,7 +191,7 @@ public class SelfActivity extends BaseActivity{
                 Glide.with(SelfActivity.this)
                         .load(data.getThumbnailPath())
                         .error(R.drawable.error)
-                        .placeholder(R.drawable.loading4)
+//                        .placeholder(R.drawable.loading4)
                         .diskCacheStrategy(DiskCacheStrategy.RESULT)
                         .into((ImageView) holder.findViewById(R.id.item_grid_image));
             }
@@ -201,7 +201,7 @@ public class SelfActivity extends BaseActivity{
                 Glide.with(SelfActivity.this)
                         .load(R.drawable.icon_addpic_unfocused)
                         .error(R.drawable.error)
-                        .placeholder(R.drawable.loading4)
+//                        .placeholder(R.drawable.loading4)
                         .diskCacheStrategy(DiskCacheStrategy.RESULT)
                         .fitCenter()
                         .into((ImageView) holder.findViewById(R.id.item_grid_image));

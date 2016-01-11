@@ -108,7 +108,7 @@ public class FolderAdapter extends BaseAdapter {
             Glide.with(mContext)
                     .load(R.drawable.plugin_camera_no_pictures)
                     .error(R.drawable.error)
-                    .placeholder(R.drawable.loading4)
+//                    .placeholder(R.drawable.loading4)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(holder.imageView);
         else {
@@ -116,7 +116,7 @@ public class FolderAdapter extends BaseAdapter {
             Glide.with(mContext)
                     .load(path)
                     .error(R.drawable.plugin_camera_no_pictures)
-                    .placeholder(R.drawable.loading4)
+//                    .placeholder(R.drawable.loading4)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .centerCrop()
                     .into(holder.imageView);

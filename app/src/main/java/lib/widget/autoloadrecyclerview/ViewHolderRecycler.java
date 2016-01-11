@@ -78,7 +78,7 @@ public class ViewHolderRecycler extends RecyclerView.ViewHolder {
         ImageView img = (ImageView) findViewById(viewId);
         Glide.with(itemView.getContext()).load(url)
                 .error(R.drawable.error)
-                .placeholder(R.drawable.loading4)
+//                .placeholder(R.drawable.loading4)
                 .into(img);
         return this;
     }

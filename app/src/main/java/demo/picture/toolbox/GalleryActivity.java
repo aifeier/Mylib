@@ -31,7 +31,7 @@ public class GalleryActivity extends BaseActivity{
     public static final String KEY_CAN_DELETE = "can_del";
 
     private ViewPager mViewPager;
-    private mPagerAdapter adapter;
+    private MyRecyclingPagerAdapter adapter;
 
     private static ArrayList<ImageItem> mList = new ArrayList<ImageItem>();
     private static int location = -1;
@@ -55,7 +55,7 @@ public class GalleryActivity extends BaseActivity{
         mViewPager = (ViewPager) findViewById(R.id.photo_viewpager);
         mViewPager.setOffscreenPageLimit(1);
 //        mViewPager.addOnPageChangeListener(pageChangeListener);
-        adapter = new mPagerAdapter();
+        adapter = new MyRecyclingPagerAdapter(this, mList);
         mViewPager.setAdapter(adapter);
         mViewPager.setPageMargin(20);
         mViewPager.setCurrentItem(location);
@@ -79,8 +79,8 @@ public class GalleryActivity extends BaseActivity{
 //            mView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             Glide.with(container.getContext())
                     .load(mList.get(position).getImagePath())
-                    .error(R.drawable.error)
-                    .placeholder(R.drawable.loading4)
+//                    .error(R.drawable.error)
+//                    .placeholder(R.drawable.loading4)
 //                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(mView);
             container.addView(mView);
@@ -116,7 +116,5 @@ public class GalleryActivity extends BaseActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mViewPager.destroyDrawingCache();
-        mViewPager.removeAllViews();
     }
 }

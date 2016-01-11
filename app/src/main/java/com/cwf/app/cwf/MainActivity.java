@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import demo.List.DemoListActivity;
+import demo.anim.AnimDemo;
 import demo.baidumap.BaseMapActivity;
 import demo.custom.CustomLayoutList;
 import demo.intent.VolleyDemoList;
@@ -53,7 +54,9 @@ public class MainActivity extends BaseActivity implements OnItemClickListener{
                 break;
             case 4:
                 i = new Intent(MainActivity.this, QRCodeMain.class);
+                break;
             case 5:
+                i = new Intent(MainActivity.this, AnimDemo.class);
                 break;
             case 6:
                 i = new Intent(MainActivity.this, CustomLayoutList.class);

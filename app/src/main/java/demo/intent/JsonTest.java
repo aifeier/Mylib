@@ -38,7 +38,9 @@ public class JsonTest extends BaseActivity implements  Response.Listener,Respons
         //goole推荐的图片加载
         Glide.with(this)
                 .load("http://b.hiphotos.baidu.com/image/pic/item/29381f30e924b899d84ce5396c061d950a7bf6bb.jpg")
-                .error(R.drawable.image_bg).placeholder(R.drawable.image_bg).into(img);
+                .error(R.drawable.image_bg)
+//                .placeholder(R.drawable.image_bg)
+                .into(img);
         text = (TextView) findViewById(R.id.textview);
         Map<String ,String> header = new HashMap<String , String>();
         header.put("apikey", "ed238d5e9c0f41c0155b8c2aead25e73");

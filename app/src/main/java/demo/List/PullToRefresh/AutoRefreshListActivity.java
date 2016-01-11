@@ -23,6 +23,7 @@ import com.handmark.pulltorefresh.library.autoloadlist.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
@@ -55,6 +56,7 @@ public class AutoRefreshListActivity extends Activity{
                 holder.setValueToButton(R.id.item_button, data.getTitle());
                 holder.setValueToTextView(R.id.item_text, data.getDescription());
                 holder.setUrlToImageView(R.id.item_img, data.getPicUrl(), R.drawable.error, R.drawable.loading2);
+                holder.findViewById(R.id.item_img).setVisibility(View.GONE);
                 holder.setUrlToImageView(R.id.item_header_img, data.getPicUrl(), R.drawable.error, R.drawable.loading2);
                 final ArrayList<String> lists = new ArrayList<String>();
                 lists.add(data.getPicUrl());
@@ -62,6 +64,9 @@ public class AutoRefreshListActivity extends Activity{
                 lists.add(data.getPicUrl());
                 lists.add(data.getPicUrl());
                 lists.add(data.getPicUrl());
+                int i = (int) (Math.random() * ( lists.size() - 1 ));
+                for(int j = i;j > 0;j--)
+                    lists.remove(j);
                 holder.setPicturesToGridView(R.id.item_gridview, lists, R.drawable.error, R.drawable.loading4);
                 GridView gridView = (GridView) holder.findViewById(R.id.item_gridview);
                 final ArrayList<ImageItem> imageItems = new ArrayList<ImageItem>();
@@ -72,13 +77,15 @@ public class AutoRefreshListActivity extends Activity{
                 imageItems.add(imageItem);
                 imageItems.add(imageItem);
                 imageItems.add(imageItem);
+                for(int j = i;j > 0;j--)
+                    imageItems.remove(j);
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         GalleryActivity.startThisActivity(AutoRefreshListActivity.this, imageItems , position);
                     }
                 });
-                if (page ==1) {
+                /*if (page ==1) {
                     holder.setVideoToView(R.id.item_textureview, "http://115.231.144." +
                             "58/6/j/t/s/d/jtsdhetjxhxpaawfotxqrzuknrohqk/hc.yin" +
                             "yuetai.com/CA7A014F2176C6967B183E333F6C36FB.flv?sc=02fb295b193c140b&" +
@@ -91,7 +98,7 @@ public class AutoRefreshListActivity extends Activity{
                     holder.setVideoToView(R.id.item_textureview,"http://hc.yinyuetai.com/uploa" +
                             "ds/videos/common/647F0150B778E873B32628782EDAEA15.flv?sc=d4fdbe767cd" +
                             "aa21a&br=781&vid=2409118&aid=39513&area=ML&vst=0");
-                }
+                }*/
                 page ++;
             }
 
