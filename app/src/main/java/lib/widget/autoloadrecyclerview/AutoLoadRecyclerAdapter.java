@@ -5,13 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.handmark.pulltorefresh.library.autoloadlist.AutoRefreshListView;
 
 import java.util.ArrayList;
-
-import lib.widget.AutoRecyclerAdapter.ViewHolder2;
+import java.util.List;
 
 /**
  * Created by n-240 on 2015/10/30.
@@ -21,12 +17,14 @@ import lib.widget.AutoRecyclerAdapter.ViewHolder2;
 * */
 public abstract class AutoLoadRecyclerAdapter<T> extends RecyclerView.Adapter<ViewHolderRecycler>{
 
+    private final int maxPage = 10000;
     private Context mContext;
     private int mItemLayoutId;
     protected ArrayList<T> mData;
     private int mCurrentPage ;
     private boolean isFrist = true;
     private int allPage = 10000;
+    private RecyclerOnClickListener recyclerOnClickListener;
 
     public AutoLoadRecyclerAdapter(Context mContext, int mItemLayoutId){
         super();
@@ -42,8 +40,23 @@ public abstract class AutoLoadRecyclerAdapter<T> extends RecyclerView.Adapter<Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolderRecycler holder, int position) {
+    public void onBindViewHolder(ViewHolderRecycler holder, final int position) {
         buildView(holder, mData.get(position));
+        if(recyclerOnClickListener!=null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recyclerOnClickListener.onItemClick(mData.get(position));
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    recyclerOnClickListener.onItemLongClick(mData.get(position));
+                    return true;
+                }
+            });
+        }
     }
 
     @Override
@@ -65,21 +78,65 @@ public abstract class AutoLoadRecyclerAdapter<T> extends RecyclerView.Adapter<Vi
         }
     }
 
-    public void setmData(ArrayList<T> datalist, AutoLoadRecyclerView autoLoadRecyclerView){
+
+    /*设置数据, 在getNextPage后调用，每获取一次数据调用一次*/
+    public void setmData(List<T> datalist, AutoLoadRecyclerView autoLoadRecyclerView){
         if(autoLoadRecyclerView !=null)
             autoLoadRecyclerView.setRefreshFinish();
-        if(datalist.size()>0) {
+        if(datalist!=null&&datalist.size()>0) {
             if(mCurrentPage == 1){
                 mData.clear();
             }
             mData.addAll(datalist);
             notifyDataSetChanged();
-        }else
-            Toast.makeText(mContext, "加载失败！请重试！", Toast.LENGTH_SHORT).show();
+            allPage = maxPage;
+        }else{
+            allPage = mCurrentPage;
+        }
+//        else
+//            Toast.makeText(mContext, "加载失败！请重试！", Toast.LENGTH_SHORT).show();
     }
 
+    /*设置数据, 在getNextPage后调用，每获取一次数据调用一次*/
+    public void setmData(ArrayList<T> datalist, AutoLoadRecyclerView autoLoadRecyclerView){
+        if(autoLoadRecyclerView !=null)
+            autoLoadRecyclerView.setRefreshFinish();
+        if(datalist!=null&&datalist.size()>0) {
+            if(mCurrentPage == 1){
+                mData.clear();
+            }
+            mData.addAll(datalist);
+            notifyDataSetChanged();
+            allPage = maxPage;
+        }else{
+            allPage = mCurrentPage;
+        }
+
+//        else
+//            Toast.makeText(mContext, "加载失败！请重试！", Toast.LENGTH_SHORT).show();
+    }
+
+    public boolean hasNextPage(){
+        return mCurrentPage < allPage;
+    }
+
+    /*设置item view*/
     public abstract void buildView(ViewHolderRecycler holder, T data);
 
+    /*设置获取数据*/
     public abstract  void getPage(int page);
 
+    /*设置整个Item的点击事件*/
+    public interface RecyclerOnClickListener<T>{
+        public void onItemClick(T ItemData);
+        public void onItemLongClick(T ItemData);
+    }
+
+    public RecyclerOnClickListener getRecyclerOnClickListener() {
+        return recyclerOnClickListener;
+    }
+
+    public void setRecyclerOnClickListener(RecyclerOnClickListener recyclerOnClickListener) {
+        this.recyclerOnClickListener = recyclerOnClickListener;
+    }
 }

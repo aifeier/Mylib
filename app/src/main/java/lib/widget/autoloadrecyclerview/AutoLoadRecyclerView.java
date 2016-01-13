@@ -8,17 +8,21 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 
-import com.cwf.app.cwf.R;
+import com.manba.android.onebuy.R;
+
 
 /**
- * Created by n-240 on 2015/10/30.
+ * Created by cwf on 2015/10/30.
  */
-public class AutoLoadRecyclerView<T> extends RecyclerView{
+/*自定义RecyclerView，可下拉刷新和上拉加载*/
+public class AutoLoadRecyclerView<T> extends RecyclerView {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private Context context;
     private  int lastVisibleItem;
     private LinearLayoutManager linearLayoutManager;
+    private Boolean canLoadNextPage = true;//是否可以加载下一页
+    private Boolean canRefresh = true;//是否可以手动刷新
 
     public AutoLoadRecyclerView(Context context) {
         super(context);
@@ -62,9 +66,9 @@ public class AutoLoadRecyclerView<T> extends RecyclerView{
         });
 
         //设置背景
-        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(0xFF000066);
-        //设置箭头颜色
-        swipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_light, R.color.holo_red_light, R.color.purple);
+//        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(0xFF000066);
+        //设置颜色
+        swipeRefreshLayout.setColorSchemeResources(R.color.deepskyblue, R.color.fav_red, R.color.purple);
 
         addOnScrollListener(new OnScrollListener() {
             @Override
@@ -72,8 +76,10 @@ public class AutoLoadRecyclerView<T> extends RecyclerView{
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem + 1 == recyclerView.getAdapter().getItemCount() && !swipeRefreshLayout.isRefreshing()) {
-                    swipeRefreshLayout.setRefreshing(true);
-                    mAdapter.loadNextPage();
+                   if(mAdapter.hasNextPage()&&canLoadNextPage) {
+                       swipeRefreshLayout.setRefreshing(true);
+                       mAdapter.loadNextPage();
+                   }
                 }
             }
 
@@ -82,10 +88,11 @@ public class AutoLoadRecyclerView<T> extends RecyclerView{
                 super.onScrolled(recyclerView, dx, dy);
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
                 swipeRefreshLayout.setEnabled(linearLayoutManager
-                        .findFirstCompletelyVisibleItemPosition() == 0);
+                        .findFirstCompletelyVisibleItemPosition() == 0 && canRefresh);
             }
         });
         //第一次加载
+        swipeRefreshLayout.setRefreshing(true);
         mAdapter.refreshAndClearData();
     }
 
@@ -93,5 +100,21 @@ public class AutoLoadRecyclerView<T> extends RecyclerView{
         if(swipeRefreshLayout!=null){
             swipeRefreshLayout.setRefreshing(false);
         }
+    }
+
+    public Boolean getCanLoadNextPage() {
+        return canLoadNextPage;
+    }
+
+    public void setCanLoadNextPage(Boolean canLoadNextPage) {
+        this.canLoadNextPage = canLoadNextPage;
+    }
+
+    public Boolean getCanRefresh() {
+        return canRefresh;
+    }
+
+    public void setCanRefresh(Boolean canRefresh) {
+        this.canRefresh = canRefresh;
     }
 }
