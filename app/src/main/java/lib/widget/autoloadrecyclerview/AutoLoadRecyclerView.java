@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 
-import com.manba.android.onebuy.R;
+import com.cwf.app.cwf.R;
 
 
 /**
@@ -68,7 +68,7 @@ public class AutoLoadRecyclerView<T> extends RecyclerView {
         //设置背景
 //        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(0xFF000066);
         //设置颜色
-        swipeRefreshLayout.setColorSchemeResources(R.color.deepskyblue, R.color.fav_red, R.color.purple);
+//        swipeRefreshLayout.setColorSchemeResources(R.color.deepskyblue, R.color.gray_color, R.color.purple);
 
         addOnScrollListener(new OnScrollListener() {
             @Override

@@ -26,6 +26,7 @@ import com.google.zxing.client.android.Intents;
 
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
+import lib.utils.DoubleSIMInfo;
 import lib.utils.MobleUtils;
 import lib.utils.NetUtils;
 
@@ -56,8 +57,16 @@ public class QRCodeMain extends BaseActivity
 //        Window window = getWindow();
 //        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);//保持屏幕不变暗
         if(true){
-            ActivityUtils.showTip("" + NetUtils.isWifi(getApplicationContext())
-                    + MobleUtils.getTelephonyAllInfo(this), true);
+           /* ActivityUtils.showTip("" + NetUtils.isWifi(getApplicationContext())
+                    + MobleUtils.getTelephonyAllInfo(this), true);*/
+            DoubleSIMInfo doubleSIMInfo = MobleUtils.isDoubleSim(getApplicationContext());
+            if(doubleSIMInfo!=null){
+                ActivityUtils.showTip(doubleSIMInfo.getMtkDoubleSim()
+                        + "\n:" + doubleSIMInfo.getImsi_1()
+                        + "\n:" + doubleSIMInfo.getImsi_2()
+                        + "\n:" + doubleSIMInfo.getImei_1()
+                        + "\n:" + doubleSIMInfo.getImei_2(), true);
+            }
             Intent i = new Intent(QRCodeMain.this, LoginActivity.class);
             startActivity(i);
             finish();

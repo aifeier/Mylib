@@ -26,11 +26,14 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.android.support:cardview-v7:23.1.1'
     compile 'de.greenrobot:eventbus:3.0.0-beta1'
+    /*OKHttp*/
     compile 'com.squareup.okhttp:okhttp:2.6.0'
     compile 'com.squareup.okio:okio:1.6.0'
     compile 'com.android.support:design:23.1.1'
+    /*google推荐的图片设置器*/
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'org.glassfish.main.appclient:client:4.1.1'
+    /*可缩放的图片View*/
     compile 'com.bm.photoview:library:1.3.6'
     compile 'com.squareup:android-times-square:1.6.4@aar'
     compile 'com.zhy:autolayout:1.3.6'
@@ -40,4 +43,9 @@ dependencies {
     compile files('libs/android_auth.jar')
     compile files('libs/pki.jar')
     compile 'cn.finalteam:toolsfinal:1.1.1'
+    /*地址等选择器*/
+    compile 'cn.qqtheme.framework:AndroidPicker:latest.integration'
+    compile 'com.alibaba:fastjson:1.2.7'
+    /*view绑定器*/
+    compile 'com.jakewharton:butterknife:7.0.1'
 }

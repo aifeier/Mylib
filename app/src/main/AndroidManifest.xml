@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -292,6 +292,14 @@
         <!--CustomLayoutList-->
         <activity android:name="demo.custom.CustomLayoutList"
             android:screenOrientation="portrait"></activity>
+        <activity android:name="demo.custom.PickerDemoActivity"
+            android:label="多级联动选择器"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="demo.custom.CustomLayoutList"></category>
+            </intent-filter>
+        </activity>
 
         <!--gestureLock-->
         <activity android:name="demo.custom.GestureLockActivity"

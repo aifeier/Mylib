@@ -46,6 +46,7 @@
 <!--        <receiver android:name="wintone.idcard.android.DataChangeReceiver" >
         </receiver>-->
 
+
     </application>
 
 </manifest>

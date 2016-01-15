@@ -134,7 +134,7 @@ public class OkhttpDemo extends BaseActivity implements Callback{
         registerReceiver(broadcastReceiver, new IntentFilter(ACTION));
         registerReceiver(broadcastReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
         registerReceiver(broadcastReceiver, new IntentFilter((Intent.ACTION_SCREEN_OFF)));
-        new OkHttpDisplayImgRequest.Builder()
+        /*new OkHttpDisplayImgRequest.Builder()
                 .url("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6o.jpg")
                 .errResId(R.drawable.error)
                 .imageView((ImageView) findViewById(R.id.imageview))
@@ -189,6 +189,24 @@ public class OkhttpDemo extends BaseActivity implements Callback{
                     @Override
                     public void onResponse(String response) {
                         ActivityUtils.showTip(response, false);
+                    }
+                });*/
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("mobile", "15867117181");
+        new OkHttpRequest.Builder()
+                .url("http://120.26.45.151:8081/yyg/member!code.action")
+                .params(params)
+                .tag(1)
+                .post(new ResultCallback<String>() {
+                    @Override
+                    public void onError(Request request, Exception e) {
+                        ActivityUtils.showTip("失败" + e.getMessage(), false);
+                    }
+
+                    @Override
+                    public void onResponse(String response) {
+                        ActivityUtils.showTip(response, true);
                     }
                 });
     }
