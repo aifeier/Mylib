@@ -151,11 +151,12 @@ public class MobleUtils {
         try {
             Class<?> cx = Class
                     .forName("android.telephony.MSimTelephonyManager");
-            Object obj = mContext.getSystemService(Context.TELEPHONY_SERVICE);
+            Object obj = mContext.getSystemService("phone_msim");
 
             Method md = cx.getMethod("getDeviceId", int.class);
             Method ms = cx.getMethod("getSubscriberId", int.class);
-
+            cx.getMethods();
+            md.invoke(obj, 1);
             gaotongDoubleInfo.setImei_1((String) md.invoke(obj,
                     gaotongDoubleInfo.getSimId_1()));
             gaotongDoubleInfo.setImei_2((String) md.invoke(obj,
