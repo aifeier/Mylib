@@ -89,7 +89,7 @@ public class SharedPreferencesUtils {
     public static boolean putObject(SharedPreferences sp, String key, Object obj) {
         paraCheck(sp, key);
         if (obj == null) {
-            Editor e = sp.edit();
+            SharedPreferences.Editor e = sp.edit();
             e.putString(key, "");
             return e.commit();
         } else {
@@ -98,40 +98,49 @@ public class SharedPreferencesUtils {
             try {
                 oos = new ObjectOutputStream(baos);
                 oos.writeObject(obj);
+                oos.close();
+                baos.close();
             } catch (IOException e1) {
                 e1.printStackTrace();
                 return false;
             }
             String objectBase64 = new String(Base64.encode(baos.toByteArray(),
                     Base64.DEFAULT));
-            Editor e = sp.edit();
+            SharedPreferences.Editor e = sp.edit();
             e.putString(key, objectBase64);
             return e.commit();
         }
     }
 
     public static Object getObject(SharedPreferences sp, String key,
-            Object defaultValue) {
+                                   Object defaultValue) {
         paraCheck(sp, key);
         String objectBase64 = sp.getString(key, "");
-        byte[] base64Bytes = Base64.decode(objectBase64.getBytes(),
-                Base64.DEFAULT);
-        ByteArrayInputStream bais = new ByteArrayInputStream(base64Bytes);
-        ObjectInputStream ois;
+        Object result = defaultValue;
         try {
+            if(TextUtils.isEmpty(objectBase64))
+                return result;
+            byte[] base64Bytes = Base64.decode(objectBase64.getBytes(),
+                    Base64.DEFAULT);
+            ByteArrayInputStream bais = new ByteArrayInputStream(base64Bytes);
+            ObjectInputStream ois;
             ois = new ObjectInputStream(bais);
-            return ois.readObject();
+            result = ois.readObject();
+            ois.close();
+            bais.close();
+            return result;
         } catch (StreamCorruptedException e) {
             e.printStackTrace();
-            return null;
+            return defaultValue;
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return defaultValue;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            return null;
+            return defaultValue;
         }
     }
+
 
     public static boolean isObjectEqual(SharedPreferences sp, String key,
             Object newValue) {

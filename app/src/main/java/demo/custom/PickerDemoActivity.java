@@ -1,5 +1,6 @@
 package demo.custom;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,8 @@ import com.alibaba.fastjson.JSON;
 import com.cwf.app.cwf.R;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.qqtheme.framework.picker.AddressPicker;
 import cn.qqtheme.framework.picker.ColorPicker;
@@ -17,6 +20,7 @@ import cn.qqtheme.framework.util.StorageUtils;
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
 import lib.utils.AssetsUtils;
+import lib.utils.CommonUtils;
 
 /**
  * Created by n-240 on 2016/1/14.
@@ -66,7 +70,7 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
                 colorPicker.show();
                 break;
             case R.id.picker_file:
-                FilePicker filePicker = new FilePicker(this);
+                /*FilePicker filePicker = new FilePicker(this);
                 filePicker.setShowHideDir(false);
                 filePicker.setRootPath(StorageUtils.getRootPath(this) + "");
                 //picker.setAllowExtensions(new String[]{".apk"});
@@ -77,8 +81,34 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
                         ActivityUtils.showTip(currentPath, true);
                     }
                 });
-                filePicker.show();
+                filePicker.show();*/
+//                CommonUtils.sendSms(PickerDemoActivity.this, "10086", "1581");
+                /*
+                //亮屏解鎖
+                TimerTask timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        CommonUtils.wakeUpAndUnlock(PickerDemoActivity.this);
+                    }
+                };
+                Timer timer = new Timer();
+                timer.schedule(timerTask, 5000);*/
+//                ActivityUtils.showTip(CommonUtils.getMacAddress(this), true);
+//                ActivityUtils.showTip(CommonUtils.collectDeviceInfoStr(this), true);
+//                CommonUtils.goHome(this);
+                ActivityUtils.showTip(CommonUtils.getNetWorkStatus(this)+"", false);
                 break;
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode){
+            case CommonUtils.REQUEST_CODE_ASK_CALL_PHONE:
+                CommonUtils.onRequestPermissionsResult(
+                        PickerDemoActivity.this, "10086", requestCode, permissions, grantResults);
+                break;
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

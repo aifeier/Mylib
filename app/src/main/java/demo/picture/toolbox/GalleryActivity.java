@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.bm.library.Info;
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.cwf.app.cwf.R;
@@ -90,6 +91,7 @@ public class GalleryActivity extends BaseActivity{
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
+            ((View) object).destroyDrawingCache();
         }
 
         @Override
