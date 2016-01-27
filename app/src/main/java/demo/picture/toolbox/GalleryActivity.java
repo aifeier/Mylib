@@ -10,18 +10,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.bm.library.Info;
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.cwf.app.cwf.R;
 
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import demo.picture.toolbox.entiy.ImageItem;
 import lib.BaseActivity;
+import lib.utils.CommonUtils;
 
 /**
  * Created by n-240 on 2015/9/28.
@@ -40,6 +37,7 @@ public class GalleryActivity extends BaseActivity{
     private static ArrayList<ImageItem> mList = new ArrayList<ImageItem>();
     private static int location = -1;
 
+    private boolean isUnder720 = true;
 
     /*初始化参数*/
     public static void startThisActivity(Activity activity, ArrayList<ImageItem> data, int position){
@@ -55,6 +53,11 @@ public class GalleryActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_photos_view);
         ((RelativeLayout)findViewById(R.id.relat)).setVisibility(View.GONE);
+
+        /*720P使用GLide加载，不需要override图片size，
+        大于720的时候需要overrtide(720, 1280)否则会报异常*/
+        isUnder720 = CommonUtils.getDisplayMetrics(this).heightPixels <= 720
+                || CommonUtils.getDisplayMetrics(this).widthPixels <= 720;
 
         mViewPager = (ViewPager) findViewById(R.id.photo_viewpager);
         mViewPager.setOffscreenPageLimit(0);
@@ -77,27 +80,19 @@ public class GalleryActivity extends BaseActivity{
 
         @Override
         public View instantiateItem(ViewGroup container, int position) {
-            PhotoView mView = null;
-            if(map.size() > position){
-                mView = map.get(position).get();
-            }
-            if(mView == null)
-            {
-                mView = new PhotoView(container.getContext());
+            PhotoView  mView = new PhotoView(container.getContext());
                 mView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT));
                 mView.enable();
-//            mView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                if(isUnder720)
                 Glide.with(container.getContext())
                         .load(mList.get(position).getImagePath())
-//                    .error(R.drawable.error)
-//                    .placeholder(R.drawable.loading4)
-//                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                        .override(720, 1280)
                         .into(mView);
-                SoftReference<PhotoView> photoViewSoftReference = new SoftReference<PhotoView>(mView);
-                map.put(position, photoViewSoftReference);
-            }
+                else
+                    Glide.with(container.getContext())
+                            .load(mList.get(position).getImagePath())
+                            .override(720, 1280)
+                            .into(mView);
             container.addView(mView);
             return mView;
         }
@@ -115,7 +110,6 @@ public class GalleryActivity extends BaseActivity{
         }
     }
 
-    private Map<Integer, SoftReference<PhotoView>> map = new HashMap<>();
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
 
@@ -135,7 +129,6 @@ public class GalleryActivity extends BaseActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        map.clear();
         System.gc();
     }
 }
