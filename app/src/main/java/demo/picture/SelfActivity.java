@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Gravity;
@@ -25,6 +26,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cwf.app.cwf.R;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import demo.picture.toolbox.BitmapTemp;
@@ -140,13 +143,28 @@ public class SelfActivity extends BaseActivity{
 
     }
 
+    private File cameraFile = null;
 
     /*
     * 打开相机
     * */
     public void camera() {
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        String fileName = String.valueOf(System.currentTimeMillis());
+        if (!FileUtils.isFileExist("")) {
+            try {
+                File tempf = FileUtils.createSDDir("");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        cameraFile = new File(FileUtils.SDPATH, fileName + ".jpg");
+                if (cameraFile.exists()) {
+                    cameraFile.delete();
+                }
+        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile));
         startActivityForResult(openCameraIntent, TAKE_CAMERA);
+
     }
 
 
@@ -156,15 +174,14 @@ public class SelfActivity extends BaseActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case TAKE_CAMERA:
-                if (canAddPhotos() && resultCode == RESULT_OK) {
-
-                    String fileName = String.valueOf(System.currentTimeMillis());
-                    Bitmap bm = (Bitmap) data.getExtras().get("data");
-                    FileUtils.saveBitmap(bm, fileName);
-
+                if (resultCode != RESULT_OK) {
+                    cameraFile.delete();
+                    cameraFile = null;
+                }
+                if( canAddPhotos() && cameraFile != null){
                     ImageItem takePhoto = new ImageItem();
                     takePhoto.setImageId(BitmapTemp.tempSelectBitmap.size() + "");
-                    takePhoto.setImagePath(FileUtils.SDPATH + fileName+".jpg");
+                    takePhoto.setImagePath(cameraFile.getAbsolutePath());
                     BitmapTemp.tempSelectBitmap.add(takePhoto);
                     mAdapter.notifyDataSetChanged();
                 }

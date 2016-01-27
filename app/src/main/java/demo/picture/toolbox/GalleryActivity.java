@@ -15,7 +15,10 @@ import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
 import com.cwf.app.cwf.R;
 
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import demo.picture.toolbox.entiy.ImageItem;
 import lib.BaseActivity;
@@ -54,10 +57,11 @@ public class GalleryActivity extends BaseActivity{
         ((RelativeLayout)findViewById(R.id.relat)).setVisibility(View.GONE);
 
         mViewPager = (ViewPager) findViewById(R.id.photo_viewpager);
-        mViewPager.setOffscreenPageLimit(1);
+        mViewPager.setOffscreenPageLimit(0);
 //        mViewPager.addOnPageChangeListener(pageChangeListener);
-        adapter = new MyRecyclingPagerAdapter(this, mList);
-        mViewPager.setAdapter(adapter);
+//        adapter = new MyRecyclingPagerAdapter(this, mList);
+//        mViewPager.setAdapter(adapter);
+        mViewPager.setAdapter(new mPagerAdapter());
         mViewPager.setPageMargin(20);
         mViewPager.setCurrentItem(location);
     }
@@ -73,17 +77,27 @@ public class GalleryActivity extends BaseActivity{
 
         @Override
         public View instantiateItem(ViewGroup container, int position) {
-            PhotoView mView = new PhotoView(container.getContext());
-            mView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT));
-            mView.enable();
+            PhotoView mView = null;
+            if(map.size() > position){
+                mView = map.get(position).get();
+            }
+            if(mView == null)
+            {
+                mView = new PhotoView(container.getContext());
+                mView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT));
+                mView.enable();
 //            mView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            Glide.with(container.getContext())
-                    .load(mList.get(position).getImagePath())
+                Glide.with(container.getContext())
+                        .load(mList.get(position).getImagePath())
 //                    .error(R.drawable.error)
 //                    .placeholder(R.drawable.loading4)
 //                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                    .into(mView);
+                        .override(720, 1280)
+                        .into(mView);
+                SoftReference<PhotoView> photoViewSoftReference = new SoftReference<PhotoView>(mView);
+                map.put(position, photoViewSoftReference);
+            }
             container.addView(mView);
             return mView;
         }
@@ -92,6 +106,7 @@ public class GalleryActivity extends BaseActivity{
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
             ((View) object).destroyDrawingCache();
+            System.gc();
         }
 
         @Override
@@ -99,6 +114,8 @@ public class GalleryActivity extends BaseActivity{
             return view == object;
         }
     }
+
+    private Map<Integer, SoftReference<PhotoView>> map = new HashMap<>();
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
 
@@ -118,5 +135,7 @@ public class GalleryActivity extends BaseActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        map.clear();
+        System.gc();
     }
 }
