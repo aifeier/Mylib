@@ -25,7 +25,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     /** CrashHandler实例 */
     private static CrashHandler crashHandler;
     /** 程序的Context对象 */
-//    private Context mContext;
+    private Context mContext;
     /** 保证只有一个CrashHandler实例 */
     private CrashHandler() {}
 
@@ -46,7 +46,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * @param ctx
      */
     public void init(Context ctx) {
-//        mContext = ctx;
+        mContext = ctx;
         uncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(this);
     }
@@ -90,7 +90,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 //                Toast.makeText(mContext, "程序出错啦:" + message, Toast.LENGTH_LONG).show();
 //                可以只创建一个文件，以后全部往里面append然后发送，这样就会有重复的信息，个人不推荐
                 String fileName = "crash-" + System.currentTimeMillis()  + ".log";
-                File file = new File(FileUtils.getInstance(MainApplication.getInstance().getApplicationContext()).logCache
+                File file = new File(FileUtils.getInstance(mContext).logCache
                         , fileName);
                 try {
                     FileOutputStream fos = new FileOutputStream(file,true);
