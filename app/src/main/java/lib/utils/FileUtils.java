@@ -2,6 +2,7 @@ package lib.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 
@@ -52,6 +53,25 @@ public class FileUtils {
 		return instance;
 	}
 
+	public static void saveFile(String path, String saveName) {
+		try {
+			File f = new File(photoCache, saveName + ".jpg");
+			if (f.exists()) {
+				f.delete();
+			}
+			Bitmap bm = BitmapFactory.decodeFile(path);
+			FileOutputStream out = new FileOutputStream(f);
+			bm.compress(Bitmap.CompressFormat.JPEG, 50, out);
+			out.flush();
+			out.close();
+			bm.recycle();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	public static void saveBitmap(Bitmap bm, String picName) {
 		try {
@@ -60,9 +80,10 @@ public class FileUtils {
 				f.delete();
 			}
 			FileOutputStream out = new FileOutputStream(f);
-			bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
+			bm.compress(Bitmap.CompressFormat.JPEG, 50, out);
 			out.flush();
 			out.close();
+			bm.recycle();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
