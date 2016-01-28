@@ -1,22 +1,22 @@
 package demo.custom;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSON;
 import com.cwf.app.cwf.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.List;
 
 import cn.qqtheme.framework.picker.AddressPicker;
 import cn.qqtheme.framework.picker.ColorPicker;
-import cn.qqtheme.framework.picker.FilePicker;
 import cn.qqtheme.framework.util.ConvertUtils;
-import cn.qqtheme.framework.util.StorageUtils;
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
 import lib.utils.AssetsUtils;
@@ -40,13 +40,22 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
 
     }
 
+    private ArrayList<AddressPicker.Province> data = new ArrayList<AddressPicker.Province>();
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.picker_address:
-                ArrayList<AddressPicker.Province> data = new ArrayList<AddressPicker.Province>();
-                String json = AssetsUtils.readText(this, "city.json");
-                data.addAll(JSON.parseArray(json, AddressPicker.Province.class));
+                if(data == null) {
+                    Gson gson = new Gson();
+                    gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                    String json = AssetsUtils.readText(this, "city.json");
+                    Type type = new TypeToken<List<AddressPicker.Province>>() {
+                    }.getType();
+                    List<AddressPicker.Province> a = gson.fromJson(json, type);
+                    data.addAll(a);
+                }
+//                data.addAll(JSON.parseArray(json, AddressPicker.Province.class));
                 AddressPicker addressPicker = new AddressPicker(this, data);
 //                picker.setSelectedItem("贵州", "贵阳", "花溪");
                 addressPicker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {

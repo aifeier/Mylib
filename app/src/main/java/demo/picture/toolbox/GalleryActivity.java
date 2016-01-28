@@ -32,7 +32,7 @@ public class GalleryActivity extends BaseActivity{
     public static final String KEY_CAN_DELETE = "can_del";
 
     private ViewPager mViewPager;
-    private MyRecyclingPagerAdapter adapter;
+//    private MyRecyclingPagerAdapter adapter;
 
     private static ArrayList<ImageItem> mList = new ArrayList<ImageItem>();
     private static int location = -1;

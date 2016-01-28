@@ -1,33 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cwf.app.alllibrary">
+    package="com.cwf.app.alllibrary" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:supportsRtl="true">
-
+        android:supportsRtl="true" >
         <activity
             android:name="com.example.idcard_demo.CameraActivity"
             android:label="扫描"
             android:screenOrientation="landscape" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
-                <category android:name="demo.custom.CustomLayoutList"></category>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="demo.custom.CustomLayoutList" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.example.idcard_demo.ShowResultActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
         </activity>
-<!--        <service
+        <!--
+            <service
             android:name="wintone.idcard.android.AuthService"
             android:enabled="true" >
             <intent-filter>
                 <action android:name="wintone.idcard.authService" />
             </intent-filter>
-        </service>-->
+        </service>
+        -->
         <service
             android:name="com.example.idcard_demo.RecogService"
             android:enabled="true" >
@@ -43,9 +47,10 @@
             </intent-filter>
         </service>
 
-<!--        <receiver android:name="wintone.idcard.android.DataChangeReceiver" >
-        </receiver>-->
-
+        <!--
+            <receiver android:name="wintone.idcard.android.DataChangeReceiver" >
+        </receiver>
+        -->
 
     </application>
 
