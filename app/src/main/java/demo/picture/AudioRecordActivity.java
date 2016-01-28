@@ -55,7 +55,7 @@ public class AudioRecordActivity extends BaseActivity{
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
         mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
         mediaRecorder.setAudioEncodingBitRate(44100);
-        mediaRecorder.setOutputFile(FileUtils.getInstance(getApplicationContext()).photoCache
+        mediaRecorder.setOutputFile(FileUtils.getInstance(getApplicationContext()).fileCache
                 +"/"+TimeUtils.getSimpleDate().replace(" ", "-").replace(":", "-") + ".aac");
         try {
             mediaRecorder.prepare();
