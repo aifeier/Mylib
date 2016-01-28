@@ -151,14 +151,8 @@ public class SelfActivity extends BaseActivity{
     public void camera() {
         Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         String fileName = String.valueOf(System.currentTimeMillis());
-        if (!FileUtils.isFileExist("")) {
-            try {
-                File tempf = FileUtils.createSDDir("");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        cameraFile = new File(FileUtils.SDPATH, fileName + ".jpg");
+
+        cameraFile = new File(FileUtils.getInstance(this).photoCache, fileName + ".jpg");
                 if (cameraFile.exists()) {
                     cameraFile.delete();
                 }

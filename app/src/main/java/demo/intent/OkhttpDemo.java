@@ -104,8 +104,8 @@ public class OkhttpDemo extends BaseActivity implements Callback{
                         textview.setText(news.getNewslist().get(0).getTitle());//UI线程
                     }
                 });*/
-        /*OkHttpClientManager.downloadAsyn("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6o.jpg",
-                FileUtils.createPath("files"), new OkHttpClientManager.ResultCallback<String>() {
+        OkHttpClientManager.downloadAsyn("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6o.jpg",
+                FileUtils.getInstance(getApplicationContext()).fileCache, new OkHttpClientManager.ResultCallback<String>() {
                     @Override
                     public void onFileDownSize(long downsize, long allSize) {
                         Log.e(getPackageName(), downsize + "/" + allSize);
@@ -127,7 +127,7 @@ public class OkhttpDemo extends BaseActivity implements Callback{
                         ActivityUtils.showTip("下载完成", false);
                     }
 
-                });*/
+                });
         bindService(ActivityUtils.getServiceIntent(this, ServiceDemo.ACTION), serviceConnection, BIND_AUTO_CREATE);
         startService(ActivityUtils.getServiceIntent(this, ServiceDemo.ACTION));
 
@@ -192,7 +192,7 @@ public class OkhttpDemo extends BaseActivity implements Callback{
                     }
                 });*/
 
-        HashMap<String, String> params = new HashMap<String, String>();
+        /*HashMap<String, String> params = new HashMap<String, String>();
         params.put("mobile", "15867117181");
         new OkHttpRequest.Builder()
                 .url("http://120.26.45.151:8081/yyg/member!code.action")
@@ -208,7 +208,7 @@ public class OkhttpDemo extends BaseActivity implements Callback{
                     public void onResponse(String response) {
                         ActivityUtils.showTip(response, true);
                     }
-                });
+                });*/
     }
 
     ServiceConnection serviceConnection = new ServiceConnection() {

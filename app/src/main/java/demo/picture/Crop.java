@@ -50,7 +50,7 @@ public class Crop extends BaseActivity implements View.OnClickListener{
 
     private void video(){
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        Uri uri = Uri.fromFile(new File(FileUtils.createPath("")+"/a.mp4"));
+        Uri uri = Uri.fromFile(new File(FileUtils.getInstance(this).fileCache+"/a.mp4"));
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
         startActivity(intent);

@@ -20,6 +20,7 @@ import com.cwf.app.cwf.R;
 import java.io.IOException;
 import java.net.URL;
 
+import lib.utils.FileUtils;
 import lib.utils.ScreenUtils;
 import lib.utils.TimeUtils;
 
@@ -38,6 +39,7 @@ public class VideoPlayInTextureView extends Activity implements TextureView.Surf
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_videorecord);
+        FileUtils.getInstance(this);
         ((SurfaceView) findViewById(R.id.surfaceview)).setVisibility(View.GONE);
         initView();
     }
