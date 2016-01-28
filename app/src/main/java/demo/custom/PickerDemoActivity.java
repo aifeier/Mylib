@@ -46,9 +46,9 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.picker_address:
-                if(data == null) {
-                    Gson gson = new Gson();
-                    gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                if(data == null || data.size() <= 0) {
+                    data = new ArrayList<AddressPicker.Province>();
+                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                     String json = AssetsUtils.readText(this, "city.json");
                     Type type = new TypeToken<List<AddressPicker.Province>>() {
                     }.getType();
