@@ -7,6 +7,7 @@ import android.os.Environment;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -51,25 +52,6 @@ public class FileUtils {
 			instance = new FileUtils();
 		}
 		return instance;
-	}
-
-	public static void saveFile(String path, String saveName) {
-		try {
-			File f = new File(photoCache, saveName + ".jpg");
-			if (f.exists()) {
-				f.delete();
-			}
-			Bitmap bm = BitmapFactory.decodeFile(path);
-			FileOutputStream out = new FileOutputStream(f);
-			bm.compress(Bitmap.CompressFormat.JPEG, 50, out);
-			out.flush();
-			out.close();
-			bm.recycle();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 
@@ -127,6 +109,32 @@ public class FileUtils {
 			return false;
 		}
 		return true;
+	}
+
+	/*保存本地文件，copy本地文件，saveName包含后缀*/
+	public static void saveFile(String filePath, String saveName){
+		File inFile = new File(filePath);
+		File outFile = new File(fileCache, saveName);
+		if(!inFile.exists())
+			return;
+		try {
+			FileInputStream inputStream = new FileInputStream(inFile);
+			FileOutputStream outputStream = new FileOutputStream(outFile, true);
+			byte[] buf = new byte[2048];
+			int len = 0;
+			while ((len = inputStream.read(buf)) != -1){
+				outputStream.write(buf, 0, len);
+			}
+			outputStream.close();
+			outputStream.flush();
+			inputStream.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
 	}
 
 }

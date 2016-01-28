@@ -26,6 +26,7 @@ import com.google.zxing.client.android.Intents;
 
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
+import lib.utils.AppUtils;
 import lib.utils.DoubleSIMInfo;
 import lib.utils.MobleUtils;
 import lib.utils.NetUtils;
@@ -54,6 +55,7 @@ public class QRCodeMain extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppUtils.getInstallApk(this);
 //        Window window = getWindow();
 //        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);//保持屏幕不变暗
         if(true){
