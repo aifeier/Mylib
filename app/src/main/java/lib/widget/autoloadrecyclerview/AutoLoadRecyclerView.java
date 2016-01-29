@@ -8,8 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 
-import com.cwf.app.cwf.R;
-
 
 /**
  * Created by cwf on 2015/10/30.
@@ -23,6 +21,7 @@ public class AutoLoadRecyclerView<T> extends RecyclerView {
     private LinearLayoutManager linearLayoutManager;
     private Boolean canLoadNextPage = true;//是否可以加载下一页
     private Boolean canRefresh = true;//是否可以手动刷新
+    private Boolean loadFirst = true;//是否设置adapter就加载数据
 
     public AutoLoadRecyclerView(Context context) {
         super(context);
@@ -92,8 +91,10 @@ public class AutoLoadRecyclerView<T> extends RecyclerView {
             }
         });
         //第一次加载
-        swipeRefreshLayout.setRefreshing(true);
-        mAdapter.refreshAndClearData();
+        if(loadFirst) {
+            swipeRefreshLayout.setRefreshing(true);
+            mAdapter.refreshAndClearData();
+        }
     }
 
     public void setRefreshFinish(){
@@ -116,5 +117,13 @@ public class AutoLoadRecyclerView<T> extends RecyclerView {
 
     public void setCanRefresh(Boolean canRefresh) {
         this.canRefresh = canRefresh;
+    }
+
+    public Boolean getLoadFirst() {
+        return loadFirst;
+    }
+
+    public void setLoadFirst(Boolean loadFirst) {
+        this.loadFirst = loadFirst;
     }
 }
