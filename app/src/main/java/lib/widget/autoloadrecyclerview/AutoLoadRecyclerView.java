@@ -87,7 +87,7 @@ public class AutoLoadRecyclerView<T> extends RecyclerView {
                 super.onScrolled(recyclerView, dx, dy);
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
                 swipeRefreshLayout.setEnabled(linearLayoutManager
-                        .findFirstCompletelyVisibleItemPosition() == 0 && canRefresh);
+                        .findFirstCompletelyVisibleItemPosition() == 0);
             }
         });
         //第一次加载
@@ -95,6 +95,7 @@ public class AutoLoadRecyclerView<T> extends RecyclerView {
             swipeRefreshLayout.setRefreshing(true);
             mAdapter.refreshAndClearData();
         }
+        swipeRefreshLayout.setEnabled(canRefresh);
     }
 
     public void setRefreshFinish(){
