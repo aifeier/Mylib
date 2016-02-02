@@ -1,12 +1,14 @@
 package demo.List;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,8 +18,14 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.text.TextUtils;
+import android.text.style.TtsSpan;
 import android.view.DragEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
 import com.handmark.pulltorefresh.library.autoloadlist.AutoLoadAdapter;
@@ -112,6 +120,7 @@ public class WifiListActivity extends Activity{
             @Override
             public void getPage(int page) {
                 if(wifiManager.isWifiEnabled() && wifiManager.startScan()) {
+                    connectionInfo = wifiManager.getConnectionInfo();
                     list = wifiManager.getScanResults();
                     if (list != null && list.size() > 0)
                         this.setmData(list, autoLoadRecyclerView);
@@ -136,8 +145,13 @@ public class WifiListActivity extends Activity{
             = new AutoLoadRecyclerAdapter.RecyclerOnClickListener<ScanResult>() {
         @Override
         public void onItemClick(ScanResult ItemData) {
-            ActivityUtils.showTip(ItemData.SSID + ItemData.frequency, false);
-            connenctWifi(ItemData);
+            WifiConfiguration wifiConfiguration = wifiIsSaved(ItemData);
+            if(wifiConfiguration!=null){
+                connectWifi(wifiConfiguration);
+            }
+            else {
+                EditPassword(ItemData);
+            }
         }
 
         @Override
@@ -146,72 +160,70 @@ public class WifiListActivity extends Activity{
         }
     };
 
-    private boolean connenctWifi(ScanResult scanResult){
-        /*判断该wifi是否在列表中*/
-        boolean isSaved = false;
-        int position = 0;
-        configurationList = wifiManager.getConfiguredNetworks();
-        for(position = 0 ;position < configurationList.size(); position++){
-            WifiConfiguration item = configurationList.get(position);
-            if(item.BSSID != null && item.BSSID.equals(scanResult.BSSID)){
-                isSaved = true;
-                break;
-            }else if(item.SSID.toString().equals("\"tianque1\"")){
-                isSaved = true;
-                break;
+    private Dialog editPWDDialog;
+    private void EditPassword(final ScanResult ItemData){
+        editPWDDialog = new Dialog(WifiListActivity.this);
+        View view = LayoutInflater.from(WifiListActivity.this).inflate(R.layout.dialog_edit_password, null);
+        final EditText passowrod = (EditText) view.findViewById(R.id.dialog_pwd);
+        TextView title = (TextView) view.findViewById(R.id.dialog_title);
+        title.setText("连接WIFI: "+ItemData.SSID);
+        Button config = (Button) view.findViewById(R.id.dialog_config);
+        config.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addWifi(passowrod.getText().toString(), ItemData);
+                editPWDDialog.dismiss();
             }
-        }
-        if(!isSaved) {
-            /*添加新的wifi*/
-            WifiConfiguration configuration = new WifiConfiguration();
-            configuration.allowedAuthAlgorithms.clear();
-            configuration.allowedGroupCiphers.clear();
-            configuration.allowedKeyManagement.clear();
-            configuration.allowedPairwiseCiphers.clear();
-            configuration.allowedProtocols.clear();
+        });
+        editPWDDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        editPWDDialog.setContentView(view);
+        editPWDDialog.setCanceledOnTouchOutside(true);
+        editPWDDialog.show();
 
-            configuration.BSSID = scanResult.BSSID;
-            configuration.SSID = "\"" + "tianque1" + "\"";
-            String capabilities = scanResult.capabilities;
-            if (capabilities.contains("WPA-PSK") || capabilities.contains("WPA2-PSK") )
-                configuration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-            else if (capabilities.contains("WPA_EAP") || capabilities.contains("WPA2_EAP")){
-                configuration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_EAP);
-            }
-            else{
-                configuration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-            }
-            if(capabilities.contains("WEP")){
-                configuration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-                configuration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-            }
-            if(capabilities.contains("CCMP")){
-                configuration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-            }
-            if(capabilities.contains("TKIP")){
-                configuration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-            }
-            if(capabilities.contains("WPA"))
-                configuration.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-            else if(capabilities.contains("RSN"))
-                configuration.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-            if(configuration.allowedKeyManagement.isEmpty()){
-                configuration.wepKeys[0] = "";
-            }else{
-                configuration.preSharedKey = "\"" + "tianqueshuage" + "\"";
-            }
-            wifiManager.addNetwork(configuration);
-            connenctWifi(scanResult);
-        }else{
-            boolean success = wifiManager.enableNetwork(configurationList.get(position).networkId, true);
-            ActivityUtils.showTip("连接结果：" + success , false);
-            return success;
-        }
-        return false;
     }
 
-    private WifiConfiguration CreateWifiInfo(String SSID, String Password, String capabilities)
-    {
+    /*判断wifi是否已保存*/
+    private WifiConfiguration wifiIsSaved(ScanResult scanResult){
+        WifiConfiguration configuration = null;
+        configurationList = wifiManager.getConfiguredNetworks();
+        for(WifiConfiguration item: configurationList){
+            if(item.BSSID != null && item.BSSID.equals(scanResult.BSSID)){
+                configuration = item;
+                break;
+            }else if(item.SSID.toString().equals("\""+scanResult.SSID+"\"")){
+                configuration = item;
+                break;
+            }
+        }
+        return configuration;
+    }
+
+    /*连接指定wifi*/
+    private void addWifi(String password, ScanResult scanResult){
+            WifiConfiguration configuration = createWifiInfo(scanResult.SSID, password, scanResult.capabilities);
+            if(configuration!=null) {
+                wifiManager.addNetwork(configuration);
+                connectWifi(wifiIsSaved(scanResult));
+            }else{
+                ActivityUtils.showTip("连接wifi失败", false);
+            }
+
+    }
+
+    private boolean connectWifi(WifiConfiguration wifiConfiguration){
+        if(wifiConfiguration!=null) {
+            wifiManager.disconnect();
+            wifiManager.enableNetwork(wifiConfiguration.networkId, true);
+            boolean success = wifiManager.reconnect();
+            return success;
+        }else{
+            ActivityUtils.showTip("连接wifi失败", false);
+            return false;
+        }
+    }
+
+    private WifiConfiguration createWifiInfo(String SSID, String Password,
+                                             String capabilities) {
         WifiConfiguration config = new WifiConfiguration();
         config.allowedAuthAlgorithms.clear();
         config.allowedGroupCiphers.clear();
@@ -219,39 +231,41 @@ public class WifiListActivity extends Activity{
         config.allowedPairwiseCiphers.clear();
         config.allowedProtocols.clear();
         config.SSID = "\"" + SSID + "\"";
-        if(capabilities.contains("null"))
-        {
-            config.wepKeys[0] = "";
-            config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-            config.wepTxKeyIndex = 0;
-        }
-        if(capabilities.contains("WEP"))
-        {
-            config.preSharedKey = "\""+Password+"\"";
-            config.hiddenSSID = true;
-            config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
-            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-            config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-            config.wepTxKeyIndex = 0;
-        }
-        if(capabilities.contains("WPA"))
-        {
-            config.preSharedKey = "\""+Password+"\"";
+
+        if (capabilities.toUpperCase().contains("WPA")) {
+
+            // 修改之后配置
+            config.preSharedKey = "\"" + Password + "\"";
             config.hiddenSSID = true;
             config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
             config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
             config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-            config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-            config.status = WifiConfiguration.Status.ENABLED;
+            // config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+            config.allowedPairwiseCiphers
+                    .set(WifiConfiguration.PairwiseCipher.CCMP);
+
+        } else
+        if (capabilities.toUpperCase().contains("WEP")) {
+            config.preSharedKey = "\"" + Password + "\"";
+            config.hiddenSSID = true;
+            config.allowedAuthAlgorithms
+                    .set(WifiConfiguration.AuthAlgorithm.SHARED);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+            config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+            config.allowedGroupCiphers
+                    .set(WifiConfiguration.GroupCipher.WEP104);
+            config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            config.wepTxKeyIndex = 0;
+        }else{
+            config.wepKeys[0] = "";
+            config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            config.wepTxKeyIndex = 0;
         }
-        else
-        {
+        if(config.allowedKeyManagement == null)
             return null;
-        }
         return config;
     }
 }
