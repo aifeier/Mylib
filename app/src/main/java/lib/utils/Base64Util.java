@@ -1,6 +1,13 @@
 package lib.utils;
 
+import android.util.Log;
+
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 public class Base64Util {
 	private static final char[] base64EncodeChars = new char[] { 'A', 'B', 'C',
@@ -77,6 +84,8 @@ public class Base64Util {
 		while (i < len) {
 
 			/* b1 */
+			if(i >= len)
+				break;
 			do {
 				b1 = base64DecodeChars[data[i++]];
 			} while (i < len && b1 == -1);
@@ -85,6 +94,8 @@ public class Base64Util {
 			}
 
 			/* b2 */
+			if(i >= len)
+				break;
 			do {
 				b2 = base64DecodeChars[data[i++]];
 			} while (i < len && b2 == -1);
@@ -93,7 +104,10 @@ public class Base64Util {
 			}
 			buf.write((int) ((b1 << 2) | ((b2 & 0x30) >>> 4)));
 
+
 			/* b3 */
+			if(i >= len)
+				break;
 			do {
 				b3 = data[i++];
 				if (b3 == 61) {
@@ -107,6 +121,8 @@ public class Base64Util {
 			buf.write((int) (((b2 & 0x0f) << 4) | ((b3 & 0x3c) >>> 2)));
 
 			/* b4 */
+			if(i >= len)
+				break;
 			do {
 				b4 = data[i++];
 				if (b4 == 61) {
@@ -121,4 +137,20 @@ public class Base64Util {
 		}
 		return buf.toByteArray();
 	}
+
+	public static String DefaultEncoder(String s){
+		s = "ai" + s + "1993";
+		return new BASE64Encoder().encode(s.getBytes());
+	}
+
+	public static String DefaultDecoder(String s){
+		try {
+			String str = new String(new BASE64Decoder().decodeBuffer(s), "utf-8");
+			return str.substring(2, str.length()-4);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

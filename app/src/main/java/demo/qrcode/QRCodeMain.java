@@ -27,6 +27,7 @@ import com.google.zxing.client.android.Intents;
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
 import lib.utils.AppUtils;
+import lib.utils.Base64Util;
 import lib.utils.DoubleSIMInfo;
 import lib.utils.MobleUtils;
 import lib.utils.NetUtils;
@@ -56,6 +57,9 @@ public class QRCodeMain extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppUtils.getInstallApk(this);
+        String base64 = Base64Util.DefaultEncoder("1234567890");
+        Log.e(TAG, base64 + ":::" + Base64Util.DefaultDecoder(base64));
+        ActivityUtils.showTip(base64 + Base64Util.DefaultDecoder(base64), false);
 //        Window window = getWindow();
 //        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);//保持屏幕不变暗
         if(true){
