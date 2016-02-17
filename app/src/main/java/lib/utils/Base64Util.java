@@ -5,6 +5,7 @@ import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -135,7 +136,65 @@ public class Base64Util {
 			}
 			buf.write((int) (((b3 & 0x03) << 6) | b4));
 		}
+		buf.toString();
 		return buf.toByteArray();
+	}
+
+	public static String MyEncoder(String str){
+		byte[] data = str.getBytes();
+		int len = data.length;
+		/*switch (len % 3){
+			case 0:
+				break;
+			case 1:
+				str = str + "=";
+				break;
+			case 2:
+				str = str + "==";
+				break;
+		}
+		data = str.getBytes();
+		len = data.length;*/
+		StringBuffer stringBuffer = new StringBuffer();
+		int i = 0;
+		int b, b1, b2;
+		while (i < len){
+			b = data[i++];
+			Log.e("ABC", "b: " + b);
+			b2 = b >>> 4 & 0x0f;
+			b1 = b & 0x1f;
+			Log.e("ABC", "b1: " + b1 + "  b2: " + b2);
+			stringBuffer.append(base64EncodeChars[b1 >= 41 ? b1 - 41 : b1]);
+			stringBuffer.append(base64EncodeChars[b2 >= 41 ? b2 - 41 : b2]);
+//			stringBuffer.append(b1);
+//			stringBuffer.append(b2);
+		}
+		return stringBuffer.toString();
+	}
+
+	public static String myDecoder(String str){
+		byte[] data = str.getBytes();
+		StringBuffer stringBuffer = new StringBuffer();
+		int i = 0;
+		int len = data.length;
+		int b1, b2, b3;
+		ByteArrayOutputStream buf = new ByteArrayOutputStream(len);
+		while(i < len){
+			b1 = data[i++];
+			b2 = data[i++];
+			b3 = (b1 & 0x0f ) | ((b2 & 0x0f) << 4);
+			stringBuffer.append(base64DecodeChars[b3]);
+//			buf.write(b3);
+			Log.e("ABC", "b3: " + b3);
+//			stringBuffer.append(b3);
+		}
+		/*try {
+			Log.e("ABC", new String(buf.toByteArray(), "utf-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}*/
+		Log.e("ABC", stringBuffer.toString());
+		return stringBuffer.toString();
 	}
 
 	public static String DefaultEncoder(String s){

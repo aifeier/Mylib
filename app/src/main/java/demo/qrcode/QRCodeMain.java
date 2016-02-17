@@ -29,6 +29,7 @@ import lib.utils.ActivityUtils;
 import lib.utils.AppUtils;
 import lib.utils.Base64Util;
 import lib.utils.DoubleSIMInfo;
+import lib.utils.MD5Util;
 import lib.utils.MobleUtils;
 import lib.utils.NetUtils;
 
@@ -57,7 +58,12 @@ public class QRCodeMain extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppUtils.getInstallApk(this);
+        MD5Util.md5Encrypt("1234");
+        String my = Base64Util.MyEncoder("123456789E");
+        Log.e("ABC", my + ":::" + Base64Util.myDecoder(my));
         String base64 = Base64Util.DefaultEncoder("1234567890");
+        String s = "1234567890";
+        Base64Util.decode(Base64Util.encode(s.getBytes()));
         Log.e(TAG, base64 + ":::" + Base64Util.DefaultDecoder(base64));
         ActivityUtils.showTip(base64 + Base64Util.DefaultDecoder(base64), false);
 //        Window window = getWindow();
