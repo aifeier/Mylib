@@ -164,8 +164,8 @@ public class Base64Util {
 			b2 = b >>> 4 & 0x0f;
 			b1 = b & 0x1f;
 			Log.e("ABC", "b1: " + b1 + "  b2: " + b2);
-			stringBuffer.append(base64EncodeChars[b1 >= 41 ? b1 - 41 : b1]);
-			stringBuffer.append(base64EncodeChars[b2 >= 41 ? b2 - 41 : b2]);
+			stringBuffer.append(base64EncodeChars[b1]);
+			stringBuffer.append(base64EncodeChars[b2]);
 //			stringBuffer.append(b1);
 //			stringBuffer.append(b2);
 		}

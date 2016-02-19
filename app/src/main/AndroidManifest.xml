@@ -317,6 +317,15 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="demo.custom.ClipboardActivity"
+            android:label="剪切板监听"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="demo.custom.CustomLayoutList"></category>
+            </intent-filter>
+        </activity>
+
         <!--gestureLock-->
         <activity android:name="demo.custom.GestureLockActivity"
             android:screenOrientation="portrait"

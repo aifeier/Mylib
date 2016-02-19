@@ -37,6 +37,7 @@ import com.cwf.app.cwf.R;
 import com.google.zxing.client.android.camera.CameraManager;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 
 /**
@@ -52,6 +53,8 @@ public class QRCodeMain extends BaseActivity
 
     private Result savedResultToShow;
 
+    enum Weekday {a,b,c,d,e,f,g};
+
 
     private CameraManager cameraManager;
     @Override
@@ -59,11 +62,16 @@ public class QRCodeMain extends BaseActivity
         super.onCreate(savedInstanceState);
         AppUtils.getInstallApk(this);
         MD5Util.md5Encrypt("1234");
-        String my = Base64Util.MyEncoder("123456789E");
+        String my = Base64Util.MyEncoder("123456789A");
         Log.e("ABC", my + ":::" + Base64Util.myDecoder(my));
         String base64 = Base64Util.DefaultEncoder("1234567890");
-        String s = "1234567890";
-        Base64Util.decode(Base64Util.encode(s.getBytes()));
+        String s = "1234567890A";
+        try {
+            Log.e("ABC",Base64Util.encode(s.getBytes()));
+            Log.e("ABC",new String(Base64Util.decode(Base64Util.encode(s.getBytes())), "utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         Log.e(TAG, base64 + ":::" + Base64Util.DefaultDecoder(base64));
         ActivityUtils.showTip(base64 + Base64Util.DefaultDecoder(base64), false);
 //        Window window = getWindow();
@@ -92,6 +100,15 @@ public class QRCodeMain extends BaseActivity
 //        startActivity(intent);
         hasSurface = false;
 //        PreferenceManager.setDefaultValues(this, com.google.zxing.client.android.R.xml.preferences, false);
+    }
+
+    private void ii(Weekday weekday){
+        switch (weekday){
+            case a:
+                break;
+            case b:
+                break;
+        }
     }
 
  /*   @Override
