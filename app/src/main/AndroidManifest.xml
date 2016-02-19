@@ -403,6 +403,14 @@
             </intent-filter>
         </service>
 
+        <service android:name="demo.custom.ClipboardService"
+            android:enabled="true"
+            android:process=":clipboard">
+            <intent-filter>
+                <action android:name="com.cwf.ai.Clipboardservice"/>
+            </intent-filter>
+        </service>
+
         <!--监听开机-->
         <receiver android:name="demo.intent.ConnectBroadCastReceiver"
             >

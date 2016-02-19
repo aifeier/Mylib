@@ -1,13 +1,17 @@
 package demo.custom;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
-
-import com.cwf.app.cwf.R;
 
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
@@ -19,7 +23,19 @@ import de.greenrobot.event.Subscribe;
  */
 public class ClipboardActivity extends Activity {
 
+    public static String ACTION = "demo.intent.clipboardReceiver";
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            /*系统广播只能动态注册，在main中注册无效*/
+            if(intent.getAction().equals(ACTION)) {
+                Log.e(getPackageName(), intent.getStringExtra("text"));
+            }
+        }
+    };
+
     private ClipboardManager clipboardManager;
+    private Intent clipboardService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +51,43 @@ public class ClipboardActivity extends Activity {
         });
 
         EventBus.getDefault().register(this);
+        registerReceiver(broadcastReceiver, new IntentFilter(ACTION));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(clipboardService == null){
+            clipboardService = new Intent(ClipboardService.ACTION);
+            startService(clipboardService);
+            bindService(clipboardService, serviceConnection, BIND_AUTO_CREATE);
+        }
+    }
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            clipboardManager.addPrimaryClipChangedListener(new ClipboardManager.OnPrimaryClipChangedListener() {
+                @Override
+                public void onPrimaryClipChanged() {
+                    ClipData.Item data = clipboardManager.getPrimaryClip().getItemAt(0);
+                    EventBus.getDefault().post(data);
+                }
+            });
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
+
+
+    @Subscribe
+    public void onEventMainThread(ClipData.Item item){
+        if(item != null){
+            Log.e("ClipboardActivity", item.getText().toString());
+        }
     }
 
 
@@ -47,5 +100,10 @@ public class ClipboardActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        if(clipboardService != null){
+            stopService(clipboardService);
+            unbindService(serviceConnection);
+        }
+        unregisterReceiver(broadcastReceiver);
     }
 }
