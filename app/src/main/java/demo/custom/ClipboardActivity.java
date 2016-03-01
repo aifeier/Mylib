@@ -106,4 +106,6 @@ public class ClipboardActivity extends Activity {
         }
         unregisterReceiver(broadcastReceiver);
     }
+
+
 }
