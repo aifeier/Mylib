@@ -402,6 +402,8 @@
                 <action android:name="com.cwf.ai.service"/>
             </intent-filter>
         </service>
+        <service android:name="demo.service.MqttService"
+            android:label="MqttService"></service>
 
         <service android:name="demo.custom.ClipboardService"
             android:enabled="true"

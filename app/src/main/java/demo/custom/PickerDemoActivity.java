@@ -13,6 +13,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.qqtheme.framework.picker.AddressPicker;
 import cn.qqtheme.framework.picker.ColorPicker;
@@ -77,6 +79,16 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
                     }
                 });
                 colorPicker.show();
+                break;
+            case R.id.wakeup:
+                TimerTask timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        CommonUtils.wakeUpAndUnlock(PickerDemoActivity.this);
+                    }
+                };
+                Timer timer = new Timer();
+                timer.schedule(timerTask, 5000);
                 break;
             case R.id.picker_file:
                 /*FilePicker filePicker = new FilePicker(this);
