@@ -52,14 +52,6 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
 //        AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 //        PendingIntent pi = PendingIntent.getActivity(PickerDemoActivity.this, 1, new Intent(PickerDemoActivity.this,EventBusDemo.class), 0);
 //        am.set(AlarmManager.RTC_WAKEUP, 3000, pi);
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                startActivity(new Intent(PickerDemoActivity.this,EventBusDemo.class));
-            }
-        };
-        Timer timer = new Timer();
-        timer.schedule(timerTask, 5000);
 
     }
 
@@ -115,6 +107,16 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
                 NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
                 notificationUtils.startNotification("message",EventBusDemo.class,R.drawable.dialog_load, "content" );
 //                notificationUtils.showNotification("ok", EventBusDemo.class, R.drawable.file_picker_folder);
+                break;
+            case R.id.wakeNotification:
+                TimerTask timerTask1 = new TimerTask() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(PickerDemoActivity.this,EventBusDemo.class));
+                    }
+                };
+                Timer timer1 = new Timer();
+                timer1.schedule(timerTask1, 5000);
                 break;
             case R.id.picker_file:
                 /*FilePicker filePicker = new FilePicker(this);

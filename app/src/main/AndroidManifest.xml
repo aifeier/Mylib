@@ -309,7 +309,7 @@
         <activity android:name="demo.custom.CustomLayoutList"
             android:screenOrientation="portrait"></activity>
         <activity android:name="demo.custom.PickerDemoActivity"
-            android:label="多级联动选择器"
+            android:label="自定义功能测试"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
