@@ -128,6 +128,13 @@ public class CommonUtils {
         wl.release();
     }
 
+    public static void unlock(Context context) {
+        KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unlock");
+        /*解锁*/
+        kl.disableKeyguard();
+    }
+
     /*唤醒屏幕并解锁*/
     public static void wakeUp(Context context){
         /*获得电源管理器对象*/

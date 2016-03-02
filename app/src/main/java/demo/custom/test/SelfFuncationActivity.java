@@ -1,5 +1,8 @@
 package demo.custom.test;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -84,7 +87,12 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                     public void run() {
                         if(CommonUtils.isSleeping(getApplicationContext())) {
                             CommonUtils.wakeUp(getApplicationContext());
-                            startActivity(new Intent(getApplicationContext(), LockNoticationActivity.class));
+                            AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                            PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 1,
+                                    new Intent(getApplicationContext(),LockNoticationActivity.class), 0);
+                            am.set(AlarmManager.RTC_WAKEUP, 100, pi);
+
+//                            startActivity(new Intent(getApplicationContext(), LockNoticationActivity.class));
                         }
                         NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
 //                        notificationUtils.startNotification("message",EventBusDemo.class,R.drawable.dialog_load, "content" );

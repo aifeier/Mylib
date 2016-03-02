@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import com.cwf.app.cwf.R;
 
 import demo.intent.EventBusDemo;
+import lib.utils.CommonUtils;
 
 /**
  * Created by n-240 on 2016/3/2.
@@ -26,9 +27,7 @@ public class LockNoticationActivity extends Activity implements View.OnClickList
         win.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-        );
-        //解锁
-        //| WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+        );//| WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
         win.addFlags(WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
@@ -40,8 +39,11 @@ public class LockNoticationActivity extends Activity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.lock_text:
+                CommonUtils.unlock(getApplicationContext());
                 startActivity(new Intent(LockNoticationActivity.this, EventBusDemo.class));
+                finish();
                 break;
         }
+
     }
 }
