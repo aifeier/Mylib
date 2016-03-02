@@ -115,6 +115,21 @@ public class CommonUtils {
         KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unlock");
         /*解锁*/
         kl.disableKeyguard();
+//        kl.reenableKeyguard();
+
+        /*获得电源管理器对象*/
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        /*获取PowerManager.Wakelock对象，后面的参数|变色同时传入两个值，最后的是LogCat里用的Tag*/
+        PowerManager.WakeLock wl = pm.newWakeLock(
+                PowerManager.ACQUIRE_CAUSES_WAKEUP|PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
+        /*点了屏幕*/
+        wl.acquire();
+        /*释放*/
+        wl.release();
+    }
+
+    /*唤醒屏幕并解锁*/
+    public static void wakeUp(Context context){
         /*获得电源管理器对象*/
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         /*获取PowerManager.Wakelock对象，后面的参数|变色同时传入两个值，最后的是LogCat里用的Tag*/

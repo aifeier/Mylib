@@ -279,6 +279,9 @@
             />
         <activity android:name="demo.intent.EventBusDemo"
             android:screenOrientation="portrait"/>
+        <activity android:name="demo.custom.test.LockNoticationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name="lib.utils.FileExploreActivity"
             android:screenOrientation="portrait"/>
         <activity android:name="demo.custom.FileActivity"
@@ -386,6 +389,10 @@
         <activity android:name="demo.anim.AnimDemo">
 
         </activity>
+
+        <!--定义功能测试-->
+        <activity android:name="demo.custom.test.SelfFuncationActivity"
+            android:screenOrientation="portrait"/>
 
         <!--服务-->
         <service

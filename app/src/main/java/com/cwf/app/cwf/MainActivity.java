@@ -12,17 +12,17 @@ import demo.List.DemoListActivity;
 import demo.anim.AnimDemo;
 import demo.baidumap.BaseMapActivity;
 import demo.custom.CustomLayoutList;
+import demo.custom.test.SelfFuncationActivity;
 import demo.intent.VolleyDemoList;
 import demo.picture.PictureDemoList;
 import demo.qrcode.QRCodeMain;
-import demo.systembartint.SamplesListActivity;
 import lib.BaseActivity;
 import lib.MainApplication;
 
 public class MainActivity extends BaseActivity implements OnItemClickListener{
 
     private ListView mList;
-    private final String[] demo = {"百度地图" , "网络请求使用" , "多媒体", "ListDemo" , "QRCode" ,  "动画", "自定义控件"};
+    private final String[] demo = {"百度地图" , "网络请求使用" , "多媒体", "ListDemo" , "QRCode" ,  "动画", "自定义控件", "自定义功能测试"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,9 @@ public class MainActivity extends BaseActivity implements OnItemClickListener{
                 break;
             case 6:
                 i = new Intent(MainActivity.this, CustomLayoutList.class);
+                break;
+            case 7:
+                i = new Intent(MainActivity.this, SelfFuncationActivity.class);
                 break;
             default:
                 break;

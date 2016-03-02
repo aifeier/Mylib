@@ -1,17 +1,9 @@
 package demo.custom;
 
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 
-//import com.alibaba.fastjson.JSON;
 import com.cwf.app.cwf.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,6 +24,8 @@ import lib.utils.ActivityUtils;
 import lib.utils.AssetsUtils;
 import lib.utils.CommonUtils;
 import lib.utils.NotificationUtils;
+
+//import com.alibaba.fastjson.JSON;
 
 /**
  * Created by n-240 on 2016/1/14.
@@ -112,7 +106,12 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
                 TimerTask timerTask1 = new TimerTask() {
                     @Override
                     public void run() {
-                        startActivity(new Intent(PickerDemoActivity.this,EventBusDemo.class));
+                        if(CommonUtils.isSleeping(getApplicationContext()))
+                            CommonUtils.wakeUp(getApplicationContext());
+                        NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+//                        notificationUtils.startNotification("message",EventBusDemo.class,R.drawable.dialog_load, "content" );
+                        notificationUtils.showNotification("ok", EventBusDemo.class, R.drawable.file_picker_folder);
+//                            startActivity(new Intent(PickerDemoActivity.this,LockNoticationActivity.class));
                     }
                 };
                 Timer timer1 = new Timer();

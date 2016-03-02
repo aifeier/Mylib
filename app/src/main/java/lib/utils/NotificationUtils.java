@@ -44,12 +44,12 @@ public class NotificationUtils {
             Intent intent = new Intent(Intent.ACTION_MAIN);
 //            intent.addCategory(Intent.CATEGORY_LAUNCHER);
             intent.setClass(mContext, cla);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                    | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-//            intent.addFlags(Intent.FILL_IN_DATA);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FILL_IN_DATA);
 
             PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0,
-                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
             Notification notification = new Notification.Builder(mContext)
                     .setSmallIcon(icon)
@@ -86,11 +86,11 @@ public class NotificationUtils {
 
             intent.setClass(mContext, cla);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//这行代码会解决此问题
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FILL_IN_DATA);
 
             PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0,
-                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    intent, PendingIntent.FLAG_CANCEL_CURRENT);
             Notification notification = new Notification.Builder(mContext)
                     .setSmallIcon(icon)
                     .setContentTitle(message)
@@ -99,7 +99,7 @@ public class NotificationUtils {
                     .setWhen( System.currentTimeMillis())
                     .setContentIntent(contentIntent)
                     .build();
-
+            notification.sound = Uri.parse("http://down.5nd.com/a/down.ashx?t=1&xcode=79bf70bed451ab1d90a7f13d467eee6d&sid=604385");
 //            if (!new File(soundPath).exists()) {
 //                AssetManager am = null;
 //                try {
