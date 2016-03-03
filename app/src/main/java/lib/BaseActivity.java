@@ -3,14 +3,21 @@ package lib;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 //import com.cwf.app.cwflibrary.utils.ThemePreferences;
+import com.cwf.app.cwf.R;
+import com.cwf.app.cwf.SlidingLayout;
+
 import lib.utils.Systembartint.SystemBarTintManager;
 
 /**
@@ -45,6 +52,9 @@ public abstract class BaseActivity extends Activity {
         }
         tintManager = new SystemBarTintManager(this);//设置监听这里
         tintManager.setStatusBarTintEnabled(true);//设置statusbar可用
+
+        SlidingLayout rootView = new SlidingLayout(this);
+        rootView.bindActivity(this);
 //        tintManager.setTintResource(R.color.holo_blue_light);
         /*
         * 主题为actionbar
@@ -92,9 +102,28 @@ public abstract class BaseActivity extends Activity {
         super.onResume();
     }
 
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
+        super.startActivityForResult(intent, requestCode, options);
+        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+    }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
+
 }

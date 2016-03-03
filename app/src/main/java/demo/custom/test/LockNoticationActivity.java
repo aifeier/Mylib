@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.cwf.app.cwf.R;
 
 import demo.intent.EventBusDemo;
+import lib.BaseActivity;
 import lib.utils.CommonUtils;
 
 /**
@@ -21,7 +22,7 @@ import lib.utils.CommonUtils;
  *锁屏通知界面
  * @author cwf
  */
-public class LockNoticationActivity extends Activity implements View.OnClickListener
+public class LockNoticationActivity extends BaseActivity implements View.OnClickListener
         ,GestureDetector.OnGestureListener{
     TextView textView ;
     private GestureDetector gestureDetector;
