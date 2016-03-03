@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,8 +21,10 @@ import lib.utils.CommonUtils;
  *锁屏通知界面
  * @author cwf
  */
-public class LockNoticationActivity extends Activity implements View.OnClickListener{
+public class LockNoticationActivity extends Activity implements View.OnClickListener
+        ,GestureDetector.OnGestureListener{
     TextView textView ;
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,31 @@ public class LockNoticationActivity extends Activity implements View.OnClickList
 //        win.requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.lock_notification);
         textView = (TextView) findViewById(R.id.lock_text);
+        textView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
+        gestureDetector = new GestureDetector(this);
+        gestureDetector.setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                startActivity(new Intent(LockNoticationActivity.this, EventBusDemo.class));
+                finish();
+                return false;
+            }
+
+            @Override
+            public boolean onDoubleTapEvent(MotionEvent e) {
+                return false;
+            }
+        });
 
     }
 
@@ -49,10 +77,45 @@ public class LockNoticationActivity extends Activity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.lock_text:
-                startActivity(new Intent(LockNoticationActivity.this, EventBusDemo.class));
-                finish();
+//                startActivity(new Intent(LockNoticationActivity.this, EventBusDemo.class));
+//                finish();
                 break;
         }
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return gestureDetector.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return true;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
     }
 }
