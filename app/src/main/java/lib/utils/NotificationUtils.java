@@ -5,11 +5,20 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.net.Uri;
+import android.net.rtp.AudioStream;
+import android.provider.MediaStore;
+
+import com.cwf.app.cwf.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -23,13 +32,13 @@ public class NotificationUtils {
         private Context mContext;
         NotificationManager mNM;
         public static final int NOTIFYID = 2048;
-        private String soundPath = null;
 
         public NotificationUtils(Context context) {
             this.mContext = context;
             mNM = (NotificationManager) mContext
                     .getSystemService(Context.NOTIFICATION_SERVICE);
         }
+
 
         /**
          * 开启，一直在
@@ -56,12 +65,18 @@ public class NotificationUtils {
                     .setContentTitle(content)
                     .setContentInfo(message)
                     .setAutoCancel(false)
-                    .setDefaults(Notification.DEFAULT_ALL)
+//                    .setDefaults(Notification.DEFAULT_ALL)
                     .setWhen(System.currentTimeMillis())
                     .setContentIntent(contentIntent)
                     .setSubText("abc")
                     .build();
 
+            notification.sound=Uri.parse("android.resource://" + mContext.getPackageName() + "/" +R.raw.ring);
+//            notification.defaults |= Notification.DEFAULT_SOUND;
+            notification.defaults |= Notification.DEFAULT_LIGHTS;
+            notification.defaults |= Notification.DEFAULT_VIBRATE;
+            notification.defaults |= Notification.COLOR_DEFAULT;
+            notification.defaults |= Notification.PRIORITY_DEFAULT;
             // 设置点击属性，点击一次就消失
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
             // //在通知栏上点击此通知后自动清除此通知
@@ -95,39 +110,30 @@ public class NotificationUtils {
                     .setSmallIcon(icon)
                     .setContentTitle(message)
                     .setAutoCancel(false)
-                    .setDefaults(Notification.DEFAULT_ALL)
-                    .setWhen( System.currentTimeMillis())
+//                    .setDefaults(Notification.COLOR_DEFAULT | Notification.DEFAULT_SOUND)
+                    .setWhen(System.currentTimeMillis())
                     .setContentIntent(contentIntent)
+//                    .setTicker("ABCD")//状态栏 (Status Bar) 显示的通知文本提示
                     .build();
-            notification.sound = Uri.parse("http://down.5nd.com/a/down.ashx?t=1&xcode=79bf70bed451ab1d90a7f13d467eee6d&sid=604385");
-//            if (!new File(soundPath).exists()) {
-//                AssetManager am = null;
-//                try {
-//                    am = mContext.getAssets();
-//                    InputStream in = am.open("tishi.wav");
-//                    FileOutputStream fileOutputStream = new FileOutputStream(
-//                            new File(soundPath));
-//                    int remain = -1;
-//                    while ((remain = in.read()) != -1) {
-//                        fileOutputStream.write(remain);
-//                    }
-//                    fileOutputStream.flush();
-//                    fileOutputStream.close();
-//                    in.close();
-//                    am.close();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-            // 配置震动
-//            notification.defaults |= Notification.DEFAULT_VIBRATE;
-            // long[] vibrate = {0,100,200,300};
-            // notification.vibrate = vibrate ;
-            // 默认声音
-            // notification.defaults |= Notification.DEFAULT_SOUND;
-//            notification.sound = Uri.parse(soundPath);
-            // 设置点击属性，点击一次就消失
-            // notification.flags = Notification.FLAG_ONGOING_EVENT;
+
+//            notification.defaults |= Notification.DEFAULT_ALL;
+
+//            提示音
+//            notification.defaults |= Notification.DEFAULT_SOUND;
+            notification.sound=Uri.parse("android.resource://" + mContext.getPackageName() + "/" +R.raw.ring);
+//            notification.sound = Uri.withAppendedPath(MediaStore.Audio.Media.INTERNAL_CONTENT_URI, "5");
+
+//            手机振动
+            notification.defaults |= Notification.DEFAULT_VIBRATE;
+//            long[] vibrate = {0,100,200,300};
+//            notification.vibrate = vibrate ;
+//           LED 灯闪烁
+            notification.defaults |= Notification.DEFAULT_LIGHTS;
+//            notification.ledARGB = 0xff00ff00;
+//            notification.ledOnMS = 300;
+//            notification.ledOffMS = 1000;
+            notification.flags |= Notification.FLAG_SHOW_LIGHTS;
+
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
             mNM.notify(NOTIFYID + 1, notification);
         }

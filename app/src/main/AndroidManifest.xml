@@ -281,7 +281,10 @@
             android:screenOrientation="portrait"/>
         <activity android:name="demo.custom.test.LockNoticationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MyDialogCenter"/>
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar"/>
         <activity android:name="lib.utils.FileExploreActivity"
             android:screenOrientation="portrait"/>
         <activity android:name="demo.custom.FileActivity"

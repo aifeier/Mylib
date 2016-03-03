@@ -78,7 +78,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                 break;
             case 1:
                 NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-                notificationUtils.startNotification("message",EventBusDemo.class,R.drawable.dialog_load, "content" );
+                notificationUtils.startNotification("message", EventBusDemo.class, R.drawable.dialog_load, "content");
 //                notificationUtils.showNotification("ok", EventBusDemo.class, R.drawable.file_picker_folder);
                 break;
             case 2:
@@ -87,10 +87,13 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                     public void run() {
                         if(CommonUtils.isSleeping(getApplicationContext())) {
                             CommonUtils.wakeUp(getApplicationContext());
-                            AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-                            PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 1,
-                                    new Intent(getApplicationContext(),LockNoticationActivity.class), 0);
-                            am.set(AlarmManager.RTC_WAKEUP, 100, pi);
+//                            AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+//                            PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 1,
+//                                    new Intent(getApplicationContext(),LockNoticationActivity.class), 0);
+//                            am.set(AlarmManager.RTC_WAKEUP, 100, pi);
+                            Intent i = new Intent(getApplicationContext(),LockNoticationActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(i);
 
 //                            startActivity(new Intent(getApplicationContext(), LockNoticationActivity.class));
                         }
