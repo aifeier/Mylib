@@ -8,11 +8,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 //import com.cwf.app.cwflibrary.utils.ThemePreferences;
 import com.cwf.app.cwf.R;
@@ -23,11 +26,12 @@ import lib.utils.Systembartint.SystemBarTintManager;
 /**
  * Created by n-240 on 2015/9/23.
  */
-public abstract class BaseActivity extends Activity {
+public  class BaseActivity extends AppCompatActivity {
 
     private static ProgressDialog progressDialog;
     /**状态栏管理器*/
     private SystemBarTintManager tintManager;
+
 
     /*用户数据，个人设置*/
 //    private ThemePreferences themePreferences;
@@ -52,6 +56,7 @@ public abstract class BaseActivity extends Activity {
         }
         tintManager = new SystemBarTintManager(this);//设置监听这里
         tintManager.setStatusBarTintEnabled(true);//设置statusbar可用
+
 
         SlidingLayout rootView = new SlidingLayout(this);
         rootView.bindActivity(this);
@@ -125,5 +130,6 @@ public abstract class BaseActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
 
 }
