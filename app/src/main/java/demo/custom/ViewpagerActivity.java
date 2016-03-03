@@ -14,11 +14,12 @@ import java.util.ArrayList;
 import demo.custom.tabhost.fragment_1;
 import demo.custom.tabhost.fragment_2;
 import demo.custom.tabhost.fragment_3;
+import lib.BaseActivity;
 
 /**
  * Created by n-240 on 2015/11/6.
  */
-public class ViewpagerActivity extends AppCompatActivity {
+public class ViewpagerActivity extends BaseActivity {
 
     private TabHost tabHost;
     private ViewPager viewPager;

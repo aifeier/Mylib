@@ -15,10 +15,12 @@ import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
 
+import lib.BaseActivity;
+
 /**
  * Created by n-240 on 2015/11/10.
  */
-public class CoordinatorActivity extends AppCompatActivity
+public class CoordinatorActivity extends BaseActivity
         implements AppBarLayout.OnOffsetChangedListener {
 
     private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;

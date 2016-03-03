@@ -9,12 +9,14 @@ import android.widget.TextView;
 import com.cwf.app.cwf.R;
 import com.cwf.app.cwf.SlidingLayout;
 
+import lib.BaseActivity;
+
 /**
  * Created by n-240 on 2016/3/3.
  *
  * @author cwf
  */
-public class SlidingAcitivity2 extends AppCompatActivity{
+public class SlidingAcitivity2 extends BaseActivity {
     TextView textview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

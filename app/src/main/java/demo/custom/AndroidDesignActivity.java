@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,19 +13,15 @@ import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
 
-import java.util.ArrayList;
-
 import demo.custom.tabhost.SimpleFragmentPagerAdapter;
-import demo.custom.tabhost.fragment_1;
-import demo.custom.tabhost.fragment_2;
-import demo.custom.tabhost.fragment_3;
+import lib.BaseActivity;
 import lib.utils.ActivityUtils;
 
 
 /**
  * Created by n-240 on 2015/11/10.
  */
-public class AndroidDesignActivity extends AppCompatActivity{
+public class AndroidDesignActivity extends BaseActivity {
 
     private Toolbar toolbar;
     private EditText account, password;
