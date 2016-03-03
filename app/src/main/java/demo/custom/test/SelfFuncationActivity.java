@@ -57,7 +57,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
         data.add("5秒后唤醒屏幕并解锁");
         data.add("显示notification");
         data.add("5秒后唤醒屏幕不解锁显示通知");
-        data.add("5秒后唤醒屏幕并解锁");
+        data.add("测试SlidingLayout");
     }
 
 
@@ -106,6 +106,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                 timer.schedule(timerTask, 5000);
                 break;
             case 3:
+                startActivity(new Intent(this, SlidingAcitivity1.class));
                 break;
             case 4:
                 break;

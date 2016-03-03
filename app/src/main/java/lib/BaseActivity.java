@@ -26,7 +26,7 @@ import lib.utils.Systembartint.SystemBarTintManager;
 /**
  * Created by n-240 on 2015/9/23.
  */
-public  class BaseActivity extends Activity {
+public  class BaseActivity extends AppCompatActivity {
 
     private static ProgressDialog progressDialog;
     /**状态栏管理器*/
