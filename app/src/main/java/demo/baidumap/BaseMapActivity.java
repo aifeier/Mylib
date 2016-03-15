@@ -86,7 +86,7 @@ public class BaseMapActivity extends BaseActivity{
         @Override
         public void onReceiveLocation(BDLocation location) {
             if (location == null || location.getLatitude() == 4.9E-324) {
-
+                ActivityUtils.showTip("定位失败", false);
                 return;
             }
                 location.setTime(TimeUtils.getSimpleDate()+ "\n" +location.getTime());

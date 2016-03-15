@@ -24,6 +24,7 @@ import com.google.zxing.client.android.CaptureActivityHandler;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.Intents;
 
+import demo.service.MqttService9;
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
 import lib.utils.AppUtils;
@@ -60,6 +61,7 @@ public class QRCodeMain extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MqttService9.actionStart(getApplicationContext());
         AppUtils.getInstallApk(this);
         MD5Util.md5Encrypt("1234");
         String my = Base64Util.MyEncoder("123456789A");
@@ -225,4 +227,10 @@ public class QRCodeMain extends BaseActivity
     public void surfaceDestroyed(SurfaceHolder holder) {
         hasSurface = false;
     }*/
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MqttService9.actionStop(getApplicationContext());
+    }
 }

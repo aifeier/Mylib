@@ -417,6 +417,8 @@
         </service>
         <service android:name="demo.service.MqttService"
             android:label="MqttService"></service>
+        <service android:name="demo.service.MqttService9"
+            android:label="MqttService9"></service>
 
         <service android:name="demo.custom.ClipboardService"
             android:enabled="true"
