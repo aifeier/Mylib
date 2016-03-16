@@ -300,7 +300,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       paint.setStyle(Paint.Style.STROKE);
       Rect border = new Rect(2, 2, barcode.getWidth() - 2, barcode.getHeight() - 2);
       canvas.drawRect(border, paint);
-
+      Log.e("ABC", rawResult.getBarcodeFormat() + "");
       paint.setColor(getResources().getColor(R.color.result_points));
       if (points.length == 2) {
         paint.setStrokeWidth(4.0f);
@@ -326,7 +326,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   private void showResult(Result rawResult, URIResultHandler resultHandler, Bitmap barcode)
   {
 	  AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	  CharSequence displayContents = resultHandler.getDisplayContents();
+	  CharSequence displayContents = resultHandler.getDisplayContents() + ":" + rawResult.getBarcodeFormat();
 	    if (barcode == null) {
 	      builder.setIcon(R.drawable.launcher_icon);
 	    } else {

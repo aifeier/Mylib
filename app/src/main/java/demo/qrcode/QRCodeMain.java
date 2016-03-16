@@ -61,8 +61,8 @@ public class QRCodeMain extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MqttService9.actionStart(getApplicationContext());
-        AppUtils.getInstallApk(this);
+//        MqttService9.actionStart(getApplicationContext());
+/*        AppUtils.getInstallApk(this);
         MD5Util.md5Encrypt("1234");
         String my = Base64Util.MyEncoder("123456789A");
         Log.e("ABC", my + ":::" + Base64Util.myDecoder(my));
@@ -75,20 +75,20 @@ public class QRCodeMain extends BaseActivity
             e.printStackTrace();
         }
         Log.e(TAG, base64 + ":::" + Base64Util.DefaultDecoder(base64));
-        ActivityUtils.showTip(base64 + Base64Util.DefaultDecoder(base64), false);
+        ActivityUtils.showTip(base64 + Base64Util.DefaultDecoder(base64), false);*/
 //        Window window = getWindow();
 //        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);//保持屏幕不变暗
         if(true){
            /* ActivityUtils.showTip("" + NetUtils.isWifi(getApplicationContext())
                     + MobleUtils.getTelephonyAllInfo(this), true);*/
-            DoubleSIMInfo doubleSIMInfo = MobleUtils.isDoubleSim(getApplicationContext());
+           /* DoubleSIMInfo doubleSIMInfo = MobleUtils.isDoubleSim(getApplicationContext());
             if(doubleSIMInfo!=null){
                 ActivityUtils.showTip(doubleSIMInfo.getMtkDoubleSim()
                         + "\n:" + doubleSIMInfo.getImsi_1()
                         + "\n:" + doubleSIMInfo.getImsi_2()
                         + "\n:" + doubleSIMInfo.getImei_1()
                         + "\n:" + doubleSIMInfo.getImei_2(), true);
-            }
+            }*/
             Intent i = new Intent(QRCodeMain.this, LoginActivity.class);
             startActivity(i);
             finish();
@@ -231,6 +231,6 @@ public class QRCodeMain extends BaseActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MqttService9.actionStop(getApplicationContext());
+//        MqttService9.actionStop(getApplicationContext());
     }
 }
