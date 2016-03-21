@@ -18,6 +18,7 @@ import java.util.List;
 import demo.picture.SelfActivity;
 import demo.picture.toolbox.entiy.ImageCollection;
 import demo.picture.toolbox.entiy.ImageItem;
+import lib.BaseActivity;
 import lib.widget.GridAdapter;
 import lib.widget.ViewHolder;
 
@@ -25,7 +26,7 @@ import lib.widget.ViewHolder;
  * Created by n-240 on 2015/9/30.
  */
 /*查看文件夹里图片列表*/
-public class ShowAlbumActivity extends Activity implements View.OnClickListener{
+public class ShowAlbumActivity extends BaseActivity implements View.OnClickListener{
     private TextView file_select_num;//确定按钮，显示数量
     private TextView preview;//预览
     private GridView flie_list_gridview;
@@ -46,7 +47,7 @@ public class ShowAlbumActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar().setDisplayShowHomeEnabled(false);
+//        getActionBar().setDisplayShowHomeEnabled(false);
         setTitle(getResources().getString(R.string.select_photos));
         setContentView(R.layout.layout_file_photos_list);
         file_select_num = (TextView) findViewById(R.id.file_select_num);
