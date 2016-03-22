@@ -1,8 +1,15 @@
 package demo.custom;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.cwf.app.cwf.R;
 import com.google.gson.Gson;
@@ -19,6 +26,7 @@ import cn.qqtheme.framework.picker.AddressPicker;
 import cn.qqtheme.framework.picker.ColorPicker;
 import cn.qqtheme.framework.util.ConvertUtils;
 import demo.intent.EventBusDemo;
+import demo.intent.NetWorkChangeReceiver;
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
 import lib.utils.AssetsUtils;
@@ -144,10 +152,34 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
 //                ActivityUtils.showTip(CommonUtils.getMacAddress(this), true);
 //                ActivityUtils.showTip(CommonUtils.collectDeviceInfoStr(this), true);
 //                CommonUtils.goHome(this);
-                ActivityUtils.showTip(CommonUtils.getNetWorkStatus(this)+"", false);
+//                ActivityUtils.showTip(CommonUtils.getNetWorkStatus(this)+"", false);
+                if(netWorkChangeReceiver == null) {
+                    ActivityUtils.showTip("注册监听", false);
+                    netWorkChangeReceiver = new NetWorkChangeReceiver();
+                    registerReceiver(netWorkChangeReceiver,
+                            new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+                }else{
+                    ActivityUtils.showTip("取消监听", false);
+                    unregisterReceiver(netWorkChangeReceiver);
+                    netWorkChangeReceiver = null;
+                }
                 break;
         }
     }
+
+    private BroadcastReceiver netWorkChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mobileInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            NetworkInfo wifiInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            NetworkInfo activeInfo = manager.getActiveNetworkInfo();
+            Toast.makeText(context, "mobile:" + mobileInfo.isConnected() + "\n" + "wifi:" + wifiInfo.isConnected()
+                    + "\n" + "active:" + activeInfo.getTypeName(), Toast.LENGTH_SHORT).show();
+        }
+    };
+
+//    private NetWorkChangeReceiver netWorkChangeReceiver;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
