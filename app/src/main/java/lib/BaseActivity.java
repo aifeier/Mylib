@@ -1,7 +1,6 @@
 package lib;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,19 +8,19 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.VelocityTracker;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
-//import com.cwf.app.cwflibrary.utils.ThemePreferences;
 import com.cwf.app.cwf.R;
 import com.cwf.app.cwf.SlidingLayout;
 
 import lib.utils.Systembartint.SystemBarTintManager;
+
+//import com.cwf.app.cwflibrary.utils.ThemePreferences;
 
 /**
  * Created by n-240 on 2015/9/23.
@@ -32,9 +31,13 @@ public  class BaseActivity extends AppCompatActivity {
     /**状态栏管理器*/
     private SystemBarTintManager tintManager;
 
+    private FrameLayout content;
+    public static final String TITLE="base_title";
+    /*标题*/
+    protected TextView titleTv;
+    protected Toolbar toolbar;
 
-    /*用户数据，个人设置*/
-//    private ThemePreferences themePreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,6 @@ public  class BaseActivity extends AppCompatActivity {
         MainApplication.currentActivity = this;//application中当前的activity
 
 
-//        themePreferences = new ThemePreferences(this);
         if(getActionBar()!=null)
             getActionBar().setDisplayShowHomeEnabled(false);
 
@@ -60,17 +62,38 @@ public  class BaseActivity extends AppCompatActivity {
 
         SlidingLayout rootView = new SlidingLayout(this);
         rootView.bindActivity(this);
-//        tintManager.setTintResource(R.color.holo_blue_light);
+        tintManager.setTintResource(R.color.holo_blue_light);
         /*
         * 主题为actionbar
         * android:fitsSystemWindows="true"防止actionbar和状态栏重合
         * */
     }
 
-/*    protected ThemePreferences getThemePreferences(){
-        return themePreferences;
-    }*/
 
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(R.layout.basic_main_layout);
+        content = (FrameLayout) findViewById(R.id.content);
+        View view = getLayoutInflater().inflate(layoutResID, null);
+        content.addView(view);
+        titleTv=(TextView)findViewById(R.id.title_id);
+        toolbar=(Toolbar)findViewById(R.id.toolbar_id);
+        toolbar.setNavigationIcon(R.mipmap.back);
+        toolbar.setTitle("");
+        titleTv.setTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        String title=  getIntent().getStringExtra(TITLE);
+        if (title!=null){
+            titleTv.setText(title);
+        }
+    }
 
     protected void setActionBarColor(String color){
         if(getActionBar()!=null)
@@ -103,7 +126,6 @@ public  class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-//        tintManager.setTintResource(themePreferences.getStatusTineColor());
         super.onResume();
     }
 

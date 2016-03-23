@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener{
         mList.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, demo));
         mList.setOnItemClickListener(this);
-        MainApplication.currentActivity = this;
+        toolbar.setNavigationIcon(null);
     }
 
 
