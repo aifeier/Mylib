@@ -3,6 +3,7 @@ package lib;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -69,7 +70,12 @@ public  class BaseActivity extends AppCompatActivity {
         * */
     }
 
-
+    @Override
+    public void setTitle(CharSequence title) {
+        super.setTitle(title);
+        if(titleTv != null)
+            titleTv.setText(title);
+    }
 
     @Override
     public void setContentView(int layoutResID) {
@@ -131,20 +137,20 @@ public  class BaseActivity extends AppCompatActivity {
 
     @Override
     public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
-        super.startActivityForResult(intent, requestCode, options);
         overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+        super.startActivityForResult(intent, requestCode, options);
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+        super.onBackPressed();
     }
 
     @Override
     public void finish() {
-        super.finish();
         overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+        super.finish();
     }
 
 
