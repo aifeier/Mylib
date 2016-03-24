@@ -39,6 +39,7 @@ import java.util.TimerTask;
 import lib.utils.ActivityUtils;
 import lib.widget.autoloadrecyclerview.AutoLoadRecyclerAdapter;
 import lib.widget.autoloadrecyclerview.AutoLoadRecyclerView;
+import lib.widget.autoloadrecyclerview.DividerItemDecoration;
 import lib.widget.autoloadrecyclerview.ViewHolderRecycler;
 
 /**
@@ -123,7 +124,7 @@ public class WifiListActivity extends Activity{
                     connectionInfo = wifiManager.getConnectionInfo();
                     list = wifiManager.getScanResults();
                     if (list != null && list.size() > 0)
-                        this.setmData(list, autoLoadRecyclerView);
+                        this.setmData(list, autoLoadRecyclerView, false);
                     else
                         initWifi();
                 }else{
@@ -135,6 +136,8 @@ public class WifiListActivity extends Activity{
         // 设置ItemAnimator
         autoLoadRecyclerView.setItemAnimator(new DefaultItemAnimator());
         // 设置固定大小
+        autoLoadRecyclerView.addItemDecoration(new DividerItemDecoration(
+                this, DividerItemDecoration.VERTICAL_LIST));
         autoLoadRecyclerView.setHasFixedSize(true);
         autoLoadRecyclerView.setCanLoadNextPage(false);
         autoLoadRecyclerView.setAdapter(autoLoadRecyclerAdapter);
@@ -144,7 +147,7 @@ public class WifiListActivity extends Activity{
     private AutoLoadRecyclerAdapter.RecyclerOnClickListener<ScanResult> resultRecyclerOnClickListener
             = new AutoLoadRecyclerAdapter.RecyclerOnClickListener<ScanResult>() {
         @Override
-        public void onItemClick(ScanResult ItemData) {
+        public void onItemClick(ScanResult ItemData, int position) {
             WifiConfiguration wifiConfiguration = wifiIsSaved(ItemData);
             if(wifiConfiguration!=null){
                 connectWifi(wifiConfiguration);
@@ -155,7 +158,7 @@ public class WifiListActivity extends Activity{
         }
 
         @Override
-        public void onItemLongClick(ScanResult ItemData) {
+        public void onItemLongClick(ScanResult ItemData, int position) {
             ActivityUtils.showTip(ItemData.SSID, false);
         }
     };

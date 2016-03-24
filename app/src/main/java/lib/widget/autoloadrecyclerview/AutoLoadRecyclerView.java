@@ -116,9 +116,9 @@ public class AutoLoadRecyclerView<T> extends RecyclerView {
         return canRefresh;
     }
 
-    public void setCanRefresh(Boolean canRefresh) {
+/*    public void setCanRefresh(Boolean canRefresh) {
         this.canRefresh = canRefresh;
-    }
+    }*/
 
     public Boolean getLoadFirst() {
         return loadFirst;

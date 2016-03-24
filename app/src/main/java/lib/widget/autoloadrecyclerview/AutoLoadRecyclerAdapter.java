@@ -40,19 +40,19 @@ public abstract class AutoLoadRecyclerAdapter<T> extends RecyclerView.Adapter<Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolderRecycler holder, final int position) {
+    public void onBindViewHolder(final ViewHolderRecycler holder, final int position) {
         buildView(holder, mData.get(position));
         if(recyclerOnClickListener!=null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    recyclerOnClickListener.onItemClick(mData.get(position));
+                    recyclerOnClickListener.onItemClick(mData.get(holder.getLayoutPosition()), holder.getLayoutPosition());
                 }
             });
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    recyclerOnClickListener.onItemLongClick(mData.get(position));
+                    recyclerOnClickListener.onItemLongClick(mData.get(holder.getLayoutPosition()), holder.getLayoutPosition());
                     return true;
                 }
             });
@@ -80,9 +80,10 @@ public abstract class AutoLoadRecyclerAdapter<T> extends RecyclerView.Adapter<Vi
 
 
     /*设置数据, 在getNextPage后调用，每获取一次数据调用一次*/
-    public void setmData(List<T> datalist, AutoLoadRecyclerView autoLoadRecyclerView){
+    public void setmData(List<T> datalist, AutoLoadRecyclerView autoLoadRecyclerView, boolean hasNext){
         if(autoLoadRecyclerView !=null)
             autoLoadRecyclerView.setRefreshFinish();
+        autoLoadRecyclerView.setCanLoadNextPage(hasNext);
         if(datalist!=null&&datalist.size()>0) {
             if(mCurrentPage == 1){
                 mData.clear();
@@ -98,9 +99,10 @@ public abstract class AutoLoadRecyclerAdapter<T> extends RecyclerView.Adapter<Vi
     }
 
     /*设置数据, 在getNextPage后调用，每获取一次数据调用一次*/
-    public void setmData(ArrayList<T> datalist, AutoLoadRecyclerView autoLoadRecyclerView){
+    public void setmData(ArrayList<T> datalist, AutoLoadRecyclerView autoLoadRecyclerView, boolean hasNext){
         if(autoLoadRecyclerView !=null)
             autoLoadRecyclerView.setRefreshFinish();
+        autoLoadRecyclerView.setCanLoadNextPage(hasNext);
         if(datalist!=null&&datalist.size()>0) {
             if(mCurrentPage == 1){
                 mData.clear();
@@ -128,8 +130,8 @@ public abstract class AutoLoadRecyclerAdapter<T> extends RecyclerView.Adapter<Vi
 
     /*设置整个Item的点击事件*/
     public interface RecyclerOnClickListener<T>{
-        public void onItemClick(T ItemData);
-        public void onItemLongClick(T ItemData);
+        public void onItemClick(T ItemData, int positon);
+        public void onItemLongClick(T ItemData, int positon);
     }
 
     public RecyclerOnClickListener getRecyclerOnClickListener() {
@@ -139,4 +141,15 @@ public abstract class AutoLoadRecyclerAdapter<T> extends RecyclerView.Adapter<Vi
     public void setRecyclerOnClickListener(RecyclerOnClickListener recyclerOnClickListener) {
         this.recyclerOnClickListener = recyclerOnClickListener;
     }
+
+    public void addData(int position, T itemData){
+        mData.add(position, itemData);
+        notifyItemInserted(position);
+    }
+
+    public void removeData(int position){
+        mData.remove(position);
+        notifyItemRemoved(position);
+    }
+
 }

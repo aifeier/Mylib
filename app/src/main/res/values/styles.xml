@@ -38,6 +38,7 @@
         <item name="windowActionBar">false</item>
         <!--指定aciton字体颜色-->
         <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:listDivider">@drawable/divider_bg</item>
         <!--<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>-->
         <!--<item name="android:windowBackground">@android:color/transparent</item>-->
         <!--<item name="android:windowIsTranslucent">true</item>-->

@@ -139,29 +139,6 @@ public class ViewHolderRecycler extends RecyclerView.ViewHolder {
         return this;
     }
 
-/*    *//*设置图片列表到GridView中*//*
-    public ViewHolder setPicturesToGridView(int viewId,final ArrayList<String> strUrl, final int errImg, final int loadingImg){
-        GridView gridView = (GridView) findViewById(viewId);
-        AutoLoadAdapter<String> autoLoadAdapter = new AutoLoadAdapter<String>(mContext, R.layout.item_photo) {
-            @Override
-            public void buildView(ViewHolder holder, String data) {
-                holder.setUrlToImageView(R.id.item_imageview, data, errImg, loadingImg);
-            }
-
-            @Override
-            public void getPage(int page) {
-
-            }
-        };
-        autoLoadAdapter.setmData(strUrl, null);
-        if(strUrl.size()==1){
-            gridView.setNumColumns(1);
-        }else{
-            gridView.setNumColumns(3);
-        }
-        gridView.setAdapter(autoLoadAdapter);
-        return this;
-    }*/
 
     public ViewHolderRecycler setViewOnClickListener(int viewId , View.OnClickListener listener){
         findViewById(viewId).setOnClickListener(listener);

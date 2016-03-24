@@ -52,7 +52,7 @@ public class AutoLoadRecyclerActivity extends Activity {
 
     @Subscribe
     public void onEventBackground(ArrayList<NewsInfo> list) {
-        autoLoadRecyclerAdapter.setmData(list, autoLoadRecyclerView);
+        autoLoadRecyclerAdapter.setmData(list, autoLoadRecyclerView, true);
     }
 
     @Override
