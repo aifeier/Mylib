@@ -43,6 +43,9 @@ public class AutoLoadRecyclerActivity extends Activity {
                 NetWorkRequest.getPage(page);
             }
         };
+        autoLoadRecyclerView.setCanLoadNextPage(false);
+//        autoLoadRecyclerView.setCanRefresh(false);
+        swipeRefreshLayout.setEnabled(false);
         autoLoadRecyclerView.setAdapter(autoLoadRecyclerAdapter);
         autoLoadRecyclerView.setSwipeRefreshLayout(swipeRefreshLayout);
     }

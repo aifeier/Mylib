@@ -36,6 +36,8 @@
         <item name="colorAccent">@color/light_orange</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <!--指定aciton字体颜色-->
+        <item name="actionMenuTextColor">@android:color/white</item>
         <!--<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>-->
         <!--<item name="android:windowBackground">@android:color/transparent</item>-->
         <!--<item name="android:windowIsTranslucent">true</item>-->

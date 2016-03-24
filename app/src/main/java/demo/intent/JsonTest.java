@@ -37,7 +37,7 @@ public class JsonTest extends BaseActivity implements  Response.Listener,Respons
         ImageView img = (ImageView) findViewById(R.id.imageview);
         //goole推荐的图片加载
         Glide.with(this)
-                .load("http://b.hiphotos.baidu.com/image/pic/item/29381f30e924b899d84ce5396c061d950a7bf6bb.jpg")
+                .load("http://www.iyi8.com/uploadfile/2014/0516/20140516091117787.jpg")
                 .error(R.drawable.image_bg)
 //                .placeholder(R.drawable.image_bg)
                 .into(img);

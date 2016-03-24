@@ -32,4 +32,5 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return "tab" + position;
     }
+
 }
