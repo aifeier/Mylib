@@ -28,6 +28,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("我的例子");
         mList = (ListView) findViewById(R.id.main_list);
         mList.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, demo));
