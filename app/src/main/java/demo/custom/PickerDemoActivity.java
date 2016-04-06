@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.cwf.app.cwf.R;
@@ -104,6 +105,15 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
                 };
                 Timer timer = new Timer();
                 timer.schedule(timerTask, 5000);
+                cn.qqtheme.framework.picker.DatePicker
+                        datePicker = new cn.qqtheme.framework.picker.DatePicker(this);
+                datePicker.setOnDatePickListener(new cn.qqtheme.framework.picker.DatePicker.OnYearMonthDayPickListener() {
+                    @Override
+                    public void onDatePicked(String year, String month, String day) {
+
+                    }
+                });
+                datePicker.show();
                 break;
             case R.id.notification:
                 NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());

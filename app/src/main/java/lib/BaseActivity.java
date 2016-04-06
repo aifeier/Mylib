@@ -26,18 +26,21 @@ import lib.utils.Systembartint.SystemBarTintManager;
 /**
  * Created by n-240 on 2015/9/23.
  */
-public  class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity {
 
     private static ProgressDialog progressDialog;
-    /**状态栏管理器*/
+    /**
+     * 状态栏管理器
+     */
     private SystemBarTintManager tintManager;
 
     private FrameLayout content;
-    public static final String TITLE="base_title";
+    public static final String TITLE = "base_title";
     /*标题*/
     protected TextView titleTv;
     protected Toolbar toolbar;
 
+    protected boolean useToolbar = true;
 
 
     @Override
@@ -46,7 +49,7 @@ public  class BaseActivity extends AppCompatActivity {
         MainApplication.currentActivity = this;//application中当前的activity
 
 
-        if(getActionBar()!=null)
+        if (getActionBar() != null)
             getActionBar().setDisplayShowHomeEnabled(false);
 
         /***请求等待*/
@@ -73,40 +76,57 @@ public  class BaseActivity extends AppCompatActivity {
     @Override
     public void setTitle(CharSequence title) {
         super.setTitle(title);
-        if(titleTv != null)
+        if (titleTv != null)
             titleTv.setText(title);
     }
 
     @Override
+    public void setTitle(int titleId) {
+        super.setTitle(titleId);
+        if (titleTv != null)
+            titleTv.setText(titleId);
+
+    }
+
+    @Override
     public void setContentView(int layoutResID) {
-        super.setContentView(R.layout.basic_main_layout);
-        content = (FrameLayout) findViewById(R.id.content);
         View view = getLayoutInflater().inflate(layoutResID, null);
-        content.addView(view);
-        titleTv=(TextView)findViewById(R.id.title_id);
-        toolbar=(Toolbar)findViewById(R.id.toolbar_id);
-        toolbar.setNavigationIcon(R.mipmap.back);
-        toolbar.setTitle("");
-        titleTv.setTextColor(Color.WHITE);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        setContentView(view);
+    }
+
+    @Override
+    public void setContentView(View view) {
+        if (useToolbar) {
+            super.setContentView(R.layout.basic_main_layout);
+            content = (FrameLayout) findViewById(R.id.content);
+            content.addView(view);
+            titleTv = (TextView) findViewById(R.id.title_id);
+            toolbar = (Toolbar) findViewById(R.id.toolbar_id);
+            toolbar.setNavigationIcon(R.mipmap.back);
+            toolbar.setTitle("");
+            titleTv.setTextColor(Color.WHITE);
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+            String title = getIntent().getStringExtra(TITLE);
+            if (title != null) {
+                titleTv.setText(title);
             }
-        });
-        String title=  getIntent().getStringExtra(TITLE);
-        if (title!=null){
-            titleTv.setText(title);
+        } else {
+            super.setContentView(view);
         }
     }
 
-    protected void setActionBarColor(String color){
-        if(getActionBar()!=null)
+    protected void setActionBarColor(String color) {
+        if (getActionBar() != null)
             getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
     }
 
-    public SystemBarTintManager getSystemBatTintManger(){
+    public SystemBarTintManager getSystemBatTintManger() {
         return tintManager;
     }
 
@@ -123,10 +143,10 @@ public  class BaseActivity extends AppCompatActivity {
         win.setAttributes(winParams);
     }
 
-    public static void setWaitProgressDialog(boolean show){
-        if(show&&!progressDialog.isShowing())
+    public static void setWaitProgressDialog(boolean show) {
+        if (show && !progressDialog.isShowing())
             progressDialog.show();
-        else if(!show&&progressDialog.isShowing())
+        else if (!show && progressDialog.isShowing())
             progressDialog.dismiss();
     }
 

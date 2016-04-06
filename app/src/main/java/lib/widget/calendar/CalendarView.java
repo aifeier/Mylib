@@ -63,7 +63,7 @@ public class CalendarView extends LinearLayout{
         btn_precious.setOnClickListener(onClickListener);
         btn_next.setOnClickListener(onClickListener);
         mCalendar.add(Calendar.MONTH, 0);
-        initDay();
+//        initDay();
         initGrid();
     }
 

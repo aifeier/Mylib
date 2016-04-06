@@ -45,6 +45,7 @@ public class SelectPictureActivity extends BaseActivity implements LoaderCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_select_picture);
+        setTitle("选择照片");
         isSelectedOne = getIntent().getBooleanExtra(KEY_SELECTED_ONE , true);
         gridView = (GridView) findViewById(R.id.ac_select_picture_gridview);
         getSupportLoaderManager().initLoader(0, null, this);
@@ -161,7 +162,6 @@ public class SelectPictureActivity extends BaseActivity implements LoaderCallbac
                                 list.set(position, photo);
                                 ((ImageView) v).setImageResource(R.mipmap.photo_selected);
                             }
-//                        gridAdapter.notifyDataSetChanged();
                         }
                     });
                 }

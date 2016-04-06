@@ -57,14 +57,16 @@ public class Html5Activity extends Activity{
         webView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()){
+                if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
                     /*返回键*/
                     webView.goBack();
                     return true;
                 }
+                finish();
                 return false;
             }
         });
+        load = "http://192.168.10.73:9087/m/page/login/login.jsp";
         webView.loadUrl(load);
 
     }

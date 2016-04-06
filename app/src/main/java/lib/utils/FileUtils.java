@@ -2,9 +2,6 @@ package lib.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Environment;
-
 
 import java.io.File;
 import java.io.FileInputStream;
