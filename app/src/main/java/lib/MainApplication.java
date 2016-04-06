@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.baidu.mapapi.SDKInitializer;
-import com.cwf.app.cwf.CrashHandler;
-import com.zhy.autolayout.config.AutoLayoutConifg;
+import com.cwf.app.cwf.CrashHandler1;
+import com.cwf.app.cwf.GlobalCrashHandler;
 
 import demo.intent.mode.toolbox.RequestManager;
-import lib.utils.FileUtils;
 
 /**
  * Created by n-240 on 2015/9/23.
@@ -24,9 +23,11 @@ public class MainApplication extends Application{
         mInstance = this;
         RequestManager.init(this);
         SDKInitializer.initialize(this);
-        CrashHandler crashHandler = CrashHandler.getInstance();
+        CrashHandler1 crashHandler1 = CrashHandler1.getInstance();
         //注册crashHandler
-        crashHandler.init(getApplicationContext());
+        crashHandler1.init(getApplicationContext());
+
+        GlobalCrashHandler.getInstance().init(getApplicationContext());
 
         /*设备的物理高度进行百分比化*/
 //        AutoLayoutConifg.getInstance().useDeviceSize();
