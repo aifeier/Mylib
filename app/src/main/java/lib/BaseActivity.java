@@ -105,6 +105,7 @@ public class BaseActivity extends AppCompatActivity {
             toolbar.setNavigationIcon(R.mipmap.back);
             toolbar.setTitle("");
             titleTv.setTextColor(Color.WHITE);
+            setSupportActionBar(toolbar);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -115,7 +116,7 @@ public class BaseActivity extends AppCompatActivity {
             if (title != null) {
                 titleTv.setText(title);
             }
-            setSupportActionBar(toolbar);
+//            setSupportActionBar(toolbar);
         } else {
             super.setContentView(view);
         }
