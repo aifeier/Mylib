@@ -489,6 +489,14 @@ public class CommonUtils {
 
     }
 
-
+    /*重新加载同一个activity的所有界面*/
+    public static void reload(Activity activity) {
+        Intent intent = activity.getIntent();
+        activity.overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        activity.finish();
+        activity.overridePendingTransition(0, 0);
+        activity.startActivity(intent);
+    }
 
 }
