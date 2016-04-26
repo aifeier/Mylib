@@ -6,6 +6,7 @@ import android.app.Application;
 import com.baidu.mapapi.SDKInitializer;
 import com.cwf.app.cwf.CrashHandler1;
 import com.cwf.app.cwf.GlobalCrashHandler;
+import com.squareup.leakcanary.LeakCanary;
 
 import demo.intent.mode.toolbox.RequestManager;
 
@@ -28,6 +29,8 @@ public class MainApplication extends Application{
         crashHandler1.init(getApplicationContext());
 
         GlobalCrashHandler.getInstance().init(getApplicationContext());
+
+        LeakCanary.install(this);
 
         /*设备的物理高度进行百分比化*/
 //        AutoLayoutConifg.getInstance().useDeviceSize();
