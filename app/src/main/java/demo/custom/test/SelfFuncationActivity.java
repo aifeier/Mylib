@@ -101,7 +101,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                 startActivity(new Intent(this, SlidingAcitivity1.class));
                 break;
             case 4:
-                MaterialDialog materialDialog = new MaterialDialog(this);
+                final MaterialDialog materialDialog = new MaterialDialog(this);
                 ArrayList<String> list = new ArrayList<>();
                 for (int i = 0; i < 30; i++) {
                     list.add("ABC" + i);
@@ -111,7 +111,13 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     }
-                })
+                }).setTitle("我是标题")
+                        .setPositiveButton("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                materialDialog.dismiss();
+                            }
+                        })
                         .show();
 
                 break;

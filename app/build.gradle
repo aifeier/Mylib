@@ -75,11 +75,14 @@ dependencies {
     compile(name: 'pulltorefreshlibrary-release', ext: 'aar')
     compile(name: 'simpleqrcodelibrary-release', ext: 'aar')
     compile(name: 'alllibrary-release', ext: 'aar')
-//    compile project(':simpleqrcodelibrary')
-//    compile project(':pulltorefreshlibrary')
-//    compile project(':okhttputilslibrary')
-//    compile project(':materialdialog')
+    compile(name: 'bottom-navigation-release', ext: 'aar')
+    //    compile project(':simpleqrcodelibrary')
 
+    //    compile project(':pulltorefreshlibrary')
+
+    //    compile project(':okhttputilslibrary')
+
+    //    compile project(':materialdialog')
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.google.code.gson:gson:2.5'
     compile 'com.android.support:design:23.1.1'
@@ -99,4 +102,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     /*内存泄露检测*/
     compile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
 }

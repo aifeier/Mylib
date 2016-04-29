@@ -2,12 +2,6 @@ package demo.intent;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.NetworkImageView;
-import com.cwf.app.cwf.R;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,31 +9,33 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.NetworkImageView;
+import com.cwf.app.cwf.R;
+
 import org.json.JSONArray;
 
-import de.greenrobot.event.EventBus;
-import demo.intent.mode.eventbus.TestEvent;
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
 
 /**
  * Created by n-240 on 2015/9/23.
  */
-public class VolleyDemoList extends BaseActivity implements OnItemClickListener , Response.Listener
-                                            ,Response.ErrorListener{
-    private static String TAG = "VolleyDemoList" ;
+public class VolleyDemoList extends BaseActivity implements OnItemClickListener, Response.Listener
+        , Response.ErrorListener {
+    private static String TAG = "VolleyDemoList";
     private ListView mList;
-    private final String[] demo = {"VoleyJsonTest","VolleyNetworkImageTest","OkHttp", "EventBus"};
+    private final String[] demo = {"VoleyJsonTest", "VolleyNetworkImageTest", "OkHttp", "EventBus"};
     private NetworkImageView imageView;
 
     @Override
-    protected  void onCreate (Bundle
-        savedInstanceState){
+    protected void onCreate(Bundle
+                                    savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSystemBatTintManger().setTintResource(R.color.holo_green_light);
         mList = (ListView) findViewById(R.id.main_list);
-            mList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, demo));
+        mList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, demo));
         mList.setOnItemClickListener(this);
         setActionBarColor("#55009999");
 //        demo_normal();
@@ -156,11 +152,10 @@ public class VolleyDemoList extends BaseActivity implements OnItemClickListener 
 //    }
 
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent i = null;
-        switch (position){
+        switch (position) {
             case 0:
                 i = new Intent(VolleyDemoList.this, JsonTest.class);
                 break;
@@ -174,7 +169,7 @@ public class VolleyDemoList extends BaseActivity implements OnItemClickListener 
                 i = new Intent(VolleyDemoList.this, EventBusDemo.class);
                 break;
         }
-        if(i != null)
+        if (i != null)
             startActivity(i);
 
     }
@@ -182,16 +177,15 @@ public class VolleyDemoList extends BaseActivity implements OnItemClickListener 
     @Override
     public void onResponse(Object o) {
         if (o instanceof String)
-            ActivityUtils.showTip((String) o ,true);
-        else
-            if (o instanceof JSONArray)
-                ActivityUtils.showTip(o.toString(), true);
+            ActivityUtils.showTip((String) o, true);
+        else if (o instanceof JSONArray)
+            ActivityUtils.showTip(o.toString(), true);
 
     }
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
-        Log.e(TAG , volleyError.getMessage().toString(), volleyError);
+        Log.e(TAG, volleyError.getMessage().toString(), volleyError);
     }
 
 }

@@ -1,25 +1,24 @@
 package lib;
 
-import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
-import com.cwf.app.cwf.SlidingLayout;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import lib.utils.Systembartint.SystemBarTintManager;
 
 //import com.cwf.app.cwflibrary.utils.ThemePreferences;
 
@@ -32,7 +31,7 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * 状态栏管理器
      */
-    private SystemBarTintManager tintManager;
+    private SystemBarTintManager systemBarTintManager;
 
     private FrameLayout content;
     public static final String TITLE = "base_title";
@@ -41,6 +40,11 @@ public class BaseActivity extends AppCompatActivity {
     protected Toolbar toolbar;
 
     protected boolean useToolbar = true;
+
+    private CoordinatorLayout coordinatorLayout;
+    private AppBarLayout appBarLayout;
+    private boolean mTranslucentStatus;
+    private boolean mTranslucentStatusSet;
 
 
     @Override
@@ -55,18 +59,19 @@ public class BaseActivity extends AppCompatActivity {
         /***请求等待*/
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("请等待...");
+//        SlidingLayout rootView = new SlidingLayout(this);
+//        rootView.bindActivity(this);
+
 
         /**当sdk大于19即android4.4时，修改actionbar的演示颜色*/
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-        }
-        tintManager = new SystemBarTintManager(this);//设置监听这里
-        tintManager.setStatusBarTintEnabled(true);//设置statusbar可用
-
-
-        SlidingLayout rootView = new SlidingLayout(this);
-        rootView.bindActivity(this);
-        tintManager.setTintResource(R.color.holo_blue_light);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            setTranslucentStatus(true);
+//        }
+//        tintManager = new SystemBarTintManager(this);//设置监听这里
+//        tintManager.setStatusBarTintEnabled(true);//设置statusbar可用
+//
+//
+//        tintManager.setTintResource(R.color.holo_blue_light);
         /*
         * 主题为actionbar
         * android:fitsSystemWindows="true"防止actionbar和状态栏重合
@@ -116,33 +121,85 @@ public class BaseActivity extends AppCompatActivity {
             if (title != null) {
                 titleTv.setText(title);
             }
-//            setSupportActionBar(toolbar);
+
+            coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+            coordinatorLayout.addOnLayoutChangeListener(onLayoutChangeListener);
+            appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
+            if (hasTranslucentStatusBar()) {
+                getSystemBarTint().setNavigationBarTintColor(R.color.red);
+                int statusbarHeight = getStatusBarHeight();
+//                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) coordinatorLayout.getLayoutParams();
+//                params.topMargin = -statusbarHeight;
+//                params = (ViewGroup.MarginLayoutParams) toolbar.getLayoutParams();
+//                params.topMargin = statusbarHeight;
+            }
         } else {
             super.setContentView(view);
         }
     }
+
+    protected SystemBarTintManager getSystemBarTint() {
+        if (null == systemBarTintManager) {
+            if (!hasTranslucentStatusBar())
+                return null;
+            systemBarTintManager = new SystemBarTintManager(this);
+        }
+        return systemBarTintManager;
+    }
+
+    public int getStatusBarHeight() {
+        return getSystemBarTint().getConfig().getStatusBarHeight();
+    }
+
+
+    private boolean hasTranslucentStatusBar() {
+        if (!mTranslucentStatusSet) {
+            if (Build.VERSION.SDK_INT >= 19) {
+                mTranslucentStatus =
+                        ((getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                                == WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            } else {
+                mTranslucentStatus = false;
+            }
+            mTranslucentStatusSet = true;
+        }
+        return mTranslucentStatus;
+    }
+
+
+    private View.OnLayoutChangeListener onLayoutChangeListener = new View.OnLayoutChangeListener() {
+        @Override
+        public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) appBarLayout.getLayoutParams();
+
+            final int topInset = toolbar.getLayoutParams().height;
+            params.height = topInset - oldTop;
+            params.topMargin = oldTop - top;
+            appBarLayout.setLayoutParams(params);
+//            appBarLayout.setPadding(0, topInset, 0, 0);
+
+            coordinatorLayout.removeOnLayoutChangeListener(this);
+        }
+    };
 
     protected void setActionBarColor(String color) {
         if (getActionBar() != null)
             getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
     }
 
-    public SystemBarTintManager getSystemBatTintManger() {
-        return tintManager;
-    }
 
-    @TargetApi(19)
-    private void setTranslucentStatus(boolean on) {
-        Window win = getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
-    }
+//    @TargetApi(19)
+//    private void setTranslucentStatus(boolean on) {
+//        Window win = getWindow();
+//        WindowManager.LayoutParams winParams = win.getAttributes();
+//        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+//        if (on) {
+//            winParams.flags |= bits;
+//        } else {
+//            winParams.flags &= ~bits;
+//        }
+//        win.setAttributes(winParams);
+//    }
 
     public static void setWaitProgressDialog(boolean show) {
         if (show && !progressDialog.isShowing())
