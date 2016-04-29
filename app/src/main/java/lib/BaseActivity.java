@@ -1,5 +1,6 @@
 package lib;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -63,10 +65,10 @@ public class BaseActivity extends AppCompatActivity {
 //        rootView.bindActivity(this);
 
 
-        /**当sdk大于19即android4.4时，修改actionbar的演示颜色*/
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            setTranslucentStatus(true);
-//        }
+        /**当sdk大于19即android4.4时，修改systemBar的演示颜色*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+        }
 //        tintManager = new SystemBarTintManager(this);//设置监听这里
 //        tintManager.setStatusBarTintEnabled(true);//设置statusbar可用
 //
@@ -126,7 +128,8 @@ public class BaseActivity extends AppCompatActivity {
             coordinatorLayout.addOnLayoutChangeListener(onLayoutChangeListener);
             appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
             if (hasTranslucentStatusBar()) {
-                getSystemBarTint().setNavigationBarTintColor(R.color.red);
+                getSystemBarTint().setStatusBarTintEnabled(true);
+//                getSystemBarTint().setStatusBarTintResource(R.color.red);
                 int statusbarHeight = getStatusBarHeight();
 //                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) coordinatorLayout.getLayoutParams();
 //                params.topMargin = -statusbarHeight;
@@ -188,18 +191,18 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-//    @TargetApi(19)
-//    private void setTranslucentStatus(boolean on) {
-//        Window win = getWindow();
-//        WindowManager.LayoutParams winParams = win.getAttributes();
-//        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-//        if (on) {
-//            winParams.flags |= bits;
-//        } else {
-//            winParams.flags &= ~bits;
-//        }
-//        win.setAttributes(winParams);
-//    }
+    @TargetApi(19)
+    private void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
+    }
 
     public static void setWaitProgressDialog(boolean show) {
         if (show && !progressDialog.isShowing())
