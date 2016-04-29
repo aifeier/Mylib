@@ -66,7 +66,7 @@ public class Html5Activity extends Activity{
                 return false;
             }
         });
-        load = "http://192.168.10.73:9087/m/page/login/login.jsp";
+//        load = "http://192.168.10.73:9087/m/page/login/login.jsp";
         webView.loadUrl(load);
 
     }

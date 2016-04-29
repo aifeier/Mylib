@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         minSdkVersion 11
@@ -16,17 +16,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
+
 
 dependencies {
     /*OKHttp*/
     /*google推荐的图片设置器*/
     /*可缩放的图片View*/
-    compile files('libs/BaiduLBS_Android.jar')
-    compile files('libs/volly-1.0.11.jar')
-    compile files('libs/idcard_sdk_scan.jar')
-    compile files('libs/android_auth.jar')
-    compile files('libs/pki.jar')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+//    compile files('libs/BaiduLBS_Android.jar')
+//    compile files('libs/volly-1.0.11.jar')
+//    compile files('libs/idcard_sdk_scan.jar')
+//    compile files('libs/android_auth.jar')
+//    compile files('libs/pki.jar')
     /*地址等选择器*/
     /*view绑定器*/
     compile 'com.nineoldandroids:library:2.4.0'
@@ -49,11 +52,13 @@ dependencies {
     //    compile 'com.alibaba:fastjson:1.2.7'
     compile 'com.jakewharton:butterknife:7.0.1'
     //    compile 'com.firebase:firebase-client-android:2.3.1'
-    compile files('libs/org.eclipse.paho.client.mqttv3.jar')
+//    compile files('libs/org.eclipse.paho.client.mqttv3.jar')
     /*内存泄露检测*/
     compile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
 //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
 //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    compile files('build/intermediates/exploded-aar/com.squareup.leakcanary/leakcanary-android/1.4-beta2/jars/classes.jar')
+//    compile files('build/intermediates/exploded-aar/com.squareup.leakcanary/leakcanary-android/1.4-beta2/jars/classes.jar')
 //    compile files('build/intermediates/exploded-aar/com.squareup.leakcanary/leakcanary-android-no-op/1.4-beta2/jars/classes.jar')
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:cardview-v7:23.0.0'
 }

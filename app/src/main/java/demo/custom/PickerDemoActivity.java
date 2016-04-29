@@ -26,6 +26,7 @@ import java.util.TimerTask;
 import cn.qqtheme.framework.picker.AddressPicker;
 import cn.qqtheme.framework.picker.ColorPicker;
 import cn.qqtheme.framework.util.ConvertUtils;
+import demo.custom.test.LockNoticationActivity;
 import demo.intent.EventBusDemo;
 import demo.intent.NetWorkChangeReceiver;
 import lib.BaseActivity;
@@ -129,7 +130,7 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
                         NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
 //                        notificationUtils.startNotification("message",EventBusDemo.class,R.drawable.dialog_load, "content" );
                         notificationUtils.showNotification("ok", EventBusDemo.class, R.drawable.file_picker_folder);
-//                            startActivity(new Intent(PickerDemoActivity.this,LockNoticationActivity.class));
+                            startActivity(new Intent(PickerDemoActivity.this, LockNoticationActivity.class));
                     }
                 };
                 Timer timer1 = new Timer();

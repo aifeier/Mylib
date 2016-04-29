@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.cwf.app.cwf"
@@ -60,10 +60,19 @@ universalApk：指示是否打包一个通用版本（包含所有的ABI）。�
             universalApk false
         }
     }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //    compile(name: 'library-release', ext: 'aar')
     compile project(':simpleqrcodelibrary')
     compile project(':pulltorefreshlibrary')
     compile project(':okhttputilslibrary')
+    compile project(':materialdialog')
 }

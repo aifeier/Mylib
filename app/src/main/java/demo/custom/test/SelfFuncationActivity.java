@@ -1,8 +1,5 @@
 package demo.custom.test;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,20 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.cwf.app.cwf.R;
+import com.materialdialog.materialdialog.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import demo.List.DemoListActivity;
-import demo.anim.AnimDemo;
-import demo.baidumap.BaseMapActivity;
-import demo.custom.CustomLayoutList;
 import demo.intent.EventBusDemo;
-import demo.intent.VolleyDemoList;
-import demo.picture.PictureDemoList;
-import demo.qrcode.QRCodeMain;
 import lib.BaseActivity;
 import lib.MainApplication;
 import lib.utils.CommonUtils;
@@ -58,6 +49,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
         data.add("显示notification");
         data.add("5秒后唤醒屏幕不解锁显示通知");
         data.add("测试SlidingLayout");
+        data.add("测试MaterialDialog");
     }
 
 
@@ -109,6 +101,11 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                 startActivity(new Intent(this, SlidingAcitivity1.class));
                 break;
             case 4:
+                MaterialDialog materialDialog = new MaterialDialog(this);
+                materialDialog.setContentView(R.layout.layout_file_photos_list)
+                        .setCanceledOnTouchOutside(true)
+                        .setTitle("我是标题").show();
+
                 break;
             case 5:
                 break;
