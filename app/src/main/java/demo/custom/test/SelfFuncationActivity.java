@@ -29,7 +29,7 @@ import lib.utils.NotificationUtils;
 public class SelfFuncationActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     private ListView mList;
-    private List<String> data ;
+    private List<String> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
         MainApplication.currentActivity = this;
     }
 
-    private void initData(){
+    private void initData() {
         data = new ArrayList<>();
         data.add("5秒后唤醒屏幕并解锁");
         data.add("显示notification");
@@ -57,7 +57,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TimerTask timerTask;
         Timer timer;
-        switch(position){
+        switch (position) {
             case 0:
                 timerTask = new TimerTask() {
                     @Override
@@ -77,13 +77,13 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                 timerTask = new TimerTask() {
                     @Override
                     public void run() {
-                        if(CommonUtils.isSleeping(getApplicationContext())) {
+                        if (CommonUtils.isSleeping(getApplicationContext())) {
                             CommonUtils.wakeUp(getApplicationContext());
 //                            AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 //                            PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 1,
 //                                    new Intent(getApplicationContext(),LockNoticationActivity.class), 0);
 //                            am.set(AlarmManager.RTC_WAKEUP, 100, pi);
-                            Intent i = new Intent(getApplicationContext(),LockNoticationActivity.class);
+                            Intent i = new Intent(getApplicationContext(), LockNoticationActivity.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(i);
 
@@ -102,9 +102,17 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                 break;
             case 4:
                 MaterialDialog materialDialog = new MaterialDialog(this);
-                materialDialog.setContentView(R.layout.layout_file_photos_list)
-                        .setCanceledOnTouchOutside(true)
-                        .setTitle("我是标题").show();
+                ArrayList<String> list = new ArrayList<>();
+                for (int i = 0; i < 30; i++) {
+                    list.add("ABC" + i);
+                }
+                materialDialog.setListData(list, new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                })
+                        .show();
 
                 break;
             case 5:

@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * Created by n-240 on 2016/4/29.
@@ -33,7 +37,7 @@ public class MaterialDialog {
     private final static int BUTTON_BOTTOM = 9;
     private final static int BUTTON_TOP = 9;
 
-    private boolean mCancel;
+    private boolean mCancel = true;
     private Context mContext;
     private AlertDialog mAlertDialog;
     private MaterialDialog.Builder mBuilder;
@@ -53,7 +57,9 @@ public class MaterialDialog {
     private DialogInterface.OnDismissListener mOnDismissListener;
     private int pId = -1, nId = -1;
     private String pText, nText;
-    View.OnClickListener pListener, nListener;
+    private View.OnClickListener pListener, nListener;
+    private ArrayList<String> charSequenceArrayList;
+    private AdapterView.OnItemClickListener onListItemClickListener;
 
     public static MaterialDialog Bulider(Context context) {
         return new MaterialDialog(context);
@@ -139,6 +145,30 @@ public class MaterialDialog {
 
     private static boolean isLollipop() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+    }
+
+
+    public MaterialDialog setListData(ArrayList<String> listData, AdapterView.OnItemClickListener onItemClickListener) {
+        this.charSequenceArrayList = listData;
+        this.onListItemClickListener = onItemClickListener;
+        final ArrayAdapter<CharSequence> arrayAdapter
+                = new ArrayAdapter<CharSequence>(mContext,
+                android.R.layout.simple_list_item_1);
+        for (int j = 0; j < charSequenceArrayList.size(); j++) {
+            arrayAdapter.add(charSequenceArrayList.get(j));
+        }
+        ListView listView = new ListView(mContext);
+        listView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        float scale = mContext.getResources().getDisplayMetrics().density;
+        int dpAsPixels = (int) (4 * scale + 0.5f);
+        listView.setPadding(0, dpAsPixels, 0, dpAsPixels);
+        listView.setDividerHeight(0);
+        listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener(onListItemClickListener);
+        setContentView(listView);
+        return this;
     }
 
 
