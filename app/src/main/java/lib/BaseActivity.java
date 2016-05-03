@@ -118,7 +118,7 @@ public class BaseActivity extends AppCompatActivity {
             if (title != null) {
                 titleTv.setText(title);
             }else{
-                titleTv.setText(getPackageManager().getClass().getSimpleName());
+                titleTv.setText(MainApplication.currentActivity.getComponentName().getShortClassName());
             }
 
             coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
@@ -128,7 +128,7 @@ public class BaseActivity extends AppCompatActivity {
             final boolean translucentStatus = hasTranslucentStatusBar();
             if (translucentStatus) {
                 getSystemBarTint().setStatusBarTintEnabled(true);
-                getSystemBarTint().setNavigationBarTintEnabled(true);
+//                getSystemBarTint().setNavigationBarTintEnabled(true);
 //                getSystemBarTint().setNavigationBarTintResource(R.color.black);
 //                getSystemBarTint().setStatusBarTintResource(R.color.red);
                 ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) coordinatorLayout.getLayoutParams();
