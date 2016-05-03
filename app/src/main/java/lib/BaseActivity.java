@@ -125,16 +125,16 @@ public class BaseActivity extends AppCompatActivity {
             }
 
             coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
-            coordinatorLayout.addOnLayoutChangeListener(onLayoutChangeListener);
+//            coordinatorLayout.addOnLayoutChangeListener(onLayoutChangeListener);
             appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
-            if (hasTranslucentStatusBar()) {
-                getSystemBarTint().setStatusBarTintEnabled(true);
-//                getSystemBarTint().setStatusBarTintResource(R.color.red);
-                int statusbarHeight = getStatusBarHeight();
-//                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) coordinatorLayout.getLayoutParams();
-//                params.topMargin = -statusbarHeight;
-//                params = (ViewGroup.MarginLayoutParams) toolbar.getLayoutParams();
-//                params.topMargin = statusbarHeight;
+
+            final int statusbarHeight = getStatusBarHeight();
+            final boolean translucentStatus = hasTranslucentStatusBar();
+            if (translucentStatus) {
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) coordinatorLayout.getLayoutParams();
+                params.topMargin = -statusbarHeight;
+                params = (ViewGroup.MarginLayoutParams) toolbar.getLayoutParams();
+                params.topMargin = statusbarHeight;
             }
         } else {
             super.setContentView(view);
@@ -143,8 +143,6 @@ public class BaseActivity extends AppCompatActivity {
 
     protected SystemBarTintManager getSystemBarTint() {
         if (null == systemBarTintManager) {
-            if (!hasTranslucentStatusBar())
-                return null;
             systemBarTintManager = new SystemBarTintManager(this);
         }
         return systemBarTintManager;

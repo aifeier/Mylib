@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import demo.custom.BottomNavigationActivity;
 import demo.intent.EventBusDemo;
 import lib.BaseActivity;
 import lib.MainApplication;
@@ -50,6 +51,8 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
         data.add("5秒后唤醒屏幕不解锁显示通知");
         data.add("测试SlidingLayout");
         data.add("测试MaterialDialog");
+        data.add("测试BottomNacigation");
+
     }
 
 
@@ -122,6 +125,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
 
                 break;
             case 5:
+                startActivity(new Intent(SelfFuncationActivity.this, BottomNavigationActivity.class));
                 break;
             case 6:
                 break;

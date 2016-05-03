@@ -420,6 +420,8 @@
         <!--定义功能测试-->
         <activity android:name="demo.custom.test.SelfFuncationActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name="demo.custom.BottomNavigationActivity"
+            android:screenOrientation="portrait"/>
 
         <activity android:name="demo.custom.test.SlidingAcitivity1"
             android:theme="@style/AppTheme.Base"/>

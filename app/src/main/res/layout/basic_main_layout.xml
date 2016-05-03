@@ -35,19 +35,29 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:filterTouchesWhenObscured="true"
         android:scrollbars="none"
         app:behavior_overlapTop="0dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:filterTouchesWhenObscured="true">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <FrameLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/appbar_layout"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            >
 
         </FrameLayout>
     </android.support.v4.widget.NestedScrollView>
+
+
+    <it.sephiroth.android.library.bottomnavigation.BottomNavigation
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        app:bbn_badgeProvider="@string/bbn_badgeProvider"
+        app:bbn_entries="@menu/bottombar_menu_4items"
+        app:layout_behavior="@string/bbn_phone_view_behavior"
+        android:visibility="gone"/>
 
 </android.support.design.widget.CoordinatorLayout>
