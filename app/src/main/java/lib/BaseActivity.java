@@ -120,7 +120,6 @@ public class BaseActivity extends AppCompatActivity {
             }
 
             coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
-//            coordinatorLayout.addOnLayoutChangeListener(onLayoutChangeListener);
             appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
 
             final int statusbarHeight = getStatusBarHeight();
@@ -163,21 +162,6 @@ public class BaseActivity extends AppCompatActivity {
         return mTranslucentStatus;
     }
 
-
-    private View.OnLayoutChangeListener onLayoutChangeListener = new View.OnLayoutChangeListener() {
-        @Override
-        public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) appBarLayout.getLayoutParams();
-
-            final int topInset = toolbar.getLayoutParams().height;
-            params.height = topInset - oldTop;
-            params.topMargin = oldTop - top;
-            appBarLayout.setLayoutParams(params);
-//            appBarLayout.setPadding(0, topInset, 0, 0);
-
-            coordinatorLayout.removeOnLayoutChangeListener(this);
-        }
-    };
 
     protected void setActionBarColor(String color) {
         if (getActionBar() != null)
