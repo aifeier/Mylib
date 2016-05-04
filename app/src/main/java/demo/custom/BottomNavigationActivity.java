@@ -25,6 +25,7 @@ public class BottomNavigationActivity extends BaseActivity {
         setContentView(R.layout.ac_bottom_navigation);
         bottomNavigation = (BottomNavigation) findViewById(R.id.bottom_navigation);
         bottomNavigation.setVisibility(View.VISIBLE);
+        bottomNavigation.setDefaultSelectedIndex(2);
         bottomNavigation.setOnMenuItemClickListener(new BottomNavigation.OnMenuItemSelectionListener() {
             @Override
             public void onMenuItemSelect(@IdRes int itemId, int position) {
@@ -38,8 +39,8 @@ public class BottomNavigationActivity extends BaseActivity {
             }
         });
         BadgeProvider provider = bottomNavigation.getBadgeProvider();
-        provider.setBadgetype(0);
-        provider.show(R.id.bbn_item2, 99);
+        provider.setBadgetype(1);
+        provider.show(R.id.bbn_item2, 1000);
         provider.show(R.id.bbn_item3);
     }
 

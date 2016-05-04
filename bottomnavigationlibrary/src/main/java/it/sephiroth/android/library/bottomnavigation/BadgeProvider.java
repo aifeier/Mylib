@@ -27,6 +27,7 @@ public class BadgeProvider {
     private final BottomNavigation navigation;
     private final HashSet<Integer> map = new HashSet<>();
     private final int badgeSize;
+    private final float density;
 
     /*0:显示原点
     * 1:显示数字*/
@@ -35,6 +36,7 @@ public class BadgeProvider {
 
     public BadgeProvider(final BottomNavigation navigation) {
         this.navigation = navigation;
+        density = navigation.getResources().getDisplayMetrics().density;
         this.badgeSize = navigation.getContext().getResources().getDimensionPixelSize(R.dimen.bbn_badge_size);
     }
 
@@ -119,7 +121,7 @@ public class BadgeProvider {
             return new Badge(preferredColor, count);
     }
 
-    public static final class Badge extends Drawable {
+    public final class Badge extends Drawable {
         final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         final Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.LINEAR_TEXT_FLAG | Paint.SUBPIXEL_TEXT_FLAG);
 
@@ -129,12 +131,15 @@ public class BadgeProvider {
 
         public Badge(final int color, final int count) {
             super();
-            this.text = String.valueOf(count);
+            if (count > 99)
+                this.text = "99+";
+            else
+                this.text = String.valueOf(count);
 
             paint.setColor(color);
 
             textPaint.setColor(Color.BLACK);
-            textPaint.setTextSize(24);
+            textPaint.setTextSize(9 * density);
         }
 
         @Override
@@ -171,12 +176,12 @@ public class BadgeProvider {
 
         @Override
         public int getIntrinsicWidth() {
-            return 50;
+            return (int) (20 * density);
         }
 
         @Override
         public int getIntrinsicHeight() {
-            return 50;
+            return (int) (20 * density);
         }
     }
 

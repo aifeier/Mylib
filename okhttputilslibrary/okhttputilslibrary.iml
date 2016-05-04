@@ -98,8 +98,8 @@
     <orderEntry type="library" exported="" name="eventbus-3.0.0-beta1" level="project" />
     <orderEntry type="library" exported="" name="okhttp-2.6.0" level="project" />
     <orderEntry type="library" exported="" name="leakcanary-watcher-1.4-beta2" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="glide-3.7.0" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-23.1.1" level="project" />
     <orderEntry type="module" module-name="alllibrary" exported="" />
   </component>
 </module>
