@@ -30,8 +30,45 @@ public class AnimDemo extends BaseActivity{
     }
 
     private void initAnim(){
-        Animation animation1 = AnimationUtils.loadAnimation(this, R.anim.ball_up_bottom);
+        final Animation animation1 = AnimationUtils.loadAnimation(this, R.anim.ball_up_bottom);
+        final Animation animation2 = AnimationUtils.loadAnimation(this, R.anim.down_up_infinite);
+        animation2.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                findViewById(R.id.img2).setAnimation(animation1);
+                animation1.start();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        animation1.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                imageView.setAnimation(animation2);
+                animation2.start();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         imageView.setAnimation(animation1);
         animation1.start();
+        findViewById(R.id.img2).setAnimation(animation2);
+        animation2.start();
     }
 }

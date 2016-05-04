@@ -117,7 +117,7 @@ public class BaseActivity extends AppCompatActivity {
             String title = getIntent().getStringExtra(TITLE);
             if (title != null) {
                 titleTv.setText(title);
-            }else{
+            } else {
                 titleTv.setText(MainApplication.currentActivity.getComponentName().getShortClassName());
             }
 
@@ -129,8 +129,8 @@ public class BaseActivity extends AppCompatActivity {
             if (translucentStatus) {
                 getSystemBarTint().setStatusBarTintEnabled(true);
 //                getSystemBarTint().setNavigationBarTintEnabled(true);
-//                getSystemBarTint().setNavigationBarTintResource(R.color.black);
-//                getSystemBarTint().setStatusBarTintResource(R.color.red);
+//                getSystemBarTint().setNavigationBarTintResource(R.color.blueviolet);
+                getSystemBarTint().setStatusBarTintResource(R.color.primary_dark);
                 ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) coordinatorLayout.getLayoutParams();
                 params.topMargin = -statusbarHeight;
                 params = (ViewGroup.MarginLayoutParams) toolbar.getLayoutParams();
