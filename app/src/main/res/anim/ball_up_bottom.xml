@@ -3,34 +3,35 @@
     android:fillAfter="true"
     >
     <alpha
+        android:duration="2000"
         android:fromAlpha="1.0"
-        android:toAlpha="0.5"
-        android:duration="2000"/>
+        android:toAlpha="0.3"
+        android:repeatCount="infinite"/>
     <rotate
         android:duration="3000"
         android:fromDegrees="0"
-        android:toDegrees="360"
         android:pivotX="50%"
         android:pivotY="50%"
-        />
+        android:toDegrees="360"
+        android:repeatCount="infinite"/>
     <scale
         android:duration="3000"
         android:fromXScale="0.5"
-        android:toXScale="2.0"
         android:fromYScale="1.0"
-        android:toYScale="2.0"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:fillAfter="false"
-        android:fillBefore="true"
-        />
+        android:toXScale="1.0"
+        android:toYScale="1.0"
+        android:repeatCount="infinite"/>
     <translate
-        android:fromXDelta="0"
-        android:toXDelta="30%p"
-        android:fromYDelta="0"
-        android:toYDelta="0"
         android:duration="4000"
+        android:fromXDelta="0"
+        android:fromYDelta="0"
         android:interpolator="@android:anim/accelerate_interpolator"
-        />
+        android:toXDelta="30%p"
+        android:toYDelta="0"
+        android:repeatCount="infinite"
+        android:repeatMode="reverse"/>
+
 
 </set>

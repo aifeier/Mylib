@@ -2,12 +2,22 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:fillAfter="true">
     <rotate
-        android:duration="2000"
+        android:duration="3000"
         android:fromDegrees="0"
-        android:toDegrees="270"
+        android:toDegrees="260"
         android:pivotX="50%"
         android:pivotY="50%"
         android:repeatCount="infinite"
+        android:repeatMode="reverse"
         android:interpolator="@android:anim/linear_interpolator"
         />
+    <translate
+        android:duration="3000"
+        android:fromXDelta="0"
+        android:fromYDelta="0"
+        android:interpolator="@android:anim/anticipate_overshoot_interpolator"
+        android:toXDelta="30%p"
+        android:toYDelta="30%p"
+        android:repeatCount="infinite"
+        android:repeatMode="reverse"/>
 </set>

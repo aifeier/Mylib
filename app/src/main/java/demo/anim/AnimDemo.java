@@ -1,5 +1,8 @@
 package demo.anim;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,8 +17,9 @@ import lib.BaseActivity;
  *
  * @author cwf
  */
-public class AnimDemo extends BaseActivity{
-    private ImageView imageView ;
+public class AnimDemo extends BaseActivity {
+    private ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,50 +29,24 @@ public class AnimDemo extends BaseActivity{
         initAnim();
     }
 
-    private void initView(){
+    private void initView() {
         imageView = (ImageView) findViewById(R.id.anim_image);
     }
 
-    private void initAnim(){
+    private void initAnim() {
         final Animation animation1 = AnimationUtils.loadAnimation(this, R.anim.ball_up_bottom);
         final Animation animation2 = AnimationUtils.loadAnimation(this, R.anim.down_up_infinite);
-        animation2.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                findViewById(R.id.img2).setAnimation(animation1);
-                animation1.start();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        animation1.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                imageView.setAnimation(animation2);
-                animation2.start();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
         imageView.setAnimation(animation1);
         animation1.start();
         findViewById(R.id.img2).setAnimation(animation2);
         animation2.start();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        findViewById(R.id.img1).setBackgroundResource(R.drawable.animationlist);
+        ((AnimationDrawable) findViewById(R.id.img1).getBackground()).stop();
+        ((AnimationDrawable) findViewById(R.id.img1).getBackground()).start();
+        super.onWindowFocusChanged(hasFocus);
     }
 }
