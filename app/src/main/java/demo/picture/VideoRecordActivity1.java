@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.cwf.app.cwf.R;
 
@@ -118,26 +119,30 @@ public class VideoRecordActivity1 extends BaseActivity implements SurfaceHolder.
         if (surfaceHolder != null) {
             if (camera == null)
                 camera = Camera.open();
-            try {
-                Camera.Parameters parameters = camera.getParameters();
-                if (previewSize == null) {
-                    for (Camera.Size size : camera.getParameters().getSupportedPreviewSizes()) {
-                        if (size.height > displayMetrics.widthPixels)
-                            break;
-                        if (size.width * 3 / 4 == size.height) {
-                            previewSize = size;
+            if (camera != null)
+                try {
+                    Camera.Parameters parameters = camera.getParameters();
+                    if (previewSize == null) {
+                        for (Camera.Size size : camera.getParameters().getSupportedPreviewSizes()) {
+                            if (size.height > displayMetrics.widthPixels)
+                                break;
+                            if (size.width * 3 / 4 == size.height) {
+                                previewSize = size;
+                            }
                         }
                     }
+                    if (previewSize != null) {
+                        parameters.setPreviewSize(previewSize.width, previewSize.height);
+                        camera.setParameters(parameters);
+                    }
+                    camera.setPreviewDisplay(surfaceHolder);
+                    camera.setDisplayOrientation(90);
+                    camera.startPreview();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                if (previewSize != null) {
-                    parameters.setPreviewSize(previewSize.width, previewSize.height);
-                    camera.setParameters(parameters);
-                }
-                camera.setPreviewDisplay(surfaceHolder);
-                camera.setDisplayOrientation(90);
-                camera.startPreview();
-            } catch (IOException e) {
-                e.printStackTrace();
+            else {
+                Toast.makeText(this, "打开摄像头失败", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -201,6 +206,19 @@ public class VideoRecordActivity1 extends BaseActivity implements SurfaceHolder.
             mediaRecorder = null;
             camera.lock();
         }
+    }
+
+    /*打开前置摄像头*/
+    private Camera openFaceCamera() {
+        int numberOfCameras = Camera.getNumberOfCameras();
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        for (int i = 0; i < numberOfCameras; i++) {
+            Camera.getCameraInfo(i, cameraInfo);
+            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                return Camera.open(i);
+            }
+        }
+        return null;
     }
 
 
