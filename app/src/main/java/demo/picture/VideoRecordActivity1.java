@@ -5,12 +5,15 @@ import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.DisplayMetrics;
+import android.view.Choreographer;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Chronometer;
 import android.widget.LinearLayout;
 
 import com.cwf.app.cwf.R;
@@ -27,12 +30,16 @@ import lib.widget.customview.RecordImage;
  */
 public class VideoRecordActivity1 extends BaseActivity implements SurfaceHolder.Callback {
 
-    /*预览类*/
+    /*录制按钮*/
     private RecordImage recordImage;
 
+    /*预览类*/
     private SurfaceView surfaceView;
 
     private SurfaceHolder surfaceHolder;
+
+    /*时间计数器*/
+    private Chronometer chronometer;
 
     /*录制*/
     private MediaRecorder mediaRecorder;
@@ -61,6 +68,7 @@ public class VideoRecordActivity1 extends BaseActivity implements SurfaceHolder.
     }
 
     private void initView() {
+        chronometer = (Chronometer) findViewById(R.id.chronometer);
         recordImage = (RecordImage) findViewById(R.id.recordbutton);
         recordImage.setVisibility(View.VISIBLE);
         recordImage.setOnRecordTouchListener(new RecordImage.OnRecordTouchListener() {
@@ -68,6 +76,8 @@ public class VideoRecordActivity1 extends BaseActivity implements SurfaceHolder.
             public void OnActionDown() {
                 recordImage.setText("抬起停止录制");
                 startRecord();
+                chronometer.setBase(SystemClock.elapsedRealtime());
+                chronometer.start();
             }
 
             @Override
@@ -79,6 +89,7 @@ public class VideoRecordActivity1 extends BaseActivity implements SurfaceHolder.
             public void OnActionUp() {
                 recordImage.setText("按住录制视频");
                 stopRecord();
+                chronometer.stop();
             }
 
         });
@@ -212,9 +223,9 @@ public class VideoRecordActivity1 extends BaseActivity implements SurfaceHolder.
 
     @Override
     protected void onDestroy() {
-        surfaceView = null;
         surfaceHolder.removeCallback(this);
         surfaceHolder = null;
+        surfaceView = null;
         if (mediaRecorder != null) {
             mediaRecorder.stop();
             mediaRecorder.release();
