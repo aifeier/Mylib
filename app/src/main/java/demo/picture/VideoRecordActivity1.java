@@ -11,14 +11,11 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.cwf.app.cwf.R;
 
 import java.io.IOException;
-import java.util.List;
 
 import lib.BaseActivity;
 import lib.utils.FileUtils;
@@ -98,7 +95,9 @@ public class VideoRecordActivity1 extends BaseActivity implements SurfaceHolder.
             Camera.Parameters parameters = camera.getParameters();
             Camera.Size previewSize = null;
             for (Camera.Size size : camera.getParameters().getSupportedPreviewSizes()) {
-                if (size.width * 4 / 3 == size.height) {
+                if (size.height > displayMetrics.widthPixels)
+                    break;
+                if (size.width * 3 / 4 == size.height) {
                     previewSize = size;
                 }
             }
