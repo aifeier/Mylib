@@ -44,6 +44,8 @@ public class VideoRecordActivity1 extends BaseActivity implements SurfaceHolder.
 
     private CamcorderProfile camcorderProfile = null;
 
+    private Camera.Size previewSize;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +80,7 @@ public class VideoRecordActivity1 extends BaseActivity implements SurfaceHolder.
                 recordImage.setText("按住录制视频");
                 stopRecord();
             }
+
         });
         surfaceView = (SurfaceView) findViewById(R.id.surfaceview);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -88,35 +91,52 @@ public class VideoRecordActivity1 extends BaseActivity implements SurfaceHolder.
         surfaceHolder.setKeepScreenOn(true);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startPreview();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopPreview();
+    }
+
     private void startPreview() {
-        if (camera == null)
-            camera = Camera.open();
-        try {
-            Camera.Parameters parameters = camera.getParameters();
-            Camera.Size previewSize = null;
-            for (Camera.Size size : camera.getParameters().getSupportedPreviewSizes()) {
-                if (size.height > displayMetrics.widthPixels)
-                    break;
-                if (size.width * 3 / 4 == size.height) {
-                    previewSize = size;
+        if (surfaceHolder != null) {
+            if (camera == null)
+                camera = Camera.open();
+            try {
+                Camera.Parameters parameters = camera.getParameters();
+                if (previewSize == null) {
+                    for (Camera.Size size : camera.getParameters().getSupportedPreviewSizes()) {
+                        if (size.height > displayMetrics.widthPixels)
+                            break;
+                        if (size.width * 3 / 4 == size.height) {
+                            previewSize = size;
+                        }
+                    }
                 }
+                if (previewSize != null) {
+                    parameters.setPreviewSize(previewSize.width, previewSize.height);
+                    camera.setParameters(parameters);
+                }
+                camera.setPreviewDisplay(surfaceHolder);
+                camera.setDisplayOrientation(90);
+                camera.startPreview();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            if (previewSize != null) {
-                parameters.setPreviewSize(previewSize.width, previewSize.height);
-                camera.setParameters(parameters);
-            }
-            camera.setPreviewDisplay(surfaceHolder);
-            camera.setDisplayOrientation(90);
-            camera.startPreview();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
     private void stopPreview() {
         if (camera != null) {
             camera.stopPreview();
+            camera.lock();
             camera.release();
+            camera = null;
         }
     }
 
@@ -200,8 +220,7 @@ public class VideoRecordActivity1 extends BaseActivity implements SurfaceHolder.
             mediaRecorder.release();
         }
         mediaRecorder = null;
-        if (camera != null)
-            camera.lock();
+        stopPreview();
         super.onDestroy();
     }
 }

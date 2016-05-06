@@ -17,8 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
-        android:textColor="@color/blueviolet"
-        android:background="@color/white_e"
-        android:text="开始" />
+        android:text="开始"
+        android:textColor="@color/blueviolet" />
 
 </LinearLayout>
