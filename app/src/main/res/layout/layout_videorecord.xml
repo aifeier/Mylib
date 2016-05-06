@@ -10,6 +10,12 @@
         android:layout_height="wrap_content"
         >
 
+        <demo.picture.AutoFitTextureView
+            android:id="@+id/autofittextureview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true" />
+
         <TextureView
             android:id="@+id/textureview"
             android:layout_width="wrap_content"
@@ -76,7 +82,7 @@
         android:id="@+id/linearlayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_horizontal|bottom"
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
         >

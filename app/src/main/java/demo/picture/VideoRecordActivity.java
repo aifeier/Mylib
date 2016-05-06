@@ -119,9 +119,9 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
          height = PreferenceConfig.PreviewCameraHeight > cameraManager.getCameraResolution().x
                 ? PreferenceConfig.PreviewCameraHeight : cameraManager.getCameraResolution().x;
         RelativeLayout.LayoutParams cameraFL =
-/*                new RelativeLayout.LayoutParams(
+                new RelativeLayout.LayoutParams(
                 cameraManager.getCameraResolution().y,
-                cameraManager.getCameraResolution().x);*/
+                cameraManager.getCameraResolution().x);
         new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 ScreenUtils.getScreenWidth(this) * height/ width);//
         surfaceview.setLayoutParams(cameraFL);
@@ -180,6 +180,7 @@ public class VideoRecordActivity extends Activity implements SurfaceHolder.Callb
         // 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
 //                mediarecorder.setVideoSize(height, width);
 //                mediarecorder.setVideoSize(width  , height);
+
         mediarecorder.setVideoSize(cameraManager.getCameraResolution().y, cameraManager.getCameraResolution().x);
         // 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
         mediarecorder.setVideoFrameRate(30);

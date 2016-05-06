@@ -192,6 +192,15 @@
                 <category android:name="com.cwf.app.cwf.demo.picture"/>
             </intent-filter>
         </activity>
+        <activity android:name="demo.picture.VideoRecordActivity1"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:label="视频录制1">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.cwf.app.cwf.demo.picture"/>
+            </intent-filter>
+        </activity>
         <activity android:name="demo.picture.AudioRecordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"

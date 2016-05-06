@@ -433,6 +433,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     @Override
     protected void onDestroy() {
         surfaceHolder.removeCallback(this);
+        mediaPlayer.stop();
         mediaPlayer.release();
         super.onDestroy();
     }
