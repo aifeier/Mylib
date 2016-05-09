@@ -34,6 +34,7 @@ public class Html5Activity extends Activity{
 //        webSettings.setUseWideViewPort(true);
         webSettings.setSupportZoom(true);
         webSettings.setLoadsImagesAutomatically(true);
+        webSettings.setAppCacheEnabled(true);
  /*       webSettings.setAppCacheEnabled(true);
         webSettings.setAppCachePath(SDCardUtils.getAbleDirectoryPath());*/
 

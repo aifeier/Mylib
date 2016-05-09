@@ -116,9 +116,10 @@ public class SimpleView extends View {
         float sweepAngle = 360 - angle * 2;
         paint1.setColor(Color.RED);
         canvas.drawArc(rectF, startAngle, sweepAngle, false, paint1);
+        canvas.drawArc(rectF, startAngle, sweepAngle - 60, false, paint1);
 
 //        canvas.save();
-        canvas.rotate(180, getWidth() / 2, getHeight() / 2);
+//        canvas.rotate(180, getWidth() / 2, getHeight() / 2);
         paint1.setColor(Color.GREEN);
         canvas.drawArc(rectF, 270 - angle, angle * 2, false, paint1);
 //        canvas.restore();

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cwf.app.cwf"
-    >
+    package="com.cwf.app.cwf">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -10,7 +9,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -32,72 +34,67 @@
     <!--调节亮度-->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!--保持屏幕唤醒-->
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <!--监听开机权限-->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!--解锁权限-->
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!--KeyguardLock使用权限-->
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
     <application
+        android:name="lib.MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/penguins"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme.Base"
         android:supportsRtl="true"
-        android:name="lib.MainApplication">
+        android:theme="@style/AppTheme.Base">
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="fPVI4Tj6QcHglL0R5RfyFdVo" />
-        <meta-data android:name="demo.intent.mode.GlideConfiguration"
-            android:value="GlideModule"/>
+        <meta-data
+            android:name="demo.intent.mode.GlideConfiguration"
+            android:value="GlideModule" />
         <!--设计稿的尺寸-->
-        <meta-data android:name="design_width" android:value="720">
-        </meta-data>
-        <meta-data android:name="design_height" android:value="1280">
-        </meta-data>
+        <meta-data
+            android:name="design_width"
+            android:value="720"></meta-data>
+        <meta-data
+            android:name="design_height"
+            android:value="1280"></meta-data>
 
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="cwf" android:host="192.168.12.1"
-                    android:port="8080"
-                    />
+
             </intent-filter>
         </activity>
 
         <!--intent-->
-        <activity android:name="demo.intent.VolleyDemoList"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="demo.intent.JsonTest"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="demo.intent.NetworkImageTest"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="demo.intent.OkhttpDemo"
-            android:screenOrientation="portrait"/>
-        <activity android:name="demo.systembartint.SamplesListActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/ActionBarTheme"
+        <activity
+            android:name="demo.intent.VolleyDemoList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="demo.intent.JsonTest"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="demo.intent.NetworkImageTest"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="demo.intent.OkhttpDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="demo.systembartint.SamplesListActivity"
             android:label="状态栏变色"
-            >
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="demo.custom.CustomLayoutList"></category>
@@ -105,30 +102,31 @@
         </activity>
 
         <!--systembartint-->
-        <activity android:name="demo.systembartint.DefaultActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name="demo.systembartint.DefaultActivity"
             android:label="Default example"
-            android:theme="@style/FullBleedTheme"
-            >
+            android:screenOrientation="portrait"
+            android:theme="@style/FullBleedTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE1" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.systembartint.ColorActivity"
+        <activity
+            android:name="demo.systembartint.ColorActivity"
+            android:label="color example"
             android:screenOrientation="portrait"
-            android:theme="@style/FullBleedTheme"
-            android:label="color example">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="com.readystatesoftware.systembartint.SAMPLE1" />
-        </intent-filter>
+            android:theme="@style/FullBleedTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.readystatesoftware.systembartint.SAMPLE1" />
+            </intent-filter>
         </activity>
-        <activity android:name="demo.systembartint.MatchActionBarActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name="demo.systembartint.MatchActionBarActivity"
             android:label="MatchActionBar example"
-            android:theme="@style/ActionBarTheme"
-            >
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.readystatesoftware.systembartint.SAMPLE1" />
@@ -136,173 +134,197 @@
         </activity>
 
         <!--baidu map-->
-        <activity android:name="demo.baidumap.BaseMapActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name="demo.baidumap.BaseMapActivity"
+            android:screenOrientation="portrait" />
 
         <!--picture video-->
-        <activity android:name="demo.picture.PictureDemoList"
-            android:screenOrientation="portrait"/>
-        <activity android:name="demo.picture.Photos"
+        <activity
+            android:name="demo.picture.PictureDemoList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="demo.picture.Photos"
             android:label="图库获取"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.app.cwf.demo.picture"/>
+                <category android:name="com.cwf.app.cwf.demo.picture" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.picture.CameraActivity"
+        <activity
+            android:name="demo.picture.CameraActivity"
             android:label="拍照获取"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.app.cwf.demo.picture"/>
+                <category android:name="com.cwf.app.cwf.demo.picture" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.picture.Crop"
+        <activity
+            android:name="demo.picture.Crop"
             android:label="系统裁剪"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.app.cwf.demo.picture"/>
+                <category android:name="com.cwf.app.cwf.demo.picture" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.picture.SelfActivity"
+        <activity
+            android:name="demo.picture.SelfActivity"
             android:label="自定义相册预览"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.app.cwf.demo.picture"/>
+                <category android:name="com.cwf.app.cwf.demo.picture" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.picture.toolbox.GalleryActivity"
+        <activity
+            android:name="demo.picture.toolbox.GalleryActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name="demo.picture.toolbox.ImageFileActivity"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name="demo.picture.toolbox.ImageFileActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name="demo.picture.toolbox.ShowAlbumActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="demo.picture.VideoRecordActivity"
+        <activity
+            android:name="demo.picture.toolbox.ShowAlbumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="demo.picture.VideoRecordActivity"
+            android:label="视频录制"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="视频录制">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.app.cwf.demo.picture"/>
+                <category android:name="com.cwf.app.cwf.demo.picture" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.picture.VideoRecordActivity1"
+        <activity
+            android:name="demo.picture.VideoRecordActivity1"
+            android:label="视频录制1"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="视频录制1">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.app.cwf.demo.picture"/>
+                <category android:name="com.cwf.app.cwf.demo.picture" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.picture.AudioRecordActivity"
+        <activity
+            android:name="demo.picture.AudioRecordActivity"
+            android:label="音频录制"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="音频录制">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.app.cwf.demo.picture"/>
+                <category android:name="com.cwf.app.cwf.demo.picture" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.picture.VideoPlayActivity"
+        <activity
+            android:name="demo.picture.VideoPlayActivity"
+            android:label="VideoPlayActivity"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:label="VideoPlayActivity">
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.app.cwf.demo.picture"/>
+                <category android:name="com.cwf.app.cwf.demo.picture" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.picture.VideoPlayActivity2"
-            android:screenOrientation="unspecified"
+        <activity
+            android:name="demo.picture.VideoPlayActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="VideoPlayActivity2">
+            android:label="VideoPlayActivity2"
+            android:screenOrientation="unspecified">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.app.cwf.demo.picture"/>
+                <category android:name="com.cwf.app.cwf.demo.picture" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.picture.VideoPlayInTextureView"
+        <activity
+            android:name="demo.picture.VideoPlayInTextureView"
+            android:label="VideoPlayInTextureView不完全"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:label="VideoPlayInTextureView不完全">
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.app.cwf.demo.picture"/>
+                <category android:name="com.cwf.app.cwf.demo.picture" />
             </intent-filter>
         </activity>
 
 
         <!--List-->
-        <activity android:name="demo.List.RecycleView.RecyclerViewActivity4"
-            android:screenOrientation="portrait"
+        <activity
+            android:name="demo.List.RecycleView.RecyclerViewActivity4"
             android:label="RecyclerViewActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.demo_list"/>
+                <category android:name="com.cwf.demo_list" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.List.RecycleView.AutoLoadRecyclerActivity"
-            android:screenOrientation="portrait"
-            android:label="AutoLoadRecyclerActivity">
+        <activity
+            android:name="demo.List.RecycleView.AutoLoadRecyclerActivity"
+            android:label="AutoLoadRecyclerActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.demo_list"/>
+                <category android:name="com.cwf.demo_list" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.List.PullToRefresh.AutoRefreshListActivity"
-            android:screenOrientation="portrait"
-            android:label="AutoRefreshListActivity">
+        <activity
+            android:name="demo.List.PullToRefresh.AutoRefreshListActivity"
+            android:label="AutoRefreshListActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.demo_list"/>
+                <category android:name="com.cwf.demo_list" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.List.PullToRefresh.AutoRefreshGirdViewActivity"
-            android:screenOrientation="portrait"
-            android:label="AutoRefreshGirdViewActivity">
+        <activity
+            android:name="demo.List.PullToRefresh.AutoRefreshGirdViewActivity"
+            android:label="AutoRefreshGirdViewActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.demo_list"/>
+                <category android:name="com.cwf.demo_list" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.List.AppListActivity"
-            android:screenOrientation="portrait"
-            android:label="AppListActivity">
+        <activity
+            android:name="demo.List.AppListActivity"
+            android:label="AppListActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.demo_list"/>
+                <category android:name="com.cwf.demo_list" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.List.WifiListActivity"
-            android:screenOrientation="portrait"
-            android:label="WifiListActivity">
+        <activity
+            android:name="demo.List.WifiListActivity"
+            android:label="WifiListActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.cwf.demo_list"/>
+                <category android:name="com.cwf.demo_list" />
             </intent-filter>
         </activity>
-        <activity android:name="demo.List.DemoListActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="demo.intent.EventBusDemo"
-            android:screenOrientation="portrait"/>
-        <activity android:name="demo.custom.test.LockNoticationActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance"
+        <activity
+            android:name="demo.List.DemoListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="demo.intent.EventBusDemo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="demo.custom.test.LockNoticationActivity"
             android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
             android:taskAffinity=""
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar"/>
-        <activity android:name="lib.utils.FileExploreActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="demo.custom.FileActivity"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" />
+        <activity
+            android:name="lib.utils.FileExploreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="demo.custom.FileActivity"
             android:label="文件管理器"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -310,7 +332,8 @@
                 <category android:name="demo.custom.CustomLayoutList"></category>
             </intent-filter>
         </activity>
-        <activity android:name="lib.widget.SelectPictureActivity"
+        <activity
+            android:name="lib.widget.SelectPictureActivity"
             android:label="仿微信选择照片"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -319,7 +342,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="demo.custom.AutoLayoutDemo"
+        <activity
+            android:name="demo.custom.AutoLayoutDemo"
             android:label="AutoLayoutDemo"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
@@ -330,14 +354,17 @@
         </activity>
 
         <!--QRCode-->
-        <activity android:name="demo.qrcode.QRCodeMain"
+        <activity
+            android:name="demo.qrcode.QRCodeMain"
             android:screenOrientation="unspecified"
             android:theme="@style/FullBleedTheme"></activity>
 
         <!--CustomLayoutList-->
-        <activity android:name="demo.custom.CustomLayoutList"
+        <activity
+            android:name="demo.custom.CustomLayoutList"
             android:screenOrientation="portrait"></activity>
-        <activity android:name="demo.custom.PickerDemoActivity"
+        <activity
+            android:name="demo.custom.PickerDemoActivity"
             android:label="自定义功能测试"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -346,7 +373,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="demo.custom.ClipboardActivity"
+        <activity
+            android:name="demo.custom.ClipboardActivity"
             android:label="剪切板监听"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -356,64 +384,70 @@
         </activity>
 
         <!--gestureLock-->
-        <activity android:name="demo.custom.GestureLockActivity"
-            android:screenOrientation="portrait"
-            android:label="手势密码">
+        <activity
+            android:name="demo.custom.GestureLockActivity"
+            android:label="手势密码"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="demo.custom.CustomLayoutList"></category>
             </intent-filter>
         </activity>
-        <activity android:name="demo.Html5Activity"
-            android:screenOrientation="portrait"
-            android:label="Html5Activity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
-                <category android:name="demo.custom.CustomLayoutList"></category>
-            </intent-filter>
-        </activity>
-
-        <activity android:name="demo.custom.tabhost.TabHostActivity"
-            android:screenOrientation="portrait"
-            android:label="TabHostActivity">
+        <activity
+            android:name="demo.Html5Activity"
+            android:label="Html5Activity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="demo.custom.CustomLayoutList"></category>
             </intent-filter>
         </activity>
 
-        <activity android:name="demo.custom.ViewpagerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/ToolBarTheme"
+        <activity
+            android:name="demo.custom.tabhost.TabHostActivity"
+            android:label="TabHostActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+                <category android:name="demo.custom.CustomLayoutList"></category>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="demo.custom.ViewpagerActivity"
             android:label="ViewpagerActivity"
-            >
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="demo.custom.CustomLayoutList"></category>
             </intent-filter>
         </activity>
 
-        <activity android:name="demo.custom.AndroidDesignActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name="demo.custom.AndroidDesignActivity"
             android:label="AndroidDesignActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ToolBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="demo.custom.CustomLayoutList"></category>
             </intent-filter>
         </activity>
-        <activity android:name="demo.custom.GlassActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name="demo.custom.GlassActivity"
             android:label="GlassActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ToolBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="demo.custom.CustomLayoutList"></category>
             </intent-filter>
         </activity>
-        <activity android:name="demo.custom.CoordinatorActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name="demo.custom.CoordinatorActivity"
             android:label="CoordinatorActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ToolBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
@@ -427,49 +461,72 @@
         </activity>
 
         <!--定义功能测试-->
-        <activity android:name="demo.custom.test.SelfFuncationActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="demo.custom.BottomNavigationActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name="demo.custom.test.SelfFuncationActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
 
-        <activity android:name="demo.custom.test.SlidingAcitivity1"
-            android:theme="@style/AppTheme.Base"/>
-        <activity android:name="demo.custom.test.SlidingAcitivity2"
-            android:theme="@style/AppTheme.Base"/>
-        <activity android:name="demo.custom.SimpleViewActivity"
-            />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="test.com"
+                    android:scheme="cwf" />
+
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="demo.custom.BottomNavigationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="demo.custom.test.SlidingAcitivity1"
+            android:theme="@style/AppTheme.Base" />
+        <activity
+            android:name="demo.custom.test.SlidingAcitivity2"
+            android:theme="@style/AppTheme.Base" />
+        <activity
+            android:name="demo.custom.SimpleViewActivity"
+            >
+        </activity>
 
         <!--服务-->
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"
-            >
-        </service>
+            android:process=":remote"></service>
 
-        <service android:name="demo.intent.ServiceDemo"
+        <service
+            android:name="demo.intent.ServiceDemo"
             android:enabled="true"
             android:process=":servicedemo">
             <intent-filter>
-                <action android:name="com.cwf.ai.service"/>
+                <action android:name="com.cwf.ai.service" />
             </intent-filter>
         </service>
-        <service android:name="demo.service.MqttService"
+        <service
+            android:name="demo.service.MqttService"
             android:label="MqttService"></service>
-        <service android:name="demo.service.MqttService9"
+        <service
+            android:name="demo.service.MqttService9"
             android:label="MqttService9"></service>
 
-        <service android:name="demo.custom.ClipboardService"
+        <service
+            android:name="demo.custom.ClipboardService"
             android:enabled="true"
             android:process=":clipboard">
             <intent-filter>
-                <action android:name="com.cwf.ai.Clipboardservice"/>
+                <action android:name="com.cwf.ai.Clipboardservice" />
             </intent-filter>
         </service>
 
         <!--监听开机-->
-        <receiver android:name="demo.intent.ConnectBroadCastReceiver"
-            >
+        <receiver android:name="demo.intent.ConnectBroadCastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
                 <category android:name="android.intent.category.HOME" />
