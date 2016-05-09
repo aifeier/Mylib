@@ -16,6 +16,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import demo.custom.BottomNavigationActivity;
+import demo.custom.SimpleViewActivity;
 import demo.intent.EventBusDemo;
 import lib.BaseActivity;
 import lib.MainApplication;
@@ -52,6 +53,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
         data.add("测试SlidingLayout");
         data.add("测试MaterialDialog");
         data.add("测试BottomNacigation");
+        data.add("测试自定义绘制");
 
     }
 
@@ -128,6 +130,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                 startActivity(new Intent(SelfFuncationActivity.this, BottomNavigationActivity.class));
                 break;
             case 6:
+                startActivity(new Intent(this, SimpleViewActivity.class));
                 break;
             case 7:
                 break;
