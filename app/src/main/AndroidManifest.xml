@@ -465,18 +465,12 @@
             android:name="demo.custom.test.SelfFuncationActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
-
-
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data
                     android:host="test.com"
                     android:scheme="cwf" />
-
-                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
