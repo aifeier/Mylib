@@ -6,14 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageInstaller;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
 
 import com.cwf.app.cwf.R;
 import com.handmark.pulltorefresh.library.autoloadlist.AutoLoadAdapter;
@@ -24,10 +21,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import demo.intent.entity.NewsInfo;
-
-import static com.cwf.app.cwf.R.color.black;
-
 /**
  * Created by n-240 on 2015/11/17.
  */
@@ -35,6 +28,7 @@ public class AppListActivity extends Activity {
 
     private AutoRefreshListView autoRefreshListView;
     private AutoLoadAdapter<AppInfo> mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +40,11 @@ public class AppListActivity extends Activity {
             public void buildView(ViewHolder holder, AppInfo data) {
                 //noinspection ResourceType
                 holder.getConvertView().setBackgroundColor(R.color.black);
-                if(data!=null) {
-                    holder.setValueToTextView(android.R.id.text1, data.appName  +
+                if (data != null) {
+                    holder.setValueToTextView(android.R.id.text1, data.appName +
                             "|" + data.packageName);
                     holder.setValueToTextView(android.R.id.text2, data.versionName
-                            +"|"+ data.getVersionCode());
+                            + "|" + data.getVersionCode());
                 }
             }
 
@@ -60,7 +54,8 @@ public class AppListActivity extends Activity {
             }
         };
         autoRefreshListView.setListAdapter(mAdapter);
-        mAdapter.setmData(getRunningProcess(), autoRefreshListView);
+        List<AppInfo> list = getRunningProcess();
+        mAdapter.setmData(list, autoRefreshListView);
         autoRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -70,22 +65,21 @@ public class AppListActivity extends Activity {
     }
 
     /*获取已经安装了的应用*/
-    private List<AppInfo> getInstalledPackages(){
+    private List<AppInfo> getInstalledPackages() {
         ArrayList<AppInfo> appList = new ArrayList<AppInfo>(); //用来存储获取的应用信息数据
         List<PackageInfo> packages = getPackageManager().getInstalledPackages(0);
-        for(int i=0;i<packages.size();i++) {
+        for (int i = 0; i < packages.size(); i++) {
             PackageInfo packageInfo = packages.get(i);
-            AppInfo tmpInfo =new AppInfo();
+            AppInfo tmpInfo = new AppInfo();
             tmpInfo.appName = packageInfo.applicationInfo.loadLabel(getPackageManager()).toString();
             tmpInfo.packageName = packageInfo.packageName;
             tmpInfo.versionName = packageInfo.versionName;
             tmpInfo.versionCode = packageInfo.versionCode;
             tmpInfo.appIcon = packageInfo.applicationInfo.loadIcon(getPackageManager());
-            if((packageInfo.applicationInfo.flags& ApplicationInfo.FLAG_SYSTEM)==0) {
+            if ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                 //非系统应用
 //                appList.add(tmpInfo);
-            }
-            else {
+            } else {
                 //系统应用　　　　　　　　
             }
             appList.add(tmpInfo);
@@ -94,68 +88,69 @@ public class AppListActivity extends Activity {
     }
 
     /*获取正在运行的应用*/
-    private List<AppInfo> getRunningProcess(){
+    private List<AppInfo> getRunningProcess() {
         PackagesInfo pi = new PackagesInfo(this);
         ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         //获取正在运行的应用
         List<ActivityManager.RunningAppProcessInfo> run = activityManager.getRunningAppProcesses();
         List<AppInfo> list = new ArrayList<AppInfo>();
-        for(ActivityManager.RunningAppProcessInfo ra : run){
-            if(ra.processName.equals("system") || ra.processName.equals("com.Android.phone")) {
+        for (ActivityManager.RunningAppProcessInfo ra : run) {
+            if (ra.processName.equals("system") || ra.processName.equals("com.Android.phone")) {
                 continue;
             }
             AppInfo appInfo = pi.getInfo(ra.processName);
-            if(appInfo!=null) {
+            if (appInfo != null) {
                 appInfo.setVersionCode(ra.lastTrimLevel);
                 list.add(appInfo);
             }
         }
-            return list;
+        return list;
     }
 
-    private class PackagesInfo{
+    private class PackagesInfo {
         private List<AppInfo> appList;
-        public PackagesInfo(Context context){
-           //通包管理器，检索所有的应用程序（甚至卸载的）与数据目录
+
+        public PackagesInfo(Context context) {
+            //通包管理器，检索所有的应用程序（甚至卸载的）与数据目录
             appList = getInstalledPackages();
         }
 
 
-
         /**
-              * 通过一个程序名返回该程序的一个Application对象。
-              * @param name  程序名
-              * @return  ApplicationInfo
-              */
-        public AppInfo getInfo(String name){
-               if(name == null){
-                   return null;
-               }
-               for(AppInfo appinfo : appList){
-                   if(name.equals(appinfo.packageName)){
-                        return appinfo;
-                    }
-               }
+         * 通过一个程序名返回该程序的一个Application对象。
+         *
+         * @param name 程序名
+         * @return ApplicationInfo
+         */
+        public AppInfo getInfo(String name) {
+            if (name == null) {
+                return null;
+            }
+            for (AppInfo appinfo : appList) {
+                if (name.equals(appinfo.packageName)) {
+                    return appinfo;
+                }
+            }
             return null;
         }
 
     }
 
-    public void install(View v){
+    public void install(View v) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
 
-        File file = new File(Environment.getExternalStorageDirectory(),"HtmlUI1.apk");
+        File file = new File(Environment.getExternalStorageDirectory(), "HtmlUI1.apk");
         intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
 
         startActivity(intent);
     }
 
-    public void uninstall(String url){
+    public void uninstall(String url) {
 
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_DELETE);
-        intent.setData(Uri.parse("package:"+url));
+        intent.setData(Uri.parse("package:" + url));
         startActivity(intent);
     }
 }

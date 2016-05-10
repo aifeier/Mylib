@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -68,7 +69,7 @@ public class AppUtils {
         return null;
     }
 
-    /*获取以安装应用安装包等信息的list*/
+    /*获取已安装应用安装包等信息的list*/
     public static List<PackageInfo> getInstallApk(Context context) {
         PackageManager packageManager = null;
         packageManager = context.getPackageManager();
@@ -84,6 +85,16 @@ public class AppUtils {
                 FileUtils.getInstance(context).saveFile(path, name + ".apk");
         }
         return mAllPackages;
+    }
+
+
+    /*删除app*/
+    public static void uninstall(Context context, String url) {
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_DELETE);
+        intent.setData(Uri.parse("package:" + url));
+        context.startActivity(intent);
     }
 
     /**
