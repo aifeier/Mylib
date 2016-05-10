@@ -6,7 +6,7 @@
 <div style="text-align:center;">
     <a href="openApp()">Open app</a>
     <button onclick="playPause()">播放/暂停</button>
-    <button onclick="makeBig()">大</button>
+    <button onclick="openApp()">大</button>
     <button onclick="makeNormal()">中</button>
     <button onclick="makeSmall()">小</button>
     <a href="http://www.baidu.com" target="_parent">百度</a>
@@ -49,12 +49,11 @@ function makeBig()
 myVideo.width=560; 
 }
 
-function openApp(){
-if (/android/i.test(navigator.userAgent)) {
-alert(This is Android'browser.);
-window.location.href = 'cwf://test.com';
-}
-}
+   function openApp() {
+            window.location.href = 'cwf://test.com';
+
+
+   }
 
 function makeSmall()
 { 
@@ -65,6 +64,13 @@ function makeNormal()
 { 
 myVideo.width=420;
 }
+
+
+
+
+
+
+
 
 
 
