@@ -1,7 +1,9 @@
 package demo;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,34 +23,46 @@ import lib.utils.SDCardUtils;
 /**
  * Created by n-240 on 2015/11/26.
  */
-public class Html5Activity extends Activity{
-    private  WebView webView;
+public class Html5Activity extends Activity {
+    private WebView webView;
     private String load = "file:///android_asset/html/first.htm";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_webview);
         webView = (WebView) findViewById(R.id.web_view);
-        WebSettings webSettings =  webView.getSettings();
+        WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 //        webSettings.setUseWideViewPort(true);
         webSettings.setSupportZoom(true);
         webSettings.setLoadsImagesAutomatically(true);
         webSettings.setAppCacheEnabled(true);
- /*       webSettings.setAppCacheEnabled(true);
-        webSettings.setAppCachePath(SDCardUtils.getAbleDirectoryPath());*/
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        webSettings.setAllowContentAccess(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setDatabaseEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setAppCachePath(SDCardUtils.getAbleDirectoryPath());
 
-        webView.setWebViewClient(new WebViewClient(){
+        webView.setWebViewClient(new WebViewClient() {
             /*重写shouldOverrideUrlLoading方法，使点击链接后不使用其他的浏览器打开。*/
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
+                if (url.startsWith("http:") || url.startsWith("https:"))
+                    view.loadUrl(url);
+                else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                }
+                return false;
             }
 
             @Override
             public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
-                if(event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+                if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
                     webView.goBack();
                     return true;
                 }
@@ -63,7 +77,7 @@ public class Html5Activity extends Activity{
                     webView.goBack();
                     return true;
                 }
-                finish();
+//                finish();
                 return false;
             }
         });
