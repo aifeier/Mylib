@@ -132,7 +132,7 @@ public class AppUtils {
     /*
 * 启动一个app
 */
-    public static void startAPP(Context context, String appPackageName) {
+    public static void startApp(Context context, String appPackageName) {
         try {
             Intent intent = context.getPackageManager().getLaunchIntentForPackage(appPackageName);
             context.startActivity(intent);

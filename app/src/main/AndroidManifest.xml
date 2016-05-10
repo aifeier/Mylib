@@ -253,6 +253,15 @@
 
         <!--List-->
         <activity
+            android:name="demo.List.SwipeMenuListActivity"
+            android:label="SwipeMenuListActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.cwf.demo_list" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="demo.List.RecycleView.RecyclerViewActivity4"
             android:label="RecyclerViewActivity"
             android:screenOrientation="portrait"
@@ -463,11 +472,13 @@
         <!--定义功能测试-->
         <activity
             android:name="demo.custom.test.SelfFuncationActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="test.com"
                     android:scheme="cwf" />
@@ -484,10 +495,7 @@
         <activity
             android:name="demo.custom.test.SlidingAcitivity2"
             android:theme="@style/AppTheme.Base" />
-        <activity
-            android:name="demo.custom.SimpleViewActivity"
-            >
-        </activity>
+        <activity android:name="demo.custom.SimpleViewActivity"></activity>
 
         <!--服务-->
         <service
