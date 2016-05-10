@@ -78,6 +78,7 @@ public class SimpleView extends View {
     private int item1;
     private RectF rectF;
     private int angle;
+    private int progress = 0;
 
     @Override
     protected void onDraw(final Canvas canvas) {
@@ -122,6 +123,33 @@ public class SimpleView extends View {
 //        canvas.rotate(180, getWidth() / 2, getHeight() / 2);
         paint1.setColor(Color.GREEN);
         canvas.drawArc(rectF, 270 - angle, angle * 2, false, paint1);
+
+
+        /*自定义的横线进度条*/
+        Paint paintL1 = new Paint();
+        paintL1.setAntiAlias(true);
+        paintL1.setColor(Color.BLUE);
+        paintL1.setStrokeWidth(width / 150);
+        paintL1.setStyle(Paint.Style.STROKE);
+        float xs = width / 10;
+        float xe = xs + (progress % 100) * width / 1000 * 8;
+        float y = height / 10 * 9;
+        canvas.drawLine(xs, y, xe, y, paintL1);
+        if (xe < width / 10 * 9) {
+            Paint paintL2 = new Paint();
+            paintL2.setAntiAlias(true);
+            paintL2.setColor(Color.LTGRAY);
+            paintL2.setStrokeWidth(width / 250);
+            paintL2.setStyle(Paint.Style.STROKE);
+            canvas.drawLine(xe, y, width / 10 * 9, y, paintL2);
+        }
+
+        if (xe > width / 10 * 9 - density * 8)
+            xe = width / 10 * 9 - density * 8;
+        paintL1.setStrokeWidth(density / 2);
+        paintL1.setTextSize(density * 8);
+        canvas.drawText(" " + progress % 100 + "% ", xe, y + width / 300, paintL1);
+
 //        canvas.restore();
     }
 
@@ -143,6 +171,7 @@ public class SimpleView extends View {
                 current = System.currentTimeMillis();
                 item1++;
                 angle = item1 * 10;
+                progress++;
                 postInvalidate();
             }
             if (item1 >= 10)
