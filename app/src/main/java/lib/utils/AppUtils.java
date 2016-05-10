@@ -91,7 +91,7 @@ public class AppUtils {
      * com -- ComponentName 对象，包含apk的包名和主Activity名
      * param -- 需要传给apk的参数
      */
-    private static void startApp(Context context, ComponentName com, String param) {
+    public static void startApp(Context context, ComponentName com, String param) {
         if (com != null) {
             PackageInfo packageInfo;
             try {

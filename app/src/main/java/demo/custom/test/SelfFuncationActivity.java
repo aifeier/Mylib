@@ -20,6 +20,7 @@ import demo.custom.SimpleViewActivity;
 import demo.intent.EventBusDemo;
 import lib.BaseActivity;
 import lib.MainApplication;
+import lib.utils.AppUtils;
 import lib.utils.CommonUtils;
 import lib.utils.NotificationUtils;
 
@@ -54,6 +55,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
         data.add("测试MaterialDialog");
         data.add("测试BottomNacigation");
         data.add("测试自定义绘制");
+        data.add("打开app");
 
     }
 
@@ -133,6 +135,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                 startActivity(new Intent(this, SimpleViewActivity.class));
                 break;
             case 7:
+                AppUtils.startAPP(this, "com.tencent.mobileqq");
                 break;
             default:
                 break;
