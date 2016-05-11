@@ -10,12 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-    <lib.widget.siderbarlist.SideBar
-        android:layout_width="30dp"
-        android:layout_height="300dp"
-        android:layout_gravity="right|center" />
-
-
     <lib.widget.cricleprogress.DonutProgress
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

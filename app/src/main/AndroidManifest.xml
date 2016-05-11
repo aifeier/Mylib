@@ -496,6 +496,7 @@
             android:name="demo.custom.test.SlidingAcitivity2"
             android:theme="@style/AppTheme.Base" />
         <activity android:name="demo.custom.SimpleViewActivity"></activity>
+        <activity android:name="demo.custom.ContactsActivity"/>
 
         <!--服务-->
         <service

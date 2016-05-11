@@ -16,6 +16,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import demo.custom.BottomNavigationActivity;
+import demo.custom.ContactsActivity;
 import demo.custom.SimpleViewActivity;
 import demo.intent.EventBusDemo;
 import lib.BaseActivity;
@@ -56,6 +57,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
         data.add("测试BottomNacigation");
         data.add("测试自定义绘制");
         data.add("打开QQ");
+        data.add("通讯录");
 
     }
 
@@ -136,6 +138,9 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                 break;
             case 7:
                 AppUtils.startApp(this, "com.tencent.mobileqq");
+                break;
+            case 8:
+                startActivity(new Intent(this, ContactsActivity.class));
                 break;
             default:
                 break;

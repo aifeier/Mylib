@@ -200,7 +200,7 @@ public class AppUtils {
     }
 
     /*获得sim卡上的联系人*/
-    public List<ContactsInfo> getSIMContactsInfos(Context context) {
+    public static List<ContactsInfo> getSIMContactsInfos(Context context) {
 
         List<ContactsInfo> SIMList = new ArrayList<>();
         try {
