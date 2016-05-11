@@ -1,6 +1,7 @@
 package demo.custom;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.cwf.app.cwf.R;
 
