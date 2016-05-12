@@ -7,12 +7,14 @@ package lib.utils;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,9 +23,15 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.Contacts.Data;
+import android.provider.ContactsContract.CommonDataKinds.StructuredName;
+import android.provider.ContactsContract.CommonDataKinds.Email;
+import android.provider.ContactsContract.CommonDataKinds.Im;
+import android.provider.ContactsContract.CommonDataKinds.Photo;
 
 import com.cwf.app.cwf.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -234,5 +242,79 @@ public class AppUtils {
         return SIMList;
     }
 
+    /*添加当个联系人*/
+    public static boolean addContact(Context context, ContactsInfo contactsInfo) {
+        try {
+            ContentValues values = new ContentValues();
+
+            // 下面的操作会根据RawContacts表中已有的rawContactId使用情况自动生成新联系人的rawContactId
+            Uri rawContactUri = context.getContentResolver().insert(
+                    ContactsContract.RawContacts.CONTENT_URI, values);
+            long rawContactId = ContentUris.parseId(rawContactUri);
+
+            // 向data表插入姓名数据
+            String given_name = contactsInfo.getName();
+            if (given_name != "") {
+                values.clear();
+                values.put(Data.RAW_CONTACT_ID, rawContactId);
+                values.put(Data.MIMETYPE, StructuredName.CONTENT_ITEM_TYPE);
+                values.put(StructuredName.GIVEN_NAME, given_name);
+                context.getContentResolver().insert(ContactsContract.Data.CONTENT_URI,
+                        values);
+            }
+
+            // 向data表插入电话数据
+            String mobile_number = contactsInfo.getPhone();
+            if (mobile_number != "") {
+                values.clear();
+                values.put(Data.RAW_CONTACT_ID, rawContactId);
+                values.put(Data.MIMETYPE, Phone.CONTENT_ITEM_TYPE);
+                values.put(Phone.NUMBER, mobile_number);
+                values.put(Phone.TYPE, Phone.TYPE_MOBILE);
+                context.getContentResolver().insert(ContactsContract.Data.CONTENT_URI,
+                        values);
+            }
+
+            // 向data表插入Email数据
+            String work_email = "237142681@qq.com";
+            if (work_email != "") {
+                values.clear();
+                values.put(Data.RAW_CONTACT_ID, rawContactId);
+                values.put(Data.MIMETYPE, Email.CONTENT_ITEM_TYPE);
+                values.put(Email.DATA, work_email);
+                values.put(Email.TYPE, Email.TYPE_WORK);
+                context.getContentResolver().insert(ContactsContract.Data.CONTENT_URI,
+                        values);
+            }
+
+            // 向data表插入QQ数据
+            String im_qq = "237142681";
+            if (im_qq != "") {
+                values.clear();
+                values.put(Data.RAW_CONTACT_ID, rawContactId);
+                values.put(Data.MIMETYPE, Im.CONTENT_ITEM_TYPE);
+                values.put(Im.DATA, im_qq);
+                values.put(Im.PROTOCOL, Im.PROTOCOL_QQ);
+                context.getContentResolver().insert(ContactsContract.Data.CONTENT_URI,
+                        values);
+            }
+            // 向data表插入头像数据
+            Bitmap sourceBitmap = BitmapFactory.decodeResource(context.getResources(),
+                    R.mipmap.gossip);
+            final ByteArrayOutputStream os = new ByteArrayOutputStream();
+            // 将Bitmap压缩成PNG编码，质量为100%存储
+            sourceBitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+            byte[] avatar = os.toByteArray();
+            values.put(Data.RAW_CONTACT_ID, rawContactId);
+            values.put(Data.MIMETYPE, Photo.CONTENT_ITEM_TYPE);
+            values.put(Photo.PHOTO, avatar);
+            context.getContentResolver().insert(ContactsContract.Data.CONTENT_URI,
+                    values);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+
+    }
 
 }

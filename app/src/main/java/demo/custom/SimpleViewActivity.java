@@ -7,6 +7,7 @@ import com.cwf.app.cwf.R;
 
 import lib.BaseActivity;
 import lib.utils.AppUtils;
+import lib.utils.entity.ContactsInfo;
 
 /**
  * Created by n-240 on 2016/5/9.
@@ -19,6 +20,11 @@ public class SimpleViewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_simple_view);
-        AppUtils.getLocalContactsInfos(this);
+//        AppUtils.getLocalContactsInfos(this);
+        ContactsInfo contactsInfo = new ContactsInfo();
+        contactsInfo.setName("爱妃");
+        contactsInfo.setPhone("15888888888");
+        contactsInfo.setSortKey("爱妃");
+        AppUtils.addContact(this, contactsInfo);
     }
 }
