@@ -16,6 +16,10 @@
 
 package com.google.zxing.client.android.encode;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 import android.app.Activity;
@@ -45,102 +49,120 @@ import com.google.zxing.client.android.R;
  */
 public final class EncodeActivity extends Activity {
 
-  private static final String TAG = EncodeActivity.class.getSimpleName();
+    private static final String TAG = EncodeActivity.class.getSimpleName();
 
-  private static final int MAX_BARCODE_FILENAME_LENGTH = 24;
-  private static final Pattern NOT_ALPHANUMERIC = Pattern.compile("[^A-Za-z0-9]");
-  private static final String USE_VCARD_KEY = "USE_VCARD";
+    private static final int MAX_BARCODE_FILENAME_LENGTH = 24;
+    private static final Pattern NOT_ALPHANUMERIC = Pattern.compile("[^A-Za-z0-9]");
+    private static final String USE_VCARD_KEY = "USE_VCARD";
 
-  private QRCodeEncoder qrCodeEncoder;
+    private QRCodeEncoder qrCodeEncoder;
 
-  @Override
-  public void onCreate(Bundle icicle) {
-    super.onCreate(icicle);
-    Intent intent = getIntent();
-    if (intent == null) {
-      finish();
-    } else {
-      String action = intent.getAction();
-      if (Intents.Encode.ACTION.equals(action) || Intent.ACTION_SEND.equals(action)) {
-        setContentView(R.layout.encode);
-      } else {
-        finish();
-      }
+    @Override
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        Intent intent = getIntent();
+        if (intent == null) {
+            finish();
+        } else {
+            String action = intent.getAction();
+            if (Intents.Encode.ACTION.equals(action) || Intent.ACTION_SEND.equals(action)) {
+                setContentView(R.layout.encode);
+            } else {
+                finish();
+            }
+        }
     }
-  }
 
 
-  
+    public void saveBitmap(Bitmap bm, String picName) {
+        try {
+            File f = new File(getExternalCacheDir().getParentFile().getAbsolutePath(),
+                    picName + ".jpg");
+            if (f.exists()) {
+                f.delete();
+            }
+            FileOutputStream out = new FileOutputStream(f);
+            bm.compress(Bitmap.CompressFormat.JPEG, 50, out);
+            out.flush();
+            out.close();
+//            bm.recycle();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
-  @Override
-  protected void onResume() {
-    super.onResume();
-    // This assumes the view is full screen, which is a good assumption
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // This assumes the view is full screen, which is a good assumption
    /* WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
     Display display = manager.getDefaultDisplay();
     int width = display.getWidth();
     int height = display.getHeight();*/
-    DisplayMetrics dm = new DisplayMetrics();
-    getWindowManager().getDefaultDisplay().getMetrics(dm);
-    int width = dm.widthPixels;
-    int height = dm.heightPixels;
-    int smallerDimension = width < height ? width : height;
-    smallerDimension = smallerDimension * 7 / 8;
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        int smallerDimension = width < height ? width : height;
+        smallerDimension = smallerDimension * 7 / 8;
 
-    Intent intent = getIntent();
-    if (intent == null) {
-      return;
+        Intent intent = getIntent();
+        if (intent == null) {
+            return;
+        }
+
+        try {
+            boolean useVCard = intent.getBooleanExtra(USE_VCARD_KEY, false);
+            qrCodeEncoder = new QRCodeEncoder(this, intent, smallerDimension, useVCard);
+            Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
+            if (bitmap == null) {
+                Log.w(TAG, "Could not encode barcode");
+                showErrorMessage(R.string.msg_encode_contents_failed);
+                qrCodeEncoder = null;
+                return;
+            }
+
+            ImageView view = (ImageView) findViewById(R.id.image_view);
+            view.setImageBitmap(bitmap);
+
+            TextView contents = (TextView) findViewById(R.id.contents_text_view);
+            if (intent.getBooleanExtra(Intents.Encode.SHOW_CONTENTS, true)) {
+                contents.setText(qrCodeEncoder.getDisplayContents());
+                setTitle(qrCodeEncoder.getTitle());
+            } else {
+                contents.setText("");
+                setTitle("");
+            }
+            saveBitmap(bitmap, System.currentTimeMillis() + "");
+        } catch (WriterException e) {
+            Log.w(TAG, "Could not encode barcode", e);
+            showErrorMessage(R.string.msg_encode_contents_failed);
+            qrCodeEncoder = null;
+        }
     }
 
-    try {
-      boolean useVCard = intent.getBooleanExtra(USE_VCARD_KEY, false);
-      qrCodeEncoder = new QRCodeEncoder(this, intent, smallerDimension, useVCard);
-      Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
-      if (bitmap == null) {
-        Log.w(TAG, "Could not encode barcode");
-        showErrorMessage(R.string.msg_encode_contents_failed);
-        qrCodeEncoder = null;
-        return;
-      }
+    private void showErrorMessage(int message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message);
+        builder.setPositiveButton(R.string.button_ok, new OnClickListener() {
 
-      ImageView view = (ImageView) findViewById(R.id.image_view);
-      view.setImageBitmap(bitmap);
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                finish();
+            }
+        });
+        builder.setOnCancelListener(new OnCancelListener() {
 
-      TextView contents = (TextView) findViewById(R.id.contents_text_view);
-      if (intent.getBooleanExtra(Intents.Encode.SHOW_CONTENTS, true)) {
-        contents.setText(qrCodeEncoder.getDisplayContents());
-        setTitle(qrCodeEncoder.getTitle());
-      } else {
-        contents.setText("");
-        setTitle("");
-      }
-    } catch (WriterException e) {
-      Log.w(TAG, "Could not encode barcode", e);
-      showErrorMessage(R.string.msg_encode_contents_failed);
-      qrCodeEncoder = null;
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // TODO Auto-generated method stub
+                finish();
+            }
+        });
+        builder.show();
     }
-  }
-
-  private void showErrorMessage(int message) {
-    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    builder.setMessage(message);
-    builder.setPositiveButton(R.string.button_ok, new OnClickListener() {
-		
-		@Override
-		public void onClick(DialogInterface dialog, int which) {
-			// TODO Auto-generated method stub
-			finish();
-		}
-	});
-    builder.setOnCancelListener(new OnCancelListener() {
-		
-		@Override
-		public void onCancel(DialogInterface dialog) {
-			// TODO Auto-generated method stub
-			finish();
-		}
-	});
-    builder.show();
-  }
 }

@@ -47,4 +47,11 @@
         custom:circle_text_size="16sp"
         custom:circle_unfinished_color="#00ff00" />
 
+    <com.cwf.lib.numprogressbarlibrary.NumberProgressBar
+        style="@style/NumberProgressBar_Passing_Green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_small"
+        custom:progress_current="20" />
+
 </LinearLayout>
