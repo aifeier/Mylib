@@ -54,4 +54,19 @@
         android:layout_margin="@dimen/margin_small"
         custom:progress_current="20" />
 
+    <com.cwf.libs.circularprogressbuttonlibrary.CircularProgressButton
+        android:id="@+id/circular_progress_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_xsmall"
+        android:layout_margin="@dimen/margin_large"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        custom:cpb_cornerRadius="@dimen/margin_large"
+        custom:cpb_selectorComplete="@drawable/complete_state_selector"
+        custom:cpb_selectorError="@drawable/error_state_selector"
+        custom:cpb_selectorIdle="@drawable/idle_state_selector"
+        custom:cpb_textComplete="Complete"
+        custom:cpb_textError="Error"
+        custom:cpb_textIdle="Upload" />
+
 </LinearLayout>

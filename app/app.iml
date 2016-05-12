@@ -134,5 +134,6 @@
     <orderEntry type="library" exported="" name="design-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="okhttputilslibrary-release-" level="project" />
     <orderEntry type="library" exported="" name="leakcanary-watcher-1.4-beta2" level="project" />
+    <orderEntry type="module" module-name="circularprogressbuttonlibrary" exported="" />
   </component>
 </module>

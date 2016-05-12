@@ -77,7 +77,8 @@ dependencies {
     compile(name: 'alllibrary-release', ext: 'aar')
     compile(name: 'bottomnavigationlibrary-release', ext: 'aar')
     compile(name: 'numprogressbarlibrary-release', ext: 'aar')
-//        compile project(':simpleqrcodelibrary')
+//    compile(name: 'numprogressbarlibrary-release', ext: 'aar')
+    //        compile project(':simpleqrcodelibrary')
 
     //    compile project(':pulltorefreshlibrary')
 
@@ -85,8 +86,10 @@ dependencies {
 
     //    compile project(':materialdialog')
 
-//    compile project(':bottomnavigationlibrary')
-//    compile project(':numprogressbarlibrary')
+    //    compile project(':bottomnavigationlibrary')
+
+    //    compile project(':numprogressbarlibrary')
+    compile project(':circularprogressbuttonlibrary')
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.google.code.gson:gson:2.5'
     compile 'com.android.support:design:23.1.1'
