@@ -68,5 +68,8 @@
         custom:cpb_textComplete="Complete"
         custom:cpb_textError="Error"
         custom:cpb_textIdle="Upload" />
+    <android.support.v7.widget.SwitchCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
