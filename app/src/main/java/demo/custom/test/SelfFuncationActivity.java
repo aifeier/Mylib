@@ -84,6 +84,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
 //                notificationUtils.showNotification("ok", EventBusDemo.class, R.drawable.file_picker_folder);
                 break;
             case 2:
+                CommonUtils.lock(getApplicationContext());
                 new android.os.Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

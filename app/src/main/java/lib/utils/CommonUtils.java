@@ -132,13 +132,16 @@ public class CommonUtils {
         wl.release();
     }
 
+    /*解锁*/
     public static void unlock(Context context) {
         KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
         KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unlock");
+
         /*解锁*/
         kl.disableKeyguard();
     }
 
+    /*上锁*/
     public static void lock(Context context) {
         KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
         KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unlock");

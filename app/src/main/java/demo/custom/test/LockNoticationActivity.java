@@ -1,6 +1,8 @@
 package demo.custom.test;
 
 import android.app.Activity;
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.DragEvent;
@@ -40,15 +42,17 @@ public class LockNoticationActivity extends BaseActivity implements View.OnClick
 //                | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
+    KeyguardManager km;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         /*保证界面显示在锁屏前面*/
         final Window win = getWindow();
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+//                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                        | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                        | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         );
 //        win.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -59,6 +63,9 @@ public class LockNoticationActivity extends BaseActivity implements View.OnClick
 
 //        win.requestFeature(Window.FEATURE_NO_TITLE);
         useToolbar = false;
+        km = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+        if (km.isKeyguardLocked())
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         setContentView(R.layout.lock_notification);
         textView = (TextView) findViewById(R.id.lock_text);
         textView.setOnTouchListener(new View.OnTouchListener() {
@@ -133,5 +140,12 @@ public class LockNoticationActivity extends BaseActivity implements View.OnClick
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         return false;
+    }
+
+    @Override
+    protected void onStop() {
+        if (!km.isKeyguardLocked())
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        super.onStop();
     }
 }
