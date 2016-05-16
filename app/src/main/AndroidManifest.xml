@@ -493,6 +493,9 @@
         <activity
             android:name="demo.custom.BottomNavigationActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="demo.custom.DevicePolityActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="demo.custom.test.SlidingAcitivity1"
@@ -538,6 +541,18 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
                 <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="demo.custom.test.AdminReceiver"
+            android:description="@string/app_name"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/extras_device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
 

@@ -18,6 +18,7 @@ import java.util.logging.Handler;
 
 import demo.custom.BottomNavigationActivity;
 import demo.custom.ContactsActivity;
+import demo.custom.DevicePolityActivity;
 import demo.custom.SimpleViewActivity;
 import demo.intent.EventBusDemo;
 import lib.BaseActivity;
@@ -59,6 +60,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
         data.add("测试自定义绘制");
         data.add("打开QQ");
         data.add("通讯录");
+        data.add("一键锁屏");
 
     }
 
@@ -133,6 +135,9 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                 break;
             case 8:
                 startActivity(new Intent(this, ContactsActivity.class));
+                break;
+            case 9:
+                startActivity(new Intent(this, DevicePolityActivity.class));
                 break;
             default:
                 break;
