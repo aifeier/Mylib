@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Handler;
 
 import demo.custom.BottomNavigationActivity;
 import demo.custom.ContactsActivity;
@@ -83,28 +84,18 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
 //                notificationUtils.showNotification("ok", EventBusDemo.class, R.drawable.file_picker_folder);
                 break;
             case 2:
-                timerTask = new TimerTask() {
+                new android.os.Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+                        notificationUtils.showNotification("ok", EventBusDemo.class, R.drawable.file_picker_folder);
                         if (CommonUtils.isSleeping(getApplicationContext())) {
                             CommonUtils.wakeUp(getApplicationContext());
-//                            AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-//                            PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 1,
-//                                    new Intent(getApplicationContext(),LockNoticationActivity.class), 0);
-//                            am.set(AlarmManager.RTC_WAKEUP, 100, pi);
                             Intent i = new Intent(getApplicationContext(), LockNoticationActivity.class);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(i);
-
-//                            startActivity(new Intent(getApplicationContext(), LockNoticationActivity.class));
                         }
-                        NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-//                        notificationUtils.startNotification("message",EventBusDemo.class,R.drawable.dialog_load, "content" );
-                        notificationUtils.showNotification("ok", EventBusDemo.class, R.drawable.file_picker_folder);
                     }
-                };
-                timer = new Timer();
-                timer.schedule(timerTask, 5000);
+                }, 5000);
                 break;
             case 3:
                 startActivity(new Intent(this, SlidingAcitivity1.class));

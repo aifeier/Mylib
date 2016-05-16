@@ -19,13 +19,26 @@ import lib.utils.CommonUtils;
 
 /**
  * Created by n-240 on 2016/3/2.
- *锁屏通知界面
+ * 锁屏通知界面
+ *
  * @author cwf
  */
 public class LockNoticationActivity extends BaseActivity implements View.OnClickListener
-        ,GestureDetector.OnGestureListener{
-    TextView textView ;
+        , GestureDetector.OnGestureListener {
+    TextView textView;
     private GestureDetector gestureDetector;
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                | View.SYSTEM_UI_FLAG_LOW_PROFILE
+//                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                | View.SYSTEM_UI_FLAG_IMMERSIVE
+//                | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +48,8 @@ public class LockNoticationActivity extends BaseActivity implements View.OnClick
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+        );
 //        win.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //        win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
@@ -44,6 +58,7 @@ public class LockNoticationActivity extends BaseActivity implements View.OnClick
 //                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
 //        win.requestFeature(Window.FEATURE_NO_TITLE);
+        useToolbar = false;
         setContentView(R.layout.lock_notification);
         textView = (TextView) findViewById(R.id.lock_text);
         textView.setOnTouchListener(new View.OnTouchListener() {
@@ -76,7 +91,7 @@ public class LockNoticationActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.lock_text:
 //                startActivity(new Intent(LockNoticationActivity.this, EventBusDemo.class));
 //                finish();
