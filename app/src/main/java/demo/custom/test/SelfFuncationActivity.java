@@ -61,6 +61,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
         data.add("打开QQ");
         data.add("通讯录");
         data.add("一键锁屏");
+        data.add("打开应用设置");
 
     }
 
@@ -138,6 +139,9 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
                 break;
             case 9:
                 startActivity(new Intent(this, DevicePolityActivity.class));
+                break;
+            case 10:
+                AppUtils.startAppSettings(this);
                 break;
             default:
                 break;
