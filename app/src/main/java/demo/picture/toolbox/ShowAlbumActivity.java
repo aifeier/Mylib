@@ -26,7 +26,7 @@ import lib.widget.ViewHolder;
  * Created by n-240 on 2015/9/30.
  */
 /*查看文件夹里图片列表*/
-public class ShowAlbumActivity extends BaseActivity implements View.OnClickListener{
+public class ShowAlbumActivity extends BaseActivity implements View.OnClickListener {
     private TextView file_select_num;//确定按钮，显示数量
     private TextView preview;//预览
     private GridView flie_list_gridview;
@@ -38,8 +38,8 @@ public class ShowAlbumActivity extends BaseActivity implements View.OnClickListe
 * key_id = 0: 表示从主界面查看图片大图
 * @param data:需要显示的数据
 * */
-    public static Intent startThisActivity(Activity activity, ImageCollection data ){
-        if(data!=null)
+    public static Intent startThisActivity(Activity activity, ImageCollection data) {
+        if (data != null)
             mData = data;
         return new Intent(activity, ShowAlbumActivity.class);
     }
@@ -49,6 +49,7 @@ public class ShowAlbumActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
 //        getActionBar().setDisplayShowHomeEnabled(false);
         setTitle(getResources().getString(R.string.select_photos));
+        nestedScroll = false;
         setContentView(R.layout.layout_file_photos_list);
         file_select_num = (TextView) findViewById(R.id.file_select_num);
         preview = (TextView) findViewById(R.id.preview);
@@ -70,36 +71,35 @@ public class ShowAlbumActivity extends BaseActivity implements View.OnClickListe
         }
     };
 
-    private GridAdapter<ImageItem> initAdapter(){
-        GridAdapter<ImageItem> adapter = new GridAdapter<ImageItem>(ShowAlbumActivity.this, R.layout.item_file_photos_list2,mData.getImageList()) {
+    private GridAdapter<ImageItem> initAdapter() {
+        GridAdapter<ImageItem> adapter = new GridAdapter<ImageItem>(ShowAlbumActivity.this, R.layout.item_file_photos_list2, mData.getImageList()) {
             @Override
             public void buildView(ViewHolder holder, ImageItem data) {
-                holder.setImageViewByGlide(R.id.item_grid_image,data.getImagePath() );
+                holder.setImageViewByGlide(R.id.item_grid_image, data.getImagePath());
                 ImageView select = (ImageView) holder.findViewById(R.id.imv_select);
 
-                for(ImageItem i: BitmapTemp.tempSelectBitmap){
-                    if(i.getImagePath()!=null)
-                        if(i.getImagePath().equals(data.getImagePath())) {
+                for (ImageItem i : BitmapTemp.tempSelectBitmap) {
+                    if (i.getImagePath() != null)
+                        if (i.getImagePath().equals(data.getImagePath())) {
                             data.setSelected(true);
                             break;
                         }
                 }
-                select.setImageResource(data.isSelected()? R.drawable.image_select :
+                select.setImageResource(data.isSelected() ? R.drawable.image_select :
                         R.drawable.image_unselect);
                 final ImageItem d = data;
                 select.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(d.isSelected()) {
+                        if (d.isSelected()) {
                             d.setSelected(false);
                             BitmapTemp.tempSelectBitmap.remove(d);
-                            ((ImageView)v).setImageResource(R.drawable.image_unselect);
-                        }
-                        else {
-                            if(SelfActivity.canAddPhotos()) {
+                            ((ImageView) v).setImageResource(R.drawable.image_unselect);
+                        } else {
+                            if (SelfActivity.canAddPhotos()) {
                                 d.setSelected(true);
                                 BitmapTemp.tempSelectBitmap.add(d);
-                                ((ImageView)v).setImageResource(R.drawable.image_select);
+                                ((ImageView) v).setImageResource(R.drawable.image_select);
                             }
                         }
                         refNum();
@@ -135,7 +135,7 @@ public class ShowAlbumActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.file_select_num:
                 setResult(Activity.RESULT_OK);
                 finish();
@@ -149,7 +149,7 @@ public class ShowAlbumActivity extends BaseActivity implements View.OnClickListe
     }
 
     //更新显示的数据
-    private void refNum(){
-        file_select_num.setText("确定（"+ BitmapTemp.tempSelectBitmap.size()+"/"+ SelfActivity.Max+"）");
+    private void refNum() {
+        file_select_num.setText("确定（" + BitmapTemp.tempSelectBitmap.size() + "/" + SelfActivity.Max + "）");
     }
 }

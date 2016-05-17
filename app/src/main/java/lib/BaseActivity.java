@@ -43,6 +43,8 @@ public class BaseActivity extends AppCompatActivity {
 
     protected boolean useToolbar = true;
 
+    protected boolean nestedScroll = true;
+
     private CoordinatorLayout coordinatorLayout;
     private AppBarLayout appBarLayout;
     private boolean mTranslucentStatus;
@@ -100,7 +102,17 @@ public class BaseActivity extends AppCompatActivity {
     public void setContentView(View view) {
         if (useToolbar && getSupportActionBar() == null) {
             super.setContentView(R.layout.basic_main_layout);
-            content = (FrameLayout) findViewById(R.id.content);
+            if (view != null && Build.VERSION.SDK_INT >= 14) {
+                view.setFitsSystemWindows(true);
+            }
+            if (nestedScroll) {
+                findViewById(R.id.noscroll_content).setVisibility(View.GONE);
+                findViewById(R.id.nested_scroll_view).setVisibility(View.VISIBLE);
+                content = (FrameLayout) findViewById(R.id.content);
+            } else {
+                findViewById(R.id.nested_scroll_view).setVisibility(View.GONE);
+                content = (FrameLayout) findViewById(R.id.noscroll_content);
+            }
             content.addView(view);
             titleTv = (TextView) findViewById(R.id.title_id);
             toolbar = (Toolbar) findViewById(R.id.toolbar_id);

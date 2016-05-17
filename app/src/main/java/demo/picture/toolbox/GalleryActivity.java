@@ -25,7 +25,7 @@ import lib.utils.CommonUtils;
  */
 
 /*查看大图*/
-public class GalleryActivity extends BaseActivity{
+public class GalleryActivity extends BaseActivity {
 
     public static final String KEY_ID = "location_id";
     public static final String KEY_PHOTO_LIST = "myList";
@@ -40,9 +40,9 @@ public class GalleryActivity extends BaseActivity{
     private boolean isUnder720 = true;
 
     /*初始化参数*/
-    public static void startThisActivity(Activity activity, ArrayList<ImageItem> data, int position){
+    public static void startThisActivity(Activity activity, ArrayList<ImageItem> data, int position) {
         mList = data;
-        if(position>=0)
+        if (position >= 0)
             location = position;
         activity.startActivity(new Intent(activity, GalleryActivity.class));
     }
@@ -51,8 +51,9 @@ public class GalleryActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        nestedScroll = false;
         setContentView(R.layout.layout_photos_view);
-        ((RelativeLayout)findViewById(R.id.relat)).setVisibility(View.GONE);
+        ((RelativeLayout) findViewById(R.id.relat)).setVisibility(View.GONE);
 
         /*720P使用GLide加载，不需要override图片size，
         大于720的时候需要overrtide(720, 1280)否则会报异常*/
@@ -69,8 +70,7 @@ public class GalleryActivity extends BaseActivity{
         mViewPager.setCurrentItem(location);
     }
 
-    private class mPagerAdapter extends PagerAdapter{
-
+    private class mPagerAdapter extends PagerAdapter {
 
 
         @Override
@@ -80,19 +80,19 @@ public class GalleryActivity extends BaseActivity{
 
         @Override
         public View instantiateItem(ViewGroup container, int position) {
-            PhotoView  mView = new PhotoView(container.getContext());
-                mView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT));
-                mView.enable();
-                if(isUnder720)
+            PhotoView mView = new PhotoView(container.getContext());
+            mView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT));
+            mView.enable();
+            if (isUnder720)
                 Glide.with(container.getContext())
                         .load(mList.get(position).getImagePath())
                         .into(mView);
-                else
-                    Glide.with(container.getContext())
-                            .load(mList.get(position).getImagePath())
-                            .override(720, 1280)
-                            .into(mView);
+            else
+                Glide.with(container.getContext())
+                        .load(mList.get(position).getImagePath())
+                        .override(720, 1280)
+                        .into(mView);
             container.addView(mView);
             return mView;
         }

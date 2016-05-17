@@ -9,10 +9,12 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,6 +38,11 @@ public abstract class BaseListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setListAdapter(mAdapter);
         mAdapter.refresh();
+        ViewGroup viewGroup = (ViewGroup) findViewById(Window.ID_ANDROID_CONTENT);
+        View parentView = viewGroup.getChildAt(0);
+        if (parentView != null && Build.VERSION.SDK_INT >= 14) {
+            parentView.setFitsSystemWindows(true);
+        }
     }
 
 //    protected String getTag_Category(){
@@ -69,8 +76,8 @@ public abstract class BaseListActivity extends ListActivity {
              *判断是否是我的activity
              * 不加会显示手机的所以应用
              **/
-            if(getTag_Category()!=null)
-                 mainIntent.addCategory(getTag_Category());
+            if (getTag_Category() != null)
+                mainIntent.addCategory(getTag_Category());
 
             PackageManager pm = getPackageManager();
             final List<ResolveInfo> matches = pm.queryIntentActivities(
@@ -117,6 +124,7 @@ public abstract class BaseListActivity extends ListActivity {
 
     /**
      * 根据Category获取activity
+     *
      * @return
      */
     public abstract String getTag_Category();

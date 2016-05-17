@@ -22,11 +22,12 @@ import com.cwf.app.cwf.R;
 import demo.custom.tabhost.fragment_1;
 import demo.custom.tabhost.fragment_2;
 import demo.custom.tabhost.fragment_3;
+import lib.BaseActivity;
 
 /**
  * Created by n-240 on 2015/11/5.
  */
-public class TabHostActivity extends FragmentActivity {
+public class TabHostActivity extends BaseActivity {
 
     //定义数组来存放按钮图片
     private int mImageViewArray[] = {R.drawable.tab_home_btn,
