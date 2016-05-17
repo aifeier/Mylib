@@ -1,11 +1,14 @@
 package demo.custom.test;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.cwf.app.cwf.R;
 import com.materialdialog.materialdialog.MaterialDialog;
@@ -62,6 +65,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
         data.add("通讯录");
         data.add("一键锁屏");
         data.add("打开应用设置");
+        data.add("V7.AlertDialog");
 
     }
 
@@ -143,10 +147,50 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
             case 10:
                 AppUtils.startAppSettings(this);
                 break;
+            case 11:
+                showDialog();
+                break;
             default:
                 break;
         }
 
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("V7.AlertDialog");
+//        builder.setMessage("我是一个dialog，v7我是一个dialog，v7我是一个dialog，v7我是一个dialog，v7");
+//        builder.setCancelable(true);
+//        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//
+        builder.setPositiveButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        final String[] strings = new String[]{"A", "B", "C", "D"};
+        final Boolean[] booleen = new Boolean[]{false, false, false, true};
+        builder.setMultiChoiceItems(strings, null, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                Toast.makeText(getApplicationContext(), strings[which] + isChecked, Toast.LENGTH_SHORT).show();
+            }
+        });
+//        builder.setSingleChoiceItems(strings, 1, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                Toast.makeText(getApplicationContext(), strings[which], Toast.LENGTH_SHORT).show();
+//                dialog.dismiss();
+//            }
+//        });
+//        builder.create();
+        builder.show();
     }
 
 
