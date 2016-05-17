@@ -8,7 +8,9 @@
     <style name="AppTheme.Fullscreen.NoTitleBar" parent="AppTheme.Base">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/crimson</item>
     </style>
+
 
     <style name="AppTheme" parent="AppTheme.Base"></style>
 
@@ -28,6 +30,11 @@
         <!--<item name="android:windowIsTranslucent">true</item>-->
         <!--<item name="android:windowAnimationStyle">@android:style/Animation</item>-->
         <!--<item name="android:background">@color/TransparentWhite</item>-->
+        <item name="android:alertDialogTheme">@style/AppTheme.Alert</item>
+    </style>
+
+    <style name="AppTheme.Alert" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@color/red</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -69,5 +76,4 @@
         <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
         <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
     </style>
-
 </resources>

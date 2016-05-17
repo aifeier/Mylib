@@ -1,5 +1,6 @@
 package demo.custom.test;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import lib.MainApplication;
 import lib.utils.AppUtils;
 import lib.utils.CommonUtils;
 import lib.utils.NotificationUtils;
+import lib.utils.permission.PermissionsActivity;
 
 /**
  * Created by n-240 on 2016/3/2.
@@ -66,7 +68,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
         data.add("一键锁屏");
         data.add("打开应用设置");
         data.add("V7.AlertDialog");
-
+        data.add("6.0测试权限");
     }
 
 
@@ -150,6 +152,9 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
             case 11:
                 showDialog();
                 break;
+            case 12:
+                PermissionsActivity.startActivityForResult(this, 11, new String[]{Manifest.permission.CALL_PHONE});
+                break;
             default:
                 break;
         }
@@ -159,15 +164,15 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("V7.AlertDialog");
-//        builder.setMessage("我是一个dialog，v7我是一个dialog，v7我是一个dialog，v7我是一个dialog，v7");
-//        builder.setCancelable(true);
-//        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.dismiss();
-//            }
-//        });
-//
+        builder.setMessage("我是一个dialog，v7我是一个dialog，v7我是一个dialog，v7我是一个dialog，v7");
+        builder.setCancelable(true);
+        builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
         builder.setPositiveButton("NO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
