@@ -53,11 +53,11 @@ public class TabHostActivity extends BaseActivity {
     @SuppressLint("NewApi")
     private void initView(){
         View actionbar_custom = View.inflate(this, R.layout.actionbar_customview, null);
-        getActionBar().setCustomView(actionbar_custom, new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
-                ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
-        getActionBar().setTitle("me");
-        getActionBar().setDisplayShowCustomEnabled(true);
-        getActionBar().setDisplayShowHomeEnabled(false);
+//        getActionBar().setCustomView(actionbar_custom, new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
+//                ActionBar.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
+//        getActionBar().setTitle("me");
+//        getActionBar().setDisplayShowCustomEnabled(true);
+//        getActionBar().setDisplayShowHomeEnabled(false);
 //        getActionBar().setHomeButtonEnabled(true);
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
         //实例化布局对象
