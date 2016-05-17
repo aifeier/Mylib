@@ -66,9 +66,9 @@ public class BaseActivity extends AppCompatActivity {
 
 
         /**当sdk大于19即android4.4时，修改systemBar的演示颜色*/
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            setTranslucentStatus(true);
+//        }
         /*
         * 主题为actionbar
         * android:fitsSystemWindows="true"防止actionbar和状态栏重合
@@ -128,9 +128,9 @@ public class BaseActivity extends AppCompatActivity {
             final boolean translucentStatus = hasTranslucentStatusBar();
             if (translucentStatus) {
                 getSystemBarTint().setStatusBarTintEnabled(true);
-//                getSystemBarTint().setNavigationBarTintEnabled(true);
-//                getSystemBarTint().setNavigationBarTintResource(R.color.blueviolet);
-                getSystemBarTint().setStatusBarTintResource(R.color.primary_dark);
+                getSystemBarTint().setNavigationBarTintEnabled(true);
+                getSystemBarTint().setNavigationBarTintResource(R.color.blueviolet);
+                getSystemBarTint().setStatusBarTintResource(R.color.blueviolet);
                 ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) coordinatorLayout.getLayoutParams();
                 params.topMargin = -statusbarHeight;
                 params = (ViewGroup.MarginLayoutParams) toolbar.getLayoutParams();
