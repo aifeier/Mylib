@@ -14,7 +14,7 @@
         <!-- API 14 theme customizations can go here. -->
     </style>
 
-    <style name="ActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="ActionBarTheme" parent="AppTheme.Base">
         <!-- API 14 theme customizations can go here. -->
         <item name="android:actionBarStyle">@style/ActionBarStyle</item>
     </style>

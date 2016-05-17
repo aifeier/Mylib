@@ -105,6 +105,17 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="demo.custom.test.DrawerLayoutActivity"
+            android:label="左右滑动菜单"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="demo.custom.CustomLayoutList" />
+            </intent-filter>
+        </activity>
+
         <!-- systembartint -->
         <activity
             android:name="demo.systembartint.DefaultActivity"
