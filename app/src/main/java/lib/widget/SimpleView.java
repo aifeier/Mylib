@@ -93,7 +93,9 @@ public class SimpleView extends View {
                 canvas.drawCircle(width / 10 * i, height / 10 * ii, width / 20, paint_blue);
             }
         }
-        canvas.drawArc(0f, 0f, width / 2, height / 2, 0, 360f / 10 * item1, true, paint);
+        RectF rect = new RectF();
+        rect.set(0f, 0f, width / 2, height / 2);
+        canvas.drawArc(rect, 0, 360f / 10 * item1, true, paint);
 
         canvas.drawText("你好\n我是绘制", width / 2, height / 3 * 2, paint);
         canvas.drawLine(width / 10, height / 10, width / 10 * 9, height / 10 * 9, paint);
