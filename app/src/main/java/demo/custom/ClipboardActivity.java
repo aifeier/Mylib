@@ -12,6 +12,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
@@ -90,6 +91,7 @@ public class ClipboardActivity extends Activity {
     public void onEventMainThread(ClipData.Item item) {
         if (item != null) {
             Log.e("ClipboardActivity", item.getText().toString());
+            Toast.makeText(this, item.getText().toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
