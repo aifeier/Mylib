@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -43,7 +44,7 @@ import lib.widget.ViewHolder;
 /**
  * Created by n-240 on 2015/9/28.
  */
-public class SelfActivity extends BaseActivity{
+public class SelfActivity extends BaseActivity {
 
     private static final int TAKE_CAMERA = 0x000001;
     private static final int TAKE_PHOTOS = 0x000002;
@@ -69,10 +70,11 @@ public class SelfActivity extends BaseActivity{
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_addpic_unfocused);
         init();
     }
-    private void init(){
+
+    private void init() {
         popupWindow = new PopupWindow(this);
 
-        View view = getLayoutInflater().inflate(R.layout.item_popupwindows,null);
+        View view = getLayoutInflater().inflate(R.layout.item_popupwindows, null);
 
         ll_popup = (LinearLayout) view.findViewById(R.id.ll_popup);
 
@@ -82,6 +84,9 @@ public class SelfActivity extends BaseActivity{
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setContentView(view);
+        popupWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        //因为某些机型是虚拟按键的,所以要加上以下设置防止挡住按键.
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         RelativeLayout parent = (RelativeLayout) view.findViewById(R.id.parent);
         parent.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +129,7 @@ public class SelfActivity extends BaseActivity{
             }
         });
 
-        noScrollGridView = (GridView)findViewById(R.id.noScrollgridview);
+        noScrollGridView = (GridView) findViewById(R.id.noScrollgridview);
         noScrollGridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
         mAdapter = initAdapter();
         noScrollGridView.setAdapter(mAdapter);
@@ -153,9 +158,9 @@ public class SelfActivity extends BaseActivity{
         String fileName = String.valueOf(System.currentTimeMillis());
 
         cameraFile = new File(FileUtils.getInstance(this).photoCache, fileName + ".jpg");
-                if (cameraFile.exists()) {
-                    cameraFile.delete();
-                }
+        if (cameraFile.exists()) {
+            cameraFile.delete();
+        }
         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile));
         startActivityForResult(openCameraIntent, TAKE_CAMERA);
 
@@ -172,7 +177,7 @@ public class SelfActivity extends BaseActivity{
                     cameraFile.delete();
                     cameraFile = null;
                 }
-                if( canAddPhotos() && cameraFile != null){
+                if (canAddPhotos() && cameraFile != null) {
                     ImageItem takePhoto = new ImageItem();
                     takePhoto.setImageId(BitmapTemp.tempSelectBitmap.size() + "");
                     takePhoto.setImagePath(cameraFile.getAbsolutePath());
@@ -190,6 +195,7 @@ public class SelfActivity extends BaseActivity{
 
     /**
      * item 适配
+     *
      * @return
      */
     private GridAdapter<ImageItem> initAdapter() {
@@ -233,20 +239,19 @@ public class SelfActivity extends BaseActivity{
         return mAdapter;
     }
 
-    public static boolean canAddPhotos(){
-        if(Max==-1 || BitmapTemp.tempSelectBitmap.size() < Max)
+    public static boolean canAddPhotos() {
+        if (Max == -1 || BitmapTemp.tempSelectBitmap.size() < Max)
             return true;
         else {
-            ActivityUtils.showTip("最多添加" + Max +"张照片",false);
+            ActivityUtils.showTip("最多添加" + Max + "张照片", false);
             return false;
         }
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_submit,menu);
+        getMenuInflater().inflate(R.menu.menu_submit, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -258,12 +263,12 @@ public class SelfActivity extends BaseActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.menu_id_submit){
+        if (item.getItemId() == R.id.menu_id_submit) {
             ll_popup.startAnimation(AnimationUtils.loadAnimation(SelfActivity.this,
                     R.anim.fade_in));
             popupWindow.showAtLocation(parentView, Gravity.BOTTOM, 0, 0);
         }
-    return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
