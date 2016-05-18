@@ -3,14 +3,17 @@ package demo.anim;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.graphics.drawable.AnimationDrawable;
+import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.cwf.app.cwf.R;
 
 import lib.BaseActivity;
+import lib.widget.KeyboardBuilder;
 
 /**
  * Created by n-240 on 2015/12/29.
@@ -19,14 +22,30 @@ import lib.BaseActivity;
  */
 public class AnimDemo extends BaseActivity {
     private ImageView imageView;
+    private EditText editText;
+    private KeyboardBuilder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        useToolbar = false;
         setContentView(R.layout.layout_anim);
         setTitle("动画实例");
         initView();
         initAnim();
+        editText = (EditText) findViewById(R.id.edit);
+        KeyboardView keyboardView = (KeyboardView) findViewById(R.id.keyboardview);
+        builder = new KeyboardBuilder(this, keyboardView, R.xml.keys_layout);
+        builder.registerEditText(editText);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (builder != null && builder.isCustomKeyboardVisible()) {
+            builder.hideCustomKeyboard();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void initView() {

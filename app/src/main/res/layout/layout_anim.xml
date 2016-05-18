@@ -39,5 +39,21 @@
 
     </RelativeLayout>
 
+    <EditText
+        android:id="@+id/edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_xsmall" />
+
+    <android.inputmethodservice.KeyboardView
+        android:id="@+id/keyboardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:keyBackground="@drawable/calendar_bg_selector"
+        android:keyTextColor="@color/holo_blue_light"
+        android:visibility="gone" />
 
 </LinearLayout>

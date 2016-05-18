@@ -32,7 +32,7 @@ public class DrawerLayoutActivity extends BaseActivity {
         setContentView(R.layout.activity_drawer_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("标题");
-        mToolbar.setLogoDescription("描述");
+        mToolbar.setSubtitle("副标题");
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.add, R.string.del);
         mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
