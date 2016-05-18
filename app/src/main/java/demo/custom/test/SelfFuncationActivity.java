@@ -3,11 +3,13 @@ package demo.custom.test;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.TrafficStats;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -18,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Handler;
 
 import demo.custom.BottomNavigationActivity;
 import demo.custom.ContactsActivity;
@@ -69,6 +70,7 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
         data.add("打开应用设置");
         data.add("V7.AlertDialog");
         data.add("6.0测试权限");
+        data.add("测试网速");
     }
 
 
@@ -155,10 +157,37 @@ public class SelfFuncationActivity extends BaseActivity implements AdapterView.O
             case 12:
                 PermissionsActivity.startActivityForResult(this, 11, new String[]{Manifest.permission.CALL_PHONE});
                 break;
+            case 13:
+                showNetSpeed();
+                break;
             default:
                 break;
         }
 
+    }
+
+    private long lastTotalRxBytes, lastTimeStamp;
+
+    /*测试网速*/
+    private void showNetSpeed() {
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                long nowTotalRxBytes = getTotalRxBytes();
+                long nowTimeStamp = System.currentTimeMillis();
+                long speed = ((nowTotalRxBytes - lastTotalRxBytes) * 1000 / (nowTimeStamp - lastTimeStamp));//毫秒转换
+
+                lastTimeStamp = nowTimeStamp;
+                lastTotalRxBytes = nowTotalRxBytes;
+//                data.set(13, speed + " kb/s");
+//                ((BaseAdapter) mList.getAdapter()).notifyDataSetChanged();
+                Toast.makeText(SelfFuncationActivity.this, speed + " kb/s", Toast.LENGTH_SHORT).show();
+            }
+        }, 1000);
+    }
+
+    private long getTotalRxBytes() {
+        return TrafficStats.getUidRxBytes(getApplicationInfo().uid) == TrafficStats.UNSUPPORTED ? 0 : (TrafficStats.getTotalRxBytes() / 1024);//转为KB
     }
 
     private void showDialog() {
