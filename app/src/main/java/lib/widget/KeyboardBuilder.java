@@ -23,6 +23,8 @@ public class KeyboardBuilder {
 
     private KeyboardView mKeyboardView;
 
+    private PopupKeyBoard popupKeyBoard;
+
     public KeyboardBuilder(Activity ac, KeyboardView keyboardView, int keyBoardXmlResId) {
         mActivity = ac;
         mKeyboardView = keyboardView;
@@ -130,14 +132,17 @@ public class KeyboardBuilder {
     }
 
     public void hideCustomKeyboard() {
-        mKeyboardView.setVisibility(View.GONE);
-        mKeyboardView.setEnabled(false);
+//        mKeyboardView.setVisibility(View.GONE);
+//        mKeyboardView.setEnabled(false);
+        if (popupKeyBoard != null && popupKeyBoard.isShowing())
+            popupKeyBoard.dismiss();
     }
 
     public void showCustomKeyboard(View v) {
-        mKeyboardView.setVisibility(View.VISIBLE);
-        mKeyboardView.setEnabled(true);
-
+//        mKeyboardView.setVisibility(View.VISIBLE);
+//        mKeyboardView.setEnabled(true);
+        if (popupKeyBoard != null && !popupKeyBoard.isShowing())
+            popupKeyBoard.show();
         if (v != null) {
             ((InputMethodManager) mActivity.getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(v.getWindowToken(), 0);
         }
@@ -145,6 +150,9 @@ public class KeyboardBuilder {
 
     public boolean isCustomKeyboardVisible() {
         return mKeyboardView.getVisibility() == View.VISIBLE;
+    }
 
+    public void setPopupKeyBoard(PopupKeyBoard popupKeyBoard) {
+        this.popupKeyBoard = popupKeyBoard;
     }
 }

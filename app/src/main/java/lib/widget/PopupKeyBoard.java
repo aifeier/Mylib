@@ -48,6 +48,7 @@ public class PopupKeyBoard extends PopupWindow {
         View view = activity.getLayoutInflater().inflate(R.layout.layout_board, null);
         keyboardView = (KeyboardView) view.findViewById(R.id.keyboardview);
         keyboardBuilder = new KeyboardBuilder(activity, keyboardView, R.xml.keys_layout);
+        keyboardBuilder.setPopupKeyBoard(this);
         setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
         setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
         setBackgroundDrawable(new BitmapDrawable());
