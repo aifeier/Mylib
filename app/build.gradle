@@ -70,7 +70,7 @@ universalApk：指示是否打包一个通用版本（包含所有的ABI）。�
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile(name: 'materialdialog-release', ext: 'aar')
+//    compile(name: 'materialdialog-release', ext: 'aar')
     compile(name: 'okhttputilslibrary-release', ext: 'aar')
     compile(name: 'pulltorefreshlibrary-release', ext: 'aar')
     compile(name: 'simpleqrcodelibrary-release', ext: 'aar')
@@ -84,7 +84,7 @@ dependencies {
 
     //    compile project(':okhttputilslibrary')
 
-    //    compile project(':materialdialog')
+        compile project(':materialdialog')
 
     //    compile project(':bottomnavigationlibrary')
 
@@ -107,7 +107,7 @@ dependencies {
     compile 'com.zhy:autolayout:1.3.6'
     compile 'cn.qqtheme.framework:AndroidPicker:latest.integration'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     /*内存泄露检测*/
     compile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-    compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
 }
