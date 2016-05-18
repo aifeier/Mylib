@@ -7,9 +7,9 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.cwf.app.cwf.R;
@@ -28,14 +28,12 @@ import cn.qqtheme.framework.picker.ColorPicker;
 import cn.qqtheme.framework.util.ConvertUtils;
 import demo.custom.test.LockNoticationActivity;
 import demo.intent.EventBusDemo;
-import demo.intent.NetWorkChangeReceiver;
 import lib.BaseActivity;
 import lib.utils.ActivityUtils;
 import lib.utils.AssetsUtils;
 import lib.utils.CommonUtils;
 import lib.utils.NotificationUtils;
 
-//import com.alibaba.fastjson.JSON;
 
 /**
  * Created by n-240 on 2016/1/14.
@@ -43,8 +41,10 @@ import lib.utils.NotificationUtils;
  * @author cwf
  */
 /*多级联动选择器*/
-public class PickerDemoActivity extends BaseActivity implements View.OnClickListener{
+public class PickerDemoActivity extends BaseActivity implements View.OnClickListener {
     Button address;
+    private boolean isRegistered = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,9 +63,9 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.picker_address:
-                if(data == null || data.size() <= 0) {
+                if (data == null || data.size() <= 0) {
                     data = new ArrayList<AddressPicker.Province>();
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                     String json = AssetsUtils.readText(this, "city.json");
@@ -118,19 +118,19 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.notification:
                 NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-                notificationUtils.startNotification("message",EventBusDemo.class,R.drawable.dialog_load, "content" );
+                notificationUtils.startNotification("message", EventBusDemo.class, R.drawable.dialog_load, "content");
 //                notificationUtils.showNotification("ok", EventBusDemo.class, R.drawable.file_picker_folder);
                 break;
             case R.id.wakeNotification:
                 TimerTask timerTask1 = new TimerTask() {
                     @Override
                     public void run() {
-                        if(CommonUtils.isSleeping(getApplicationContext()))
+                        if (CommonUtils.isSleeping(getApplicationContext()))
                             CommonUtils.wakeUp(getApplicationContext());
                         NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
 //                        notificationUtils.startNotification("message",EventBusDemo.class,R.drawable.dialog_load, "content" );
                         notificationUtils.showNotification("ok", EventBusDemo.class, R.drawable.file_picker_folder);
-                            startActivity(new Intent(PickerDemoActivity.this, LockNoticationActivity.class));
+                        startActivity(new Intent(PickerDemoActivity.this, LockNoticationActivity.class));
                     }
                 };
                 Timer timer1 = new Timer();
@@ -164,15 +164,15 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
 //                ActivityUtils.showTip(CommonUtils.collectDeviceInfoStr(this), true);
 //                CommonUtils.goHome(this);
 //                ActivityUtils.showTip(CommonUtils.getNetWorkStatus(this)+"", false);
-                if(netWorkChangeReceiver == null) {
+                if (!isRegistered) {
+                    isRegistered = true;
                     ActivityUtils.showTip("注册监听", false);
-                    netWorkChangeReceiver = new NetWorkChangeReceiver();
                     registerReceiver(netWorkChangeReceiver,
                             new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-                }else{
+                } else {
+                    isRegistered = false;
                     ActivityUtils.showTip("取消监听", false);
                     unregisterReceiver(netWorkChangeReceiver);
-                    netWorkChangeReceiver = null;
                 }
                 break;
         }
@@ -185,21 +185,32 @@ public class PickerDemoActivity extends BaseActivity implements View.OnClickList
             NetworkInfo mobileInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             NetworkInfo wifiInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             NetworkInfo activeInfo = manager.getActiveNetworkInfo();
-            Toast.makeText(context, "mobile:" + mobileInfo.isConnected() + "\n" + "wifi:" + wifiInfo.isConnected()
-                    + "\n" + "active:" + activeInfo.getTypeName(), Toast.LENGTH_SHORT).show();
+            Log.e("ABC", "mobile:" + mobileInfo.isConnected());
+            Log.e("ABC", "wifi:" + wifiInfo.isConnected());
+            Log.e("ABC", "wifi:" + "active:" + (activeInfo == null ? "没有连接" : activeInfo.getTypeName()));
+//            Toast.makeText(context, "mobile:" + mobileInfo.isConnected() + "\n" + "wifi:" + wifiInfo.isConnected()
+//                    + "\n" + "active:" + activeInfo.getTypeName(), Toast.LENGTH_SHORT).show();
         }
     };
 
-//    private NetWorkChangeReceiver netWorkChangeReceiver;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case CommonUtils.REQUEST_CODE_ASK_CALL_PHONE:
                 CommonUtils.onRequestPermissionsResult(
                         PickerDemoActivity.this, "10086", requestCode, permissions, grantResults);
                 break;
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isRegistered) {
+            ActivityUtils.showTip("取消监听", false);
+            unregisterReceiver(netWorkChangeReceiver);
+        }
     }
 }
