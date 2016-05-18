@@ -15,10 +15,12 @@ import android.util.Log;
 
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
+import lib.utils.ActivityUtils;
 
 /**
  * Created by n-240 on 2016/2/19.
- *模拟监听剪切板，打印剪切板内容
+ * 模拟监听剪切板，打印剪切板内容
+ *
  * @author cwf
  */
 public class ClipboardActivity extends Activity {
@@ -28,7 +30,7 @@ public class ClipboardActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             /*系统广播只能动态注册，在main中注册无效*/
-            if(intent.getAction().equals(ACTION)) {
+            if (intent.getAction().equals(ACTION)) {
                 Log.e(getPackageName(), intent.getStringExtra("text"));
             }
         }
@@ -57,10 +59,11 @@ public class ClipboardActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(clipboardService == null){
-            clipboardService = new Intent(ClipboardService.ACTION);
-            startService(clipboardService);
-            bindService(clipboardService, serviceConnection, BIND_AUTO_CREATE);
+        if (clipboardService == null) {
+//            clipboardService = new Intent(ClipboardService.ACTION);
+//            clipboardService.setPackage(getPackageName());
+            startService(ActivityUtils.getServiceIntent(this, ClipboardService.ACTION));
+            bindService(ActivityUtils.getServiceIntent(this, ClipboardService.ACTION), serviceConnection, BIND_AUTO_CREATE);
         }
     }
 
@@ -84,15 +87,15 @@ public class ClipboardActivity extends Activity {
 
 
     @Subscribe
-    public void onEventMainThread(ClipData.Item item){
-        if(item != null){
+    public void onEventMainThread(ClipData.Item item) {
+        if (item != null) {
             Log.e("ClipboardActivity", item.getText().toString());
         }
     }
 
 
     @Subscribe
-    public void onEventMainThread(String str){
+    public void onEventMainThread(String str) {
         Log.e("ABC", str);
     }
 
@@ -100,7 +103,7 @@ public class ClipboardActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        if(clipboardService != null){
+        if (clipboardService != null) {
             stopService(clipboardService);
             unbindService(serviceConnection);
         }
