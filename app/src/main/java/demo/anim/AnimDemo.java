@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.graphics.drawable.AnimationDrawable;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import com.cwf.app.cwf.R;
 
 import lib.BaseActivity;
 import lib.widget.KeyboardBuilder;
+import lib.widget.PopupKeyBoard;
 
 /**
  * Created by n-240 on 2015/12/29.
@@ -34,9 +36,24 @@ public class AnimDemo extends BaseActivity {
         initView();
         initAnim();
         editText = (EditText) findViewById(R.id.edit);
-        KeyboardView keyboardView = (KeyboardView) findViewById(R.id.keyboardview);
-        builder = new KeyboardBuilder(this, keyboardView, R.xml.keys_layout);
-        builder.registerEditText(editText);
+//        KeyboardView keyboardView = (KeyboardView) findViewById(R.id.keyboardview);
+//        builder = new KeyboardBuilder(this, keyboardView, R.xml.keys_layout);
+//        builder.registerEditText(editText);
+    }
+
+    PopupKeyBoard popupKeyBoard;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        popupKeyBoard = new PopupKeyBoard(this);
+        popupKeyBoard.setEditText(editText);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupKeyBoard.show();
+            }
+        });
     }
 
     @Override
