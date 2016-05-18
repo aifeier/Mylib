@@ -40,7 +40,7 @@ import lib.utils.TimeUtils;
 /**
  * Created by chenw on 2015/11/1.
  */
-public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callback{
+public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callback {
     private SurfaceView surface;
     private SurfaceHolder surfaceHolder;
     private SeekBar seekBar;
@@ -62,10 +62,10 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     private boolean isFrist = true;
     private ArrayList<String> videos;
     private int playVideoID;
-    private RelativeLayout.LayoutParams lp ;
-    private  RelativeLayout relativelayout;
+    private RelativeLayout.LayoutParams lp;
+    private RelativeLayout relativelayout;
 
-    private  AudioManager audioManager ;
+    private AudioManager audioManager;
     private AutoRefreshListView autoRefreshListView;
 
     @Override
@@ -91,7 +91,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         videos.add("http://he.yinyuetai.com/uploads/videos/common/0DA4015080D10E8F5D592F80220E92" +
                 "E5.flv?sc=14520cce7b04809b&br=3091&vid=2398409&aid=37822&area=KR&vst=0");
         playVideoID = -1;
-        autoRefreshListView = (AutoRefreshListView<String>)findViewById(R.id.videos_list);
+        autoRefreshListView = (AutoRefreshListView<String>) findViewById(R.id.videos_list);
         AutoLoadAdapter<String> autoLoadAdapter = new AutoLoadAdapter<String>(VideoPlayActivity2.this, android.R.layout.activity_list_item) {
             @Override
             public void buildView(ViewHolder holder, String data) {
@@ -110,16 +110,16 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         autoRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(playVideoID != position - 1){
+                if (playVideoID != position - 1) {
                     playVideoID = position;
-                    initPlay((String)parent.getAdapter().getItem(position));
+                    initPlay((String) parent.getAdapter().getItem(position));
                 }
             }
         });
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     }
 
-    private void initView(){
+    private void initView() {
         /*设置窗口大小*/
         lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 ScreenUtils.getScreenWidth(this) / 16 * 9);
@@ -182,54 +182,52 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     private View.OnTouchListener surfaceview_touch_listener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if(isPrepared && mediaPlayer !=null)
-            switch(event.getAction()){
-                case MotionEvent.ACTION_DOWN:
-                    start_x = event.getX();
-                    start_y = event.getY();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    break;
-                case MotionEvent.ACTION_UP:
-                    if(Math.abs(start_x - event.getX()) < 5
-                            && Math.abs(start_y - event.getY()) < 5) {
+            if (isPrepared && mediaPlayer != null)
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        start_x = event.getX();
+                        start_y = event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (Math.abs(start_x - event.getX()) < 5
+                                && Math.abs(start_y - event.getY()) < 5) {
                         /*点击事件*/
-                        if (isPrepared) {
-                            if (mediaPlayer.isPlaying()) {
-                                isManualPause = true;
-                                mediaPlayer.pause();
-                                stop_imageview.setVisibility(View.VISIBLE);
-                            } else {
-                                mediaPlayer.start();
-                                stop_imageview.setVisibility(View.GONE);
+                            if (isPrepared) {
+                                if (mediaPlayer.isPlaying()) {
+                                    isManualPause = true;
+                                    mediaPlayer.pause();
+                                    stop_imageview.setVisibility(View.VISIBLE);
+                                } else {
+                                    mediaPlayer.start();
+                                    stop_imageview.setVisibility(View.GONE);
+                                }
                             }
-                        }
-                    }
-                    else if(Math.abs(start_y - event.getY()) < Math.abs(start_x - event.getX())){
+                        } else if (Math.abs(start_y - event.getY()) < Math.abs(start_x - event.getX())) {
                         /*调节播放进度*/
-                        mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() +
-                                (mediaPlayer.getDuration() - mediaPlayer.getCurrentPosition())
-                                *(int) (Math.abs(start_x - event.getX())) / v.getWidth() / 10);
-                        ActivityUtils.showTip("播放：" +
-                                TimeUtils.intToString(mediaPlayer.getCurrentPosition()/1000)
-                                , false);
-                    }
-                    else if(start_x > v.getWidth() /2){
+                            mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() +
+                                    (mediaPlayer.getDuration() - mediaPlayer.getCurrentPosition())
+                                            * (int) (Math.abs(start_x - event.getX())) / v.getWidth() / 10);
+                            ActivityUtils.showTip("播放：" +
+                                            TimeUtils.intToString(mediaPlayer.getCurrentPosition() / 1000)
+                                    , false);
+                        } else if (start_x > v.getWidth() / 2) {
                         /*调节音量*/
-                        float move_y = start_y -  event.getY();
-                        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) + (int)(move_y/v.getHeight() * 10);
-                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC , currentVolume, 1);
-                        ActivityUtils.showTip("声音：" + audioManager.getStreamVolume(AudioManager.STREAM_MUSIC), false);
-                    }else{
+                            float move_y = start_y - event.getY();
+                            int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) + (int) (move_y / v.getHeight() * 10);
+                            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, 1);
+                            ActivityUtils.showTip("声音：" + audioManager.getStreamVolume(AudioManager.STREAM_MUSIC), false);
+                        } else {
                         /*调节亮度*/
-                        float move_y = start_y - event.getY();
-                        ScreenUtils.setBrightness(VideoPlayActivity2.this, move_y / v.getHeight() * 100);
-                        ActivityUtils.showTip("屏幕亮度：" +ScreenUtils.getBrightness(VideoPlayActivity2.this), false);
-                    }
-                    start_x = 0;
-                    start_y = 0;
-                    break;
-            }
+                            float move_y = start_y - event.getY();
+                            ScreenUtils.setBrightness(VideoPlayActivity2.this, move_y / v.getHeight() * 100);
+                            ActivityUtils.showTip("屏幕亮度：" + ScreenUtils.getBrightness(VideoPlayActivity2.this), false);
+                        }
+                        start_x = 0;
+                        start_y = 0;
+                        break;
+                }
             return true;
         }
     };
@@ -259,16 +257,16 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void initPlay(String url){
+    private void initPlay(String url) {
         /*设置窗口大小*/
         relativelayout.setLayoutParams(lp);
         surface.setLayoutParams(lp);
-        if(surfaceHolder == null)
+        if (surfaceHolder == null)
             return;
         /*半透明背景*/
         surfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
         resetMediaStatue();
-        if(url==null || url.equals("")) {
+        if (url == null || url.equals("")) {
             playVideoID = (playVideoID + 1) % videos.size();
             url = videos.get(playVideoID);
         }
@@ -285,7 +283,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
                 public void onBufferingUpdate(MediaPlayer mp, int percent) {
                     seekBar.setSecondaryProgress(percent);
                     start.setText("全屏" + percent);
-                    if(isPrepared && percent > 0) {
+                    if (isPrepared && percent > 0) {
                         playseek = mp.getCurrentPosition();
                         seekBar.setProgress(mp.getCurrentPosition() * 100 / mp.getDuration());
                         time_now.setText(TimeUtils.intToString(mp.getCurrentPosition() / 1000));
@@ -356,25 +354,25 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
 //            mediaPlayer.prepare();
             /*异步*/
             mediaPlayer.prepareAsync();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             e.printStackTrace();
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void resetMediaStatue(){
-        if(mediaPlayer.isPlaying())
+    private void resetMediaStatue() {
+        if (mediaPlayer.isPlaying())
             mediaPlayer.stop();
-        if(mediaPlayer !=null) {
+        if (mediaPlayer != null) {
             mediaPlayer.reset();
             mediaPlayer.release();
         }
         mediaPlayer = new MediaPlayer();
         seekBar.setClickable(false);
-        if(!isFrist) {
+        if (!isFrist) {
             isManualPause = false;
             isPrepared = false;
             playseek = -1;
@@ -383,10 +381,10 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
         }
     }
 
-    private void ConfigurationChangeed(){
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+    private void ConfigurationChangeed() {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else{
+        } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
@@ -397,7 +395,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        switch (newConfig.orientation){
+        switch (newConfig.orientation) {
             case Configuration.ORIENTATION_PORTRAIT:
                 start.setVisibility(View.VISIBLE);
                 stop.setVisibility(View.VISIBLE);
@@ -423,7 +421,7 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayer.stop();
+        mediaPlayer.pause();
         surfaceHolder.removeCallback(this);
         mediaPlayer.release();
         isFrist = true;
@@ -433,15 +431,15 @@ public class VideoPlayActivity2 extends Activity implements SurfaceHolder.Callba
     @Override
     protected void onDestroy() {
         surfaceHolder.removeCallback(this);
-        mediaPlayer.stop();
+//        mediaPlayer.stop();
         mediaPlayer.release();
         super.onDestroy();
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK)
-            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 /*全屏的时候按返回键退出全屏*/
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 return true;
