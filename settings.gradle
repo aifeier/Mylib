@@ -1,1 +1,2 @@
-include ':app', ':circularprogressbuttonlibrary' , ':simpleqrcodelibrary', ':pulltorefreshlibrary', ':okhttputilslibrary', ':alllibrary', ':materialdialog', ':bottomnavigationlibrary', ':numprogressbarlibrary'
+include ':app', ':circularprogressbuttonlibrary', ':okhttplibrary', ':simpleqrcodelibrary', ':pulltorefreshlibrary', ':okhttputilslibrary', ':alllibrary', ':materialdialog', ':bottomnavigationlibrary', ':numprogressbarlibrary'
+include ':androidpermissionchecklibrary'

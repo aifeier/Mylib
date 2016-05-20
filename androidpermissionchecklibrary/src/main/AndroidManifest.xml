@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cwf.libs.androidpermissionchecklibrary">
+    <activity android:name=".permission.PermissionsActivity"
+    android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+
+</manifest>
