@@ -9,6 +9,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.cwf.libs.okhttplibrary.OkHttpClientManager;
+import com.cwf.libs.okhttplibrary.callback.ResultCallBack;
 import com.squareup.okhttp.Request;
 
 import java.util.Timer;
@@ -17,12 +19,11 @@ import java.util.TimerTask;
 import de.greenrobot.event.EventBus;
 import lib.utils.ActivityUtils;
 import lib.utils.FileUtils;
-import lib.utils.OkHttpClientManager;
 
 /**
  * Created by n-240 on 2015/11/9.
  */
-public class ServiceDemo extends Service{
+public class ServiceDemo extends Service {
 
     public static String ACTION = "com.cwf.ai.service";
     private String TAG = "ServiceDemo";
@@ -59,39 +60,29 @@ public class ServiceDemo extends Service{
             }
         }, 0, 10000);
         /*Intent.ACTION_TIME_TICK系统时钟，每分钟运行一次，到好像有问题*/
-        IntentFilter filter=new IntentFilter();
+        IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_TIME_TICK);
-        registerReceiver(receiver,filter);
+        registerReceiver(receiver, filter);
         int i;
-        for(i =0 ; i< 3;i++){
+        for (i = 0; i < 3; i++) {
             final int a = i;
-            Thread thread = new Thread(new Runnable() {
+            OkHttpClientManager.getInstance().downloadFile("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6o.jpg", FileUtils.getInstance(getApplicationContext()).fileCache, new ResultCallBack() {
                 @Override
-                public void run() {
-                    OkHttpClientManager.downloadAsyn("http://i6.topit.me/6/3d/c7/1132049425fc9c73d6o.jpg",
-                            FileUtils.getInstance(getApplicationContext()).fileCache, new OkHttpClientManager.ResultCallback<String>() {
-                                @Override
-                                public void onFileDownSize(long downsize, long allSize) {
-                                    Log.e(getPackageName(), downsize + "/" + allSize);
-                                    ActivityUtils.showTip(a + "正在下载" + downsize * 100 / allSize + "%", false);
-                                }
+                public void onFailure(Exception e) {
+                    ActivityUtils.showTip("下载失败" + e.getMessage(), false);
+                }
 
-                                @Override
-                                public void onError(Request request, Exception e) {
-                                    ActivityUtils.showTip("下载失败", false);
-                                }
+                @Override
+                public void onSuccess(String result) {
+                    ActivityUtils.showTip("下载失败", false);
+                }
 
-
-                                @Override
-                                public void onResponse(String response) {
-                                    ActivityUtils.showTip("下载完成", false);
-                                }
-
-                            });
+                @Override
+                public void onDownloading(long downSize, long allSize) {
+                    super.onDownloading(downSize, allSize);
+                    ActivityUtils.showTip(a + "正在下载" + downSize * 100 / allSize + "%", false);
                 }
             });
-            Log.e("ABC", a+"");
-            thread.start();
         }
     }
 
@@ -121,7 +112,7 @@ public class ServiceDemo extends Service{
         super.onDestroy();
     }
 
-    public String getString(){
+    public String getString() {
         return "ni hao a!";
     }
 }

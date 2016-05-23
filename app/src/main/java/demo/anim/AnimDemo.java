@@ -5,11 +5,14 @@ import android.animation.AnimatorSet;
 import android.graphics.drawable.AnimationDrawable;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.cwf.app.cwf.R;
 
@@ -36,6 +39,21 @@ public class AnimDemo extends BaseActivity {
         initView();
         initAnim();
         editText = (EditText) findViewById(R.id.edit);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Toast.makeText(AnimDemo.this, s.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 //        KeyboardView keyboardView = (KeyboardView) findViewById(R.id.keyboardview);
 //        builder = new KeyboardBuilder(this, keyboardView, R.xml.keys_layout);
 //        builder.registerEditText(editText);

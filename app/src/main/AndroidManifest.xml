@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cwf.app.cwf">
+    package="com.cwf.app.cwf" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -53,7 +53,7 @@
         android:icon="@drawable/penguins"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="fPVI4Tj6QcHglL0R5RfyFdVo" />
@@ -72,7 +72,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -97,18 +97,16 @@
             android:name="demo.systembartint.SamplesListActivity"
             android:label="状态栏变色"
             android:screenOrientation="portrait"
-            android:theme="@style/ActionBarTheme">
+            android:theme="@style/ActionBarTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="demo.custom.CustomLayoutList" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="demo.custom.test.DrawerLayoutActivity"
-            android:label="左右滑动菜单"
-            >
+            android:label="左右滑动菜单" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -121,7 +119,7 @@
             android:name="demo.systembartint.DefaultActivity"
             android:label="Default example"
             android:screenOrientation="portrait"
-            android:theme="@style/FullBleedTheme">
+            android:theme="@style/FullBleedTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -132,7 +130,7 @@
             android:name="demo.systembartint.ColorActivity"
             android:label="color example"
             android:screenOrientation="portrait"
-            android:theme="@style/FullBleedTheme">
+            android:theme="@style/FullBleedTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -143,7 +141,7 @@
             android:name="demo.systembartint.MatchActionBarActivity"
             android:label="MatchActionBar example"
             android:screenOrientation="portrait"
-            android:theme="@style/ActionBarTheme">
+            android:theme="@style/ActionBarTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -163,7 +161,7 @@
         <activity
             android:name="demo.picture.Photos"
             android:label="图库获取"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -173,7 +171,7 @@
         <activity
             android:name="demo.picture.CameraActivity"
             android:label="拍照获取"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -183,7 +181,7 @@
         <activity
             android:name="demo.picture.Crop"
             android:label="系统裁剪"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -193,7 +191,7 @@
         <activity
             android:name="demo.picture.SelfActivity"
             android:label="自定义相册预览"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -214,7 +212,7 @@
             android:name="demo.picture.VideoRecordActivity"
             android:label="视频录制"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -225,7 +223,7 @@
             android:name="demo.picture.VideoRecordActivity1"
             android:label="视频录制1"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -236,7 +234,7 @@
             android:name="demo.picture.AudioRecordActivity"
             android:label="音频录制"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -247,7 +245,7 @@
             android:name="demo.picture.VideoPlayActivity"
             android:label="VideoPlayActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.Fullscreen.NoTitleBar">
+            android:theme="@style/AppTheme.Fullscreen.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -258,7 +256,7 @@
             android:name="demo.picture.VideoPlayActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="VideoPlayActivity2"
-            android:screenOrientation="unspecified">
+            android:screenOrientation="unspecified" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -269,7 +267,7 @@
             android:name="demo.picture.VideoPlayInTextureView"
             android:label="VideoPlayInTextureView不完全"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Fullscreen.NoTitleBar">
+            android:theme="@style/AppTheme.Fullscreen.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -281,7 +279,7 @@
         <activity
             android:name="demo.List.SwipeMenuListActivity"
             android:label="SwipeMenuListActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -292,7 +290,7 @@
             android:name="demo.List.RecycleView.RecyclerViewActivity4"
             android:label="RecyclerViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.Dialog">
+            android:theme="@style/Theme.AppCompat.Light.Dialog" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -302,7 +300,7 @@
         <activity
             android:name="demo.List.RecycleView.AutoLoadRecyclerActivity"
             android:label="AutoLoadRecyclerActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -312,7 +310,7 @@
         <activity
             android:name="demo.List.PullToRefresh.AutoRefreshListActivity"
             android:label="AutoRefreshListActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -322,7 +320,7 @@
         <activity
             android:name="demo.List.PullToRefresh.AutoRefreshGirdViewActivity"
             android:label="AutoRefreshGirdViewActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -332,7 +330,7 @@
         <activity
             android:name="demo.List.AppListActivity"
             android:label="AppListActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -342,7 +340,7 @@
         <activity
             android:name="demo.List.WifiListActivity"
             android:label="WifiListActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -368,7 +366,7 @@
         <activity
             android:name="demo.custom.FileActivity"
             android:label="文件管理器"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -378,7 +376,7 @@
         <activity
             android:name="lib.widget.SelectPictureActivity"
             android:label="仿微信选择照片"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -389,7 +387,7 @@
             android:name="demo.custom.AutoLayoutDemo"
             android:label="AutoLayoutDemo"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -410,7 +408,7 @@
         <activity
             android:name="demo.custom.PickerDemoActivity"
             android:label="自定义功能测试"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -420,7 +418,7 @@
         <activity
             android:name="demo.custom.ClipboardActivity"
             android:label="剪切板监听"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -432,7 +430,7 @@
         <activity
             android:name="demo.custom.GestureLockActivity"
             android:label="手势密码"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -442,7 +440,7 @@
         <activity
             android:name="demo.Html5Activity"
             android:label="Html5Activity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -453,7 +451,7 @@
             android:name="demo.custom.ViewpagerActivity"
             android:label="ViewpagerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ToolBarTheme">
+            android:theme="@style/ToolBarTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -464,7 +462,7 @@
             android:name="demo.custom.AndroidDesignActivity"
             android:label="AndroidDesignActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ToolBarTheme">
+            android:theme="@style/ToolBarTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -475,7 +473,7 @@
             android:name="demo.custom.GlassActivity"
             android:label="GlassActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ToolBarTheme">
+            android:theme="@style/ToolBarTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -486,7 +484,7 @@
             android:name="demo.custom.CoordinatorActivity"
             android:label="CoordinatorActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ToolBarTheme">
+            android:theme="@style/ToolBarTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -495,12 +493,12 @@
         </activity>
 
         <!-- 动画 -->
-        <activity android:name="demo.anim.AnimDemo"></activity>
+        <activity android:name="demo.anim.AnimDemo" />
 
         <!-- 定义功能测试 -->
         <activity
             android:name="demo.custom.test.SelfFuncationActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -529,8 +527,7 @@
         <activity android:name="demo.custom.SimpleViewActivity" />
         <activity android:name="demo.custom.ContactsActivity" />
 
-
-        <!--权限判断类-->
+        <!-- 权限判断类 -->
         <activity
             android:name="lib.utils.permission.PermissionsActivity"
             android:theme="@style/AppTheme.Fullscreen.NoTitleBar" />
@@ -543,7 +540,7 @@
         <service
             android:name="demo.intent.ServiceDemo"
             android:enabled="true"
-            android:process=":servicedemo">
+            android:process=":servicedemo" >
             <intent-filter>
                 <action android:name="com.cwf.ai.service" />
             </intent-filter>
@@ -557,14 +554,14 @@
         <service
             android:name="demo.custom.ClipboardService"
             android:enabled="true"
-            android:process=":clipboard">
+            android:process=":clipboard" >
             <intent-filter>
                 <action android:name="com.cwf.ai.Clipboardservice" />
             </intent-filter>
         </service>
 
         <!-- 监听开机 -->
-        <receiver android:name="demo.intent.ConnectBroadCastReceiver">
+        <receiver android:name="demo.intent.ConnectBroadCastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
 
@@ -575,7 +572,7 @@
             android:name="demo.custom.test.AdminReceiver"
             android:description="@string/app_name"
             android:label="@string/app_name"
-            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            android:permission="android.permission.BIND_DEVICE_ADMIN" >
             <meta-data
                 android:name="android.app.device_admin"
                 android:resource="@xml/extras_device_admin" />

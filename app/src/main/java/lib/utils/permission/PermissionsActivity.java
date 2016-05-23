@@ -28,7 +28,7 @@ public class PermissionsActivity extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_CODE = 0; // 系统权限管理页面的参数
     private static final String EXTRA_PERMISSIONS =
-            "me.chunyu.clwang.permission.extra_permission"; // 权限参数
+            "cwf.demo.permission.extra_permission"; // 权限参数
     private static final String PACKAGE_URL_SCHEME = "package:"; // 方案
 
     private PermissionsChecker mChecker; // 权限检测器
