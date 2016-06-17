@@ -71,7 +71,6 @@ universalApk：指示是否打包一个通用版本（包含所有的ABI）。�
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile(name: 'materialdialog-release', ext: 'aar')
-    compile(name: 'okhttputilslibrary-release', ext: 'aar')
     compile(name: 'pulltorefreshlibrary-release', ext: 'aar')
     compile(name: 'simpleqrcodelibrary-release', ext: 'aar')
     compile(name: 'alllibrary-release', ext: 'aar')
@@ -82,21 +81,22 @@ dependencies {
 
     //    compile project(':pulltorefreshlibrary')
 
-    //    compile project(':okhttputilslibrary')
+        compile project(':okhttplibrary')
 
-        compile project(':materialdialog')
+    compile project(':materialdialog')
 
     //    compile project(':bottomnavigationlibrary')
 
     //    compile project(':numprogressbarlibrary')
     compile project(':circularprogressbuttonlibrary')
+    /*内存泄露检测*/
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.google.code.gson:gson:2.5'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:support-v4:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.android.support:cardview-v7:23.1.1'
+    compile 'com.android.support:design:24.0.0-alpha1'
+    compile 'com.android.support:appcompat-v7:24.0.0-alpha1'
+    compile 'com.android.support:support-v4:24.0.0-alpha1'
+    compile 'com.android.support:recyclerview-v7:24.0.0-alpha1'
+    compile 'com.android.support:cardview-v7:24.0.0-alpha1'
     compile 'de.greenrobot:eventbus:3.0.0-beta1'
     compile 'com.squareup.okhttp:okhttp:2.6.0'
     compile 'com.squareup.okio:okio:1.6.0'
@@ -108,6 +108,6 @@ dependencies {
     compile 'cn.qqtheme.framework:AndroidPicker:latest.integration'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
-    /*内存泄露检测*/
     compile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    compile 'com.firebase:firebase-client-android:2.3.1'
 }
