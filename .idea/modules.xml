@@ -4,12 +4,13 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Mylib.iml" filepath="$PROJECT_DIR$/Mylib.iml" />
       <module fileurl="file://$PROJECT_DIR$/alllibrary/alllibrary.iml" filepath="$PROJECT_DIR$/alllibrary/alllibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/androidpermissionchecklibrary/androidpermissionchecklibrary.iml" filepath="$PROJECT_DIR$/androidpermissionchecklibrary/androidpermissionchecklibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bottomnavigationlibrary/bottomnavigationlibrary.iml" filepath="$PROJECT_DIR$/bottomnavigationlibrary/bottomnavigationlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/circularprogressbuttonlibrary/circularprogressbuttonlibrary.iml" filepath="$PROJECT_DIR$/circularprogressbuttonlibrary/circularprogressbuttonlibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/materialdesignlibrary/materialdesignlibrary.iml" filepath="$PROJECT_DIR$/materialdesignlibrary/materialdesignlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/materialdialog/materialdialog.iml" filepath="$PROJECT_DIR$/materialdialog/materialdialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/numprogressbarlibrary/numprogressbarlibrary.iml" filepath="$PROJECT_DIR$/numprogressbarlibrary/numprogressbarlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/okhttplibrary/okhttplibrary.iml" filepath="$PROJECT_DIR$/okhttplibrary/okhttplibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/okhttputilslibrary/okhttputilslibrary.iml" filepath="$PROJECT_DIR$/okhttputilslibrary/okhttputilslibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/pulltorefreshlibrary/pulltorefreshlibrary.iml" filepath="$PROJECT_DIR$/pulltorefreshlibrary/pulltorefreshlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/simpleqrcodelibrary/simpleqrcodelibrary.iml" filepath="$PROJECT_DIR$/simpleqrcodelibrary/simpleqrcodelibrary.iml" />

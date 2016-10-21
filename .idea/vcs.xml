@@ -2,5 +2,16 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/alllibrary" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/androidpermissionchecklibrary" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/app" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/bottomnavigationlibrary" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/circularprogressbuttonlibrary" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/materialdialog" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/numprogressbarlibrary" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/okhttplibrary" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/okhttputilslibrary" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/pulltorefreshlibrary" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/simpleqrcodelibrary" vcs="svn" />
   </component>
 </project>
